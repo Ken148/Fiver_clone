@@ -1,13 +1,20 @@
 <h1>All Posts</h1>
 
 <% if user_signed_in? %>
-  <%= link_to 'New Post', new_post_path %>
+  <!-- Only show this link if the user is signed in -->
+  <%= link_to 'New Post', new_post_path, class: 'button' %>
+<% else %>
+  <p><%= link_to 'Sign In', new_user_session_path %> to create a post.</p>
 <% end %>
 
-<% @posts.each do |post| %>
-  <div class="post">
-    <h2><%= link_to post.title, post_path(post) %></h2>
-    <p><%= post.content.truncate(100) %></p>
-    <p>by <%= post.user.email %></p>
-  </div>
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <div class="post">
+      <h2><%= link_to post.title, post_path(post) %></h2>
+      <p><%= post.content.truncate(100) %></p>
+      <p>by <%= post.user.email %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No posts available.</p>
 <% end %>

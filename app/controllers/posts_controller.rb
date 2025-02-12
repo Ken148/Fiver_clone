@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    # This action is already defined
+    # Display a single post
   end
 
   def new
@@ -20,18 +20,6 @@ class PostsController < ApplicationController
       redirect_to @post, notice: 'Post was successfully created.'
     else
       render :new
-    end
-  end
-
-  def edit
-    # @post is already set by the before_action
-  end
-
-  def update
-    if @post.update(post_params)
-      redirect_to @post, notice: 'Post was successfully updated.'
-    else
-      render :edit
     end
   end
 
