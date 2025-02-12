@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Page</title>
-</head>
-<body>
-    <h1>Basic Page</h1>
-    <p>This is a simple basic webpage.</p>
-</body>
+<html>
+  <head>
+    <title>Welcome to Fiver Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Hello, Welcome to Fiver Clone!</h1>
+      <p>Your journey starts here.</p>
+
+      <div class="buttons">
+        <%= link_to "Login to Enter", new_user_session_path, class: "btn btn-primary" %>
+        <%= link_to "Become a Seller", new_user_session_path, class: "btn btn-success" %>
+      </div>
+    </div>
+
+    <style>
+      .container {
+        text-align: center;
+        margin-top: 100px;
+      }
+      .buttons {
+        margin-top: 20px;
+      }
+      .btn {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .btn-primary { background-color: #007bff; color: white; }
+      .btn-success { background-color: #28a745; color: white; }
+    </style>
+  </body>
 </html>
