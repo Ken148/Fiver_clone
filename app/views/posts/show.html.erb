@@ -1,0 +1,7 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+
+<% if @post.user == current_user %> <!-- Only show "Edit" for the post creator -->
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Back to Posts', posts_path %>
+<% end %>
