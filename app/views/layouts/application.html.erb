@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Fiver Clone" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -10,28 +10,42 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <!-- PWA Manifest (if enabled) -->
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <!-- Stylesheets -->
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    
+    <!-- JavaScript (Ensures UJS is Loaded for DELETE Requests) -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <% if user_signed_in? %>
-    <p>Welcome, <%= current_user.email %>!</p>
-    <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
-    <% else %>
-      <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
-      <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-success' %>
-    <% end %>
+
+    <!-- Navigation Bar -->
+    <nav>
+      <% if user_signed_in? %>
+        <p>Welcome, <%= current_user.email %>!</p>
+        
+        <!-- Logout Button (Form with DELETE method) -->
+        <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do %>
+          <%= submit_tag "Logout", class: "btn btn-danger" %>
+        <% end %>
+
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-success' %>
+      <% end %>
+    </nav>
+
+    <!-- Main Content -->
+    <%= yield %>
   </body>
 </html>
