@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
+  def index
+    @posts = Post.all # This will fetch all the posts and pass them to the view
+  end
+
   def new
     @post = current_user.posts.new
   end
