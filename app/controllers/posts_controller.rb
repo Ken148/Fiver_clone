@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    # This action is already defined
+    @post = Post.find(params[:id])
   end
 
   def new
@@ -24,10 +24,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    # @post is already set by the before_action
+    @post = current_user.posts.find(params[:id])
   end
 
   def update
+    @post = current_user.posts.find(params[:id])
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
