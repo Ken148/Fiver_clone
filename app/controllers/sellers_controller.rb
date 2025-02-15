@@ -1,9 +1,4 @@
 class SellersController < ApplicationController
-  # Initial information page
-  def info
-    # Info page logic (can display what being a seller is, etc.)
-  end
-
   # New seller profile page
   def new
     @seller_profile = SellerProfile.new
@@ -28,7 +23,7 @@ class SellersController < ApplicationController
 
   def update_occupation_step
     @seller_profile = SellerProfile.find(params[:id])
-    
+
     if @seller_profile.update(occupation_step_params)
       redirect_to security_step_seller_path(@seller_profile)
     else
@@ -43,7 +38,7 @@ class SellersController < ApplicationController
 
   def update_security_step
     @seller_profile = SellerProfile.find(params[:id])
-    
+
     if @seller_profile.update(security_step_params)
       redirect_to create_gig_step_seller_path(@seller_profile)
     else

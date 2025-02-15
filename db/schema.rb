@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_195202) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_15_202308) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -28,6 +28,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_195202) do
     t.string "language"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "occupation"
+    t.string "skills"
+    t.string "education"
+    t.string "certifications"
+    t.string "personal_website"
   end
 
   create_table "users", force: :cascade do |t|
