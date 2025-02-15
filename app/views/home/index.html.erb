@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome to Fiver Clone</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
-  </head>
-
-  <body>
-    <div class="container">
-      <h1>Hello, Welcome to Fiver Clone!</h1>
-      <p>Your journey starts here.</p>
-
-      <div class="buttons">
-        <%= link_to "Login to Enter", new_user_session_path, class: "btn btn-primary" %>
-        <%= link_to "Become a Seller", new_user_session_path, class: "btn btn-success" %>
-      </div>
-    </div>
-
+    <title>All Posts</title>
     <style>
-      .container {
+      .search-container {
         text-align: center;
-        margin-top: 100px;
+        margin-top: 50px;
       }
-      .buttons {
-        margin-top: 20px;
-      }
-      .btn {
-        display: inline-block;
-        margin: 10px;
-        padding: 10px 20px;
+      .search-box {
+        width: 50%;
+        padding: 10px;
         font-size: 18px;
-        text-decoration: none;
+        border: 1px solid #ccc;
         border-radius: 5px;
       }
-      .btn-primary { background-color: #007bff; color: white; }
-      .btn-success { background-color: #28a745; color: white; }
+      .post-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .btn-search {
+        padding: 10px 15px;
+        font-size: 18px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     </style>
+  </head>
+  <body>
+
+    <div class="search-container">
+      <%= form_with url: posts_path, method: :get, local: true do %>
+        <input type="text" name="search" class="search-box" placeholder="Search posts...">
+        <button type="submit" class="btn-search">Search</button>
+      <% end %>
+    </div>
+
+    <div class="post-container">
+      <h1>All Posts</h1>
+      <% @posts.each do |post| %>
+        <div class="post">
+          <h2><%= link_to post.title, post_path(post) %></h2>
+          <p><%= post.content.truncate(100) %></p>
+        </div>
+      <% end %>
+    </div>
   </body>
 </html>

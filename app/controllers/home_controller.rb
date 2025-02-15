@@ -1,5 +1,9 @@
 class HomeController < ApplicationController
   def index
-    redirect_to posts_path if user_signed_in?
+    if user_signed_in?
+      redirect_to posts_path and return  # Ensure redirect stops further execution
+    end
+
+    @posts = Post.all  # Fetch all posts to display on the homepage
   end
 end
