@@ -1,0 +1,4 @@
+<h2>Google Login Successful</h2>
+<p>Welcome, <%= current_user.email %>!</p>
+<%= link_to "Go to Home", root_path, class: "btn btn-primary" %>
+<%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
