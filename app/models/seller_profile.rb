@@ -1,0 +1,2 @@
+class SellerProfile < ApplicationRecord
+end
