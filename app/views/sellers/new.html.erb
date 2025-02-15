@@ -1,0 +1,30 @@
+<h1>Complete Your Seller Profile</h1>
+
+<%= form_for @seller_profile, url: create_seller_profile_path do |f| %>
+  <div>
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :display_name %>
+    <%= f.text_field :display_name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :profile_picture %>
+    <%= f.file_field :profile_picture %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :language %>
+    <%= f.text_field :language, required: true %>
+  </div>
+
+  <%= f.submit 'Save Profile', class: 'btn-seller' %>
+<% end %>

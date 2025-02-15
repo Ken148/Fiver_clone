@@ -38,6 +38,12 @@
       <% end %>
     </div>
 
+    <!-- Become a Seller Button -->
+    <div class="become-seller-container">
+      <%= link_to 'Become a Seller', user_signed_in? ? become_a_seller_path : new_user_session_path, class: 'btn-seller' %>
+    </div>
+
+
     <div class="post-container">
       <h1>All Posts</h1>
       <% @posts.each do |post| %>
