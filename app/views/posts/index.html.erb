@@ -1,20 +1,69 @@
 <h1>All Posts</h1>
 
-<% if user_signed_in? %>
-  <!-- Only show this link if the user is signed in -->
-  <%= link_to 'New Post', new_post_path, class: 'button' %>
-<% else %>
-  <p><%= link_to 'Sign In', new_user_session_path %> to create a post.</p>
-<% end %>
-
-<% if @posts.any? %>
-  <% @posts.each do |post| %>
-    <div class="post">
-      <h2><%= link_to post.title, post_path(post) %></h2>
-      <p><%= post.content.truncate(100) %></p>
-      <p>by <%= post.user.email %></p>
-    </div>
+<!-- Search Bar -->
+<div class="search-container">
+  <%= form_with url: posts_path, method: :get, local: true do %>
+    <input type="text" name="search" class="search-box" placeholder="Search posts...">
+    <button type="submit" class="btn-search">Search</button>
   <% end %>
-<% else %>
-  <p>No posts available.</p>
-<% end %>
+</div>
+
+<!-- Become a Seller Button -->
+<div class="become-seller-container">
+  <%= link_to 'Become a Seller', become_a_seller_path, class: 'btn-seller' %>
+</div>
+
+<!-- Display Posts -->
+<div class="post-container">
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+      <div class="post">
+        <h2><%= link_to post.title, post_path(post) %></h2>
+        <p><%= post.content.truncate(100) %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No posts available.</p>
+  <% end %>
+</div>
+
+<!-- Styles -->
+<style>
+  .btn-seller {
+    padding: 10px 15px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .become-seller-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .search-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .search-box {
+    width: 50%;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .btn-search {
+    padding: 10px 15px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .post-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
