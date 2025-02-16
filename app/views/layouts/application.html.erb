@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Fiver Clone" %></title>
+    <title><%= content_for(:title) || t('home.title', default: "Fiver Clone") %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -32,21 +32,21 @@
     <!-- Navigation Bar -->
     <nav>
       <% if user_signed_in? %>
-        <p>Welcome, <%= current_user.email %>!</p>
+        <p><%= t('home.welcome', email: current_user.email) %></p>
         
         <!-- Logout Button (Form with DELETE method) -->
         <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do %>
-          <%= submit_tag "Logout", class: "btn btn-danger" %>
+          <%= submit_tag t('home.logout'), class: "btn btn-danger" %>
         <% end %>
 
       <% else %>
-        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
-        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-success' %>
+        <%= link_to t('home.login'), new_user_session_path, class: 'btn btn-primary' %>
+        <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
       <% end %>
     </nav>
 
     <!-- Main Content -->
     <%= yield %>
-    <%= link_to "FiverB", root_path, class: "btn btn-primary" %>
+    <%= link_to t('home.fiverb'), root_path, class: "btn btn-primary" %>
   </body>
 </html>

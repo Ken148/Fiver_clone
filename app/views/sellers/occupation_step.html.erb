@@ -1,25 +1,25 @@
-<h1>Tell Us About Your Work</h1>
+<h1><%= t('work_info.title') %></h1>
 
 <%= form_for @seller_profile, url: occupation_step_seller_path(@seller_profile), method: :post do |f| %>
   <div>
-    <%= f.label :occupation %>
+    <%= f.label :occupation, t('work_info.occupation') %>
     <%= f.text_field :occupation, required: true %>
   </div>
 
   <div>
-    <%= f.label :skills %>
+    <%= f.label :skills, t('work_info.skills') %>
     <%= f.text_field :skills, required: true %>
   </div>
 
   <div>
-    <%= f.label :education %>
+    <%= f.label :education, t('work_info.education') %>
     <%= f.text_field :education %>
   </div>
 
   <div>
-    <%= f.label :certifications %>
+    <%= f.label :certifications, t('work_info.certifications') %>
     <%= f.text_field :certifications %>
   </div>
 
-  <%= f.submit 'Continue', class: 'btn-seller' %>
+  <%= f.submit t('work_info.continue'), class: 'btn-seller' %>
 <% end %>

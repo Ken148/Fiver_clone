@@ -1,31 +1,31 @@
-<h1>Complete Your Seller Profile</h1>
+<h1><%= t('complete_seller_profile.title') %></h1>
 
 <%= form_for @seller_profile, url: create_seller_profile_path do |f| %>
   <div>
-    <%= f.label :full_name %>
+    <%= f.label :full_name, t('complete_seller_profile.full_name') %>
     <%= f.text_field :full_name, required: true %>
   </div>
 
   <div>
-    <%= f.label :display_name %>
+    <%= f.label :display_name, t('complete_seller_profile.display_name') %>
     <%= f.text_field :display_name, required: true %>
   </div>
 
   <div>
-    <%= f.label :profile_picture %>
+    <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %>
     <%= f.file_field :profile_picture %>
   </div>
 
   <div>
-    <%= f.label :description %>
+    <%= f.label :description, t('complete_seller_profile.description') %>
     <%= f.text_area :description, required: true %>
   </div>
 
   <div>
-    <%= f.label :language %>
-    <%= f.text_field :language, required: true %>
+    <%= f.label :language, t('complete_seller_profile.language') %>
+    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }), { prompt: t('complete_seller_profile.select_language') } %>
   </div>
 
   <!-- CONTINUE button instead of Save -->
-  <%= f.submit 'Continue', class: 'btn-seller' %>
+  <%= f.submit t('complete_seller_profile.continue'), class: 'btn-seller' %>
 <% end %>

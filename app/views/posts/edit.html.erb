@@ -1,9 +1,9 @@
-<h1>Edit Post</h1>
+<h1><%= t('posts.edit.title') %></h1> <!-- Translated "Edit Post" -->
 
 <%= form_with(model: @post, local: true) do |form| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= t('errors.prohibited', count: @post.errors.count) %></h2> <!-- Translated error heading -->
       <ul>
         <% @post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -13,18 +13,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :title %>
+    <%= form.label :title, t('posts.form.title') %> <!-- Translated label for "Title" -->
     <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
+    <%= form.label :content, t('posts.form.content') %> <!-- Translated label for "Content" -->
     <%= form.text_area :content %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Update Post' %>
+    <%= form.submit t('posts.form.update_post') %> <!-- Translated button text for "Update Post" -->
   </div>
 <% end %>
 
-<%= link_to 'Back', @post %>
+<%= link_to t('posts.back'), @post %> <!-- Translated "Back" -->

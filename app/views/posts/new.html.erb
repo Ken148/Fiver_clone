@@ -1,30 +1,30 @@
-<h1>Complete Your Seller Profile</h1>
+<h1><%= t('posts.new.title') %></h1> <!-- Translated title for "Create a New Post" -->
 
-<%= form_for @seller_profile, url: create_seller_profile_path do |f| %>
-  <div>
-    <%= f.label :full_name %>
-    <%= f.text_field :full_name, required: true %>
+<%= form_with(model: @post, local: true) do |form| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, t('errors.count_errors')) %> <%= t('errors.prohibited_post') %></h2> <!-- Translated error message -->
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, t('posts.new.title_label') %> <!-- Translated label for "Title" -->
+    <%= form.text_field :title %>
   </div>
 
-  <div>
-    <%= f.label :display_name %>
-    <%= f.text_field :display_name, required: true %>
+  <div class="field">
+    <%= form.label :content, t('posts.new.content_label') %> <!-- Translated label for "Content" -->
+    <%= form.text_area :content %>
   </div>
 
-  <div>
-    <%= f.label :profile_picture %>
-    <%= f.file_field :profile_picture %>
+  <div class="actions">
+    <%= form.submit t('posts.new.create_post') %> <!-- Translated submit button text -->
   </div>
-
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description, required: true %>
-  </div>
-
-  <div>
-    <%= f.label :language %>
-    <%= f.text_field :language, required: true %>
-  </div>
-
-  <%= f.submit 'Continue', class: 'btn-seller' %>
 <% end %>
+
+<%= link_to t('posts.new.back_to_all_posts'), posts_path %> <!-- Translated link for "Back to All Posts" -->

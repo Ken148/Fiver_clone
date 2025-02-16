@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>All Posts</title>
+    <title><%= t('home.title') %></title> <!-- Title translation -->
     <style>
       .search-container {
         text-align: center;
@@ -33,19 +33,29 @@
 
     <div class="search-container">
       <%= form_with url: posts_path, method: :get, local: true do %>
-        <input type="text" name="search" class="search-box" placeholder="Search posts...">
-        <button type="submit" class="btn-search">Search</button>
+        <input type="text" name="search" class="search-box" placeholder="<%= t('home.search_placeholder') %>"> <!-- Placeholder translation -->
+        <button type="submit" class="btn-search"><%= t('home.search_button') %></button> <!-- Search button translation -->
       <% end %>
     </div>
 
     <!-- Become a Seller Button -->
     <div class="become-seller-container">
-      <%= link_to 'Become a Seller', user_signed_in? ? become_a_seller_path : new_user_session_path, class: 'btn-seller' %>
+      <%= link_to t('home.become_seller'), user_signed_in? ? become_a_seller_path : new_user_session_path, class: 'btn-seller' %> <!-- "Become a Seller" translation -->
     </div>
-
+    
+    <!-- Language Selector -->
+    <form action="<%= set_language_path %>" method="get">
+      <select name="locale" onchange="this.form.submit();">
+        <% { 'English' => 'en', 'French' => 'fr', 'Spanish' => 'es', 'German' => 'de' }.each do |name, code| %>
+          <option value="<%= code %>" <%= 'selected' if I18n.locale.to_s == code %>>
+            <%= name %>
+          </option>
+        <% end %>
+      </select>
+    </form>
 
     <div class="post-container">
-      <h1>All Posts</h1>
+      <h1><%= t('home.all_posts') %></h1> <!-- All Posts title translation -->
       <% @posts.each do |post| %>
         <div class="post">
           <h2><%= link_to post.title, post_path(post) %></h2>

@@ -2,7 +2,8 @@
 <p><%= @post.content %></p>
 
 <% if @post.user == current_user %> <!-- Only show "Edit" for the post creator -->
-  <%= link_to 'Edit', edit_post_path(@post), class: 'button' %> |
+  <%= link_to t('posts.show.edit'), edit_post_path(@post), class: 'button' %> <!-- Translated "Edit" button -->
+  |
 <% end %>
 
-<%= link_to 'Back to Posts', posts_path, class: 'button' %>
+<%= link_to t('posts.show.back_to_posts'), posts_path, class: 'button' %> <!-- Translated "Back to Posts" button -->

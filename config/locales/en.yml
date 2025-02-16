@@ -1,31 +1,51 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  home:
+    title: "Home"
+    description: "Welcome to the home page."
+  gig_creation:
+    title: "Create Your Gig"
+    description: "In this step, you'll set up your gig. Details about creating a gig will be added here later."
+    gig_title: "Gig Title"
+    gig_title_placeholder: "Enter your gig title"
+    gig_description: "Gig Description"
+    gig_description_placeholder: "Describe your gig in detail"
+    create_gig: "Create Gig"
+  posts:
+    all_posts: "All Posts"
+    search_placeholder: "Search posts..."
+    become_seller: "Become a Seller"
+    no_posts: "No posts available."
+    create_post: "Create a New Post"
+    edit_post: "Edit Post"
+    update_post: "Update Post"
+    post_title: "Post Title"
+    post_content: "Post Content"
+  seller_profile:
+    title: "Complete Your Seller Profile"
+    full_name: "Full Name"
+    display_name: "Display Name"
+    profile_picture: "Profile Picture"
+    description: "Description"
+    language: "Language"
+    continue: "Continue"
+  occupation_step:
+    title: "Tell Us About Your Work"
+    occupation: "Occupation"
+    skills: "Skills"
+    education: "Education"
+    certifications: "Certifications"
+    continue: "Continue"
+  account_security:
+    title: "Account Security"
+    email: "Email"
+    phone_number: "Phone Number"
+    continue: "Continue"
+  seller_gig:
+    title: "Create Your Gig"
+    gig_title: "Gig Title"
+    gig_description: "Gig Description"
+    create_gig: "Create Gig"
+  back_to_posts: "Back to Posts"
+  back_to_all_posts: "Back to All Posts"
+  continue_to_seller: "Continue to Become a Seller"
+  continue_to_next_step: "Continue to Next Step"

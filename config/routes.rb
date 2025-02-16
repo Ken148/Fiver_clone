@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'become_a_seller', to: 'sellers#info'  # Page explaining seller benefits
   get 'new_seller_profile', to: 'sellers#new'  # First step form
   post 'create_seller_profile', to: 'sellers#create'  # Handles first step submission
+  get 'set_language', to: 'application#set_language', as: :set_language
+
 
   resources :sellers, only: [:new, :create] do
     member do

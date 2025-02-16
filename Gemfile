@@ -7,6 +7,7 @@ gem "propshaft"
 
 gem 'devise'
 gem 'omniauth-google-oauth2'
+gem 'language_list'
 
 
 # Use sqlite3 as the database for Active Record

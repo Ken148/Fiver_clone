@@ -1,16 +1,16 @@
-<h1>All Posts</h1>
+<h1><%= t('posts.index.title') %></h1> <!-- Translated title for "All Posts" -->
 
 <!-- Search Bar -->
 <div class="search-container">
   <%= form_with url: posts_path, method: :get, local: true do %>
-    <input type="text" name="search" class="search-box" placeholder="Search posts...">
-    <button type="submit" class="btn-search">Search</button>
+    <input type="text" name="search" class="search-box" placeholder="<%= t('posts.index.search_placeholder') %>"> <!-- Translated placeholder for "Search posts..." -->
+    <button type="submit" class="btn-search"><%= t('posts.index.search_button') %></button> <!-- Translated button for "Search" -->
   <% end %>
 </div>
 
 <!-- Become a Seller Button -->
 <div class="become-seller-container">
-  <%= link_to 'Become a Seller', become_a_seller_path, class: 'btn-seller' %>
+  <%= link_to t('posts.index.become_seller'), become_a_seller_path, class: 'btn-seller' %> <!-- Translated "Become a Seller" button -->
 </div>
 
 <!-- Display Posts -->
@@ -23,7 +23,7 @@
       </div>
     <% end %>
   <% else %>
-    <p>No posts available.</p>
+    <p><%= t('posts.index.no_posts') %></p> <!-- Translated "No posts available." -->
   <% end %>
 </div>
 
