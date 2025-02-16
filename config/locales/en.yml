@@ -34,8 +34,51 @@ en:
       content_label: "Content"
       create_post: "Create Post"
       back_to_all_posts: "Back to All Posts"
-      
+    show:
+      edit: "Edit"
+      back_to_posts: "Back to Posts"
+
   errors:
     prohibited: "There were errors with your submission. Please check the following:"
     count_errors: "errors"
     prohibited_post: "prohibited this post from being saved."
+
+  gig_creation:
+    title: "Create a New Gig"
+    description: "Provide the details of your gig."
+    gig_title: "Gig Title"
+    gig_title_placeholder: "Enter your gig title"
+    gig_description: "Gig Description"
+    gig_description_placeholder: "Describe your gig in detail"
+    create_gig: "Create Gig"
+
+  become_a_seller:
+    title: "Become a Seller"
+    description: "Start your journey to becoming a seller on our platform."
+    continue: "Continue to Become a Seller"
+
+  complete_seller_profile:
+    title: "Complete Your Seller Profile"
+    full_name: "Full Name"
+    display_name: "Display Name"
+    profile_picture: "Profile Picture"
+    description: "Profile Description"
+    language: "Preferred Language"
+    select_language: "Select Your Language"
+    continue: "Continue"
+
+  work_info:
+    title: "Work Information"
+    occupation: "Occupation"
+    skills: "Skills"
+    education: "Education"
+    certifications: "Certifications"
+    continue: "Continue"
+
+  security_info:
+    title: "Security Information"
+    email: "Email"
+    email_placeholder: "Enter your email"
+    phone_number: "Phone Number"
+    phone_number_placeholder: "Enter your phone number"
+    continue: "Continue"

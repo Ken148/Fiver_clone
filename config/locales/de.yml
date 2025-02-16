@@ -34,8 +34,51 @@ de:
       content_label: "Inhalt"
       create_post: "Beitrag erstellen"
       back_to_all_posts: "Zurück zu allen Beiträgen"
-      
+    show:
+      edit: "Bearbeiten"
+      back_to_posts: "Zurück zu den Beiträgen"
+
   errors:
     prohibited: "Es gab Fehler bei Ihrer Übermittlung. Bitte überprüfen Sie das Folgende:"
     count_errors: "Fehler"
     prohibited_post: "hat das Speichern dieses Beitrags verhindert."
+
+  gig_creation:
+    title: "Erstelle einen neuen Gig"
+    description: "Gib die Details deines Gigs an."
+    gig_title: "Gig Titel"
+    gig_title_placeholder: "Gib den Titel deines Gigs ein"
+    gig_description: "Gig Beschreibung"
+    gig_description_placeholder: "Beschreibe deinen Gig im Detail"
+    create_gig: "Gig erstellen"
+
+  become_a_seller:
+    title: "Verkäufer werden"
+    description: "Beginnen Sie Ihre Reise, um Verkäufer auf unserer Plattform zu werden."
+    continue: "Weiter zum Verkäufer werden"
+
+  complete_seller_profile:
+    title: "Vervollständigen Sie Ihr Verkäuferprofil"
+    full_name: "Vollständiger Name"
+    display_name: "Anzeigename"
+    profile_picture: "Profilbild"
+    description: "Profilbeschreibung"
+    language: "Bevorzugte Sprache"
+    select_language: "Wählen Sie Ihre Sprache"
+    continue: "Fortfahren"
+
+  work_info:
+    title: "Berufliche Informationen"
+    occupation: "Beruf"
+    skills: "Fähigkeiten"
+    education: "Bildung"
+    certifications: "Zertifikate"
+    continue: "Fortfahren"
+
+  security_info:
+    title: "Sicherheitsinformationen"
+    email: "E-Mail"
+    email_placeholder: "Geben Sie Ihre E-Mail ein"
+    phone_number: "Telefonnummer"
+    phone_number_placeholder: "Geben Sie Ihre Telefonnummer ein"
+    continue: "Weiter"

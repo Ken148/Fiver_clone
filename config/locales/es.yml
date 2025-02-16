@@ -34,8 +34,51 @@ es:
       content_label: "Contenido"
       create_post: "Crear publicación"
       back_to_all_posts: "Volver a todas las publicaciones"
-      
+    show:
+      edit: "Editar"
+      back_to_posts: "Volver a las publicaciones"
+
   errors:
     prohibited: "Hubo errores con su envío. Por favor, verifique lo siguiente:"
     count_errors: "errores"
     prohibited_post: "prohibió guardar esta publicación."
+
+  gig_creation:
+    title: "Crear un nuevo servicio"
+    description: "Proporcione los detalles de su servicio."
+    gig_title: "Título del servicio"
+    gig_title_placeholder: "Ingrese el título de su servicio"
+    gig_description: "Descripción del servicio"
+    gig_description_placeholder: "Describa su servicio en detalle"
+    create_gig: "Crear servicio"
+
+  become_a_seller:
+    title: "Conviértete en Vendedor"
+    description: "Comienza tu camino para convertirte en vendedor en nuestra plataforma."
+    continue: "Continuar para Convertirse en Vendedor"
+
+  complete_seller_profile:
+    title: "Completa Tu Perfil de Vendedor"
+    full_name: "Nombre Completo"
+    display_name: "Nombre Visible"
+    profile_picture: "Foto de Perfil"
+    description: "Descripción del Perfil"
+    language: "Idioma Preferido"
+    select_language: "Selecciona Tu Idioma"
+    continue: "Continuar"
+
+  work_info:
+    title: "Información Profesional"
+    occupation: "Ocupación"
+    skills: "Habilidades"
+    education: "Educación"
+    certifications: "Certificaciones"
+    continue: "Continuar"
+
+  security_info:
+    title: "Información de Seguridad"
+    email: "Correo electrónico"
+    email_placeholder: "Ingrese su correo electrónico"
+    phone_number: "Número de teléfono"
+    phone_number_placeholder: "Ingrese su número de teléfono"
+    continue: "Continuar"

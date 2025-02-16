@@ -34,8 +34,51 @@ fr:
       content_label: "Contenu"
       create_post: "Créer le post"
       back_to_all_posts: "Retour à tous les posts"
-      
+    show:
+      edit: "Modifier"
+      back_to_posts: "Retour aux publications"
+
   errors:
     prohibited: "Il y a eu des erreurs dans votre soumission. Veuillez vérifier ce qui suit:"
     count_errors: "erreurs"
     prohibited_post: "a empêché ce post d'être enregistré."
+  
+  gig_creation:
+    title: "Créer un nouveau service"
+    description: "Fournissez les détails de votre service."
+    gig_title: "Titre du service"
+    gig_title_placeholder: "Entrez le titre de votre service"
+    gig_description: "Description du service"
+    gig_description_placeholder: "Décrivez votre service en détail"
+    create_gig: "Créer le service"
+
+  become_a_seller:
+    title: "Devenir un Vendeur"
+    description: "Commencez votre parcours pour devenir vendeur sur notre plateforme."
+    continue: "Continuer pour Devenir un Vendeur"
+
+  complete_seller_profile:
+    title: "Complétez Votre Profil de Vendeur"
+    full_name: "Nom Complet"
+    display_name: "Nom d'Affichage"
+    profile_picture: "Photo de Profil"
+    description: "Description du Profil"
+    language: "Langue Préférée"
+    select_language: "Sélectionnez Votre Langue"
+    continue: "Continuer"
+
+  work_info:
+    title: "Informations Professionnelles"
+    occupation: "Profession"
+    skills: "Compétences"
+    education: "Éducation"
+    certifications: "Certifications"
+    continue: "Continuer"
+
+  security_info:
+    title: "Informations de Sécurité"
+    email: "E-mail"
+    email_placeholder: "Entrez votre e-mail"
+    phone_number: "Numéro de téléphone"
+    phone_number_placeholder: "Entrez votre numéro de téléphone"
+    continue: "Continuer"
