@@ -1,51 +1,41 @@
 fr:
   home:
-    title: "Accueil"
-    description: "Bienvenue sur la page d'accueil."
-  gig_creation:
-    title: "Créez votre Gig"
-    description: "À cette étape, vous allez configurer votre gig. Les détails sur la création d'un gig seront ajoutés ici plus tard."
-    gig_title: "Titre du Gig"
-    gig_title_placeholder: "Entrez le titre de votre gig"
-    gig_description: "Description du Gig"
-    gig_description_placeholder: "Décrivez votre gig en détail"
-    create_gig: "Créer un Gig"
-  posts:
-    all_posts: "Tous les Posts"
+    title: "Tous les Posts"
     search_placeholder: "Rechercher des posts..."
-    become_seller: "Devenir Vendeur"
-    no_posts: "Aucun post disponible."
-    create_post: "Créer un Nouveau Post"
-    edit_post: "Modifier le Post"
-    update_post: "Mettre à Jour le Post"
-    post_title: "Titre du Post"
-    post_content: "Contenu du Post"
-  seller_profile:
-    title: "Complétez votre Profil de Vendeur"
-    full_name: "Nom Complet"
-    display_name: "Nom d'affichage"
-    profile_picture: "Photo de Profil"
-    description: "Description"
-    language: "Langue"
-    continue: "Continuer"
-  occupation_step:
-    title: "Parlez-nous de votre travail"
-    occupation: "Profession"
-    skills: "Compétences"
-    education: "Éducation"
-    certifications: "Certifications"
-    continue: "Continuer"
-  account_security:
-    title: "Sécurité du Compte"
-    email: "Email"
-    phone_number: "Numéro de Téléphone"
-    continue: "Continuer"
-  seller_gig:
-    title: "Créez votre Gig"
-    gig_title: "Titre du Gig"
-    gig_description: "Description du Gig"
-    create_gig: "Créer un Gig"
-  back_to_posts: "Retour aux Posts"
-  back_to_all_posts: "Retour à Tous les Posts"
-  continue_to_seller: "Continuer pour Devenir Vendeur"
-  continue_to_next_step: "Continuer à l'Étape Suivante"
+    search_button: "Rechercher"
+    become_seller: "Devenir un vendeur"
+    all_posts: "Tous les Posts"
+    login: "Se connecter"
+    sign_up: "S'inscrire"
+    welcome: "Bienvenue, %{email}"
+    logout: "Se déconnecter"
+
+  mailer:
+    greeting: "Bonjour,"
+    signature: "Cordialement, Votre équipe"
+
+  posts:
+    index:
+      title: "Tous les posts"
+      search_placeholder: "Rechercher des posts..."
+      search_button: "Rechercher"
+      become_seller: "Devenir vendeur"
+      no_posts: "Aucun post disponible."
+    edit:
+      title: "Modifier le post"
+    form:
+      title: "Titre"
+      content: "Contenu"
+      update_post: "Mettre à jour le post"
+    back: "Retour"
+    new:
+      title: "Créer un nouveau post"
+      title_label: "Titre"
+      content_label: "Contenu"
+      create_post: "Créer le post"
+      back_to_all_posts: "Retour à tous les posts"
+      
+  errors:
+    prohibited: "Il y a eu des erreurs dans votre soumission. Veuillez vérifier ce qui suit:"
+    count_errors: "erreurs"
+    prohibited_post: "a empêché ce post d'être enregistré."

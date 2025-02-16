@@ -44,7 +44,18 @@
         <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
       <% end %>
     </nav>
-
+    
+    <!-- Language Selector -->
+    <form action="<%= set_language_path %>" method="get">
+      <select name="locale" onchange="this.form.submit();">
+        <% { 'English' => 'en', 'French' => 'fr', 'Spanish' => 'es', 'German' => 'de' }.each do |name, code| %>
+          <option value="<%= code %>" <%= 'selected' if I18n.locale.to_s == code %>>
+            <%= name %>
+          </option>
+        <% end %>
+      </select>
+    </form>
+    
     <!-- Main Content -->
     <%= yield %>
     <%= link_to t('home.fiverb'), root_path, class: "btn btn-primary" %>

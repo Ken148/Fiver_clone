@@ -1,51 +1,41 @@
 en:
   home:
-    title: "Home"
-    description: "Welcome to the home page."
-  gig_creation:
-    title: "Create Your Gig"
-    description: "In this step, you'll set up your gig. Details about creating a gig will be added here later."
-    gig_title: "Gig Title"
-    gig_title_placeholder: "Enter your gig title"
-    gig_description: "Gig Description"
-    gig_description_placeholder: "Describe your gig in detail"
-    create_gig: "Create Gig"
-  posts:
-    all_posts: "All Posts"
+    title: "All Posts"
     search_placeholder: "Search posts..."
+    search_button: "Search"
     become_seller: "Become a Seller"
-    no_posts: "No posts available."
-    create_post: "Create a New Post"
-    edit_post: "Edit Post"
-    update_post: "Update Post"
-    post_title: "Post Title"
-    post_content: "Post Content"
-  seller_profile:
-    title: "Complete Your Seller Profile"
-    full_name: "Full Name"
-    display_name: "Display Name"
-    profile_picture: "Profile Picture"
-    description: "Description"
-    language: "Language"
-    continue: "Continue"
-  occupation_step:
-    title: "Tell Us About Your Work"
-    occupation: "Occupation"
-    skills: "Skills"
-    education: "Education"
-    certifications: "Certifications"
-    continue: "Continue"
-  account_security:
-    title: "Account Security"
-    email: "Email"
-    phone_number: "Phone Number"
-    continue: "Continue"
-  seller_gig:
-    title: "Create Your Gig"
-    gig_title: "Gig Title"
-    gig_description: "Gig Description"
-    create_gig: "Create Gig"
-  back_to_posts: "Back to Posts"
-  back_to_all_posts: "Back to All Posts"
-  continue_to_seller: "Continue to Become a Seller"
-  continue_to_next_step: "Continue to Next Step"
+    all_posts: "All Posts"
+    login: "Login"
+    sign_up: "Sign Up"
+    welcome: "Welcome, %{email}"
+    logout: "Logout"
+
+  mailer:
+    greeting: "Hello,"
+    signature: "Best regards, Your Team"
+
+  posts:
+    index:
+      title: "All Posts"
+      search_placeholder: "Search posts..."
+      search_button: "Search"
+      become_seller: "Become a Seller"
+      no_posts: "No posts available."
+    edit:
+      title: "Edit Post"
+    form:
+      title: "Title"
+      content: "Content"
+      update_post: "Update Post"
+    back: "Back"
+    new:
+      title: "Create a New Post"
+      title_label: "Title"
+      content_label: "Content"
+      create_post: "Create Post"
+      back_to_all_posts: "Back to All Posts"
+      
+  errors:
+    prohibited: "There were errors with your submission. Please check the following:"
+    count_errors: "errors"
+    prohibited_post: "prohibited this post from being saved."
