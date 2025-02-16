@@ -82,3 +82,63 @@ de:
     phone_number: "Telefonnummer"
     phone_number_placeholder: "Geben Sie Ihre Telefonnummer ein"
     continue: "Weiter"
+
+  devise:
+    confirmations:
+      resend_instructions: "Bestätigungshinweise erneut senden"
+      welcome: "Willkommen %{email}!"
+      confirm_account: "Sie können Ihre E-Mail-Adresse über den folgenden Link bestätigen:"
+      confirm_button: "Mein Konto bestätigen"
+      resend: "Haben Sie die Bestätigungsanweisungen nicht erhalten?"
+    shared:
+      error_messages: "Bitte überprüfen Sie die Fehler unten."
+    emails:
+      hello: "Hallo %{email}!"
+      email_change_notify: "Wir kontaktieren Sie, um Sie darüber zu informieren, dass Ihre E-Mail-Adresse auf %{new_email} geändert wurde."
+      email_being_changed: "Wir kontaktieren Sie, um Sie darüber zu informieren, dass Ihre E-Mail-Adresse auf %{new_email} geändert wird."
+      password_reset_request: "Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den untenstehenden Link tun."
+      change_password_link: "Ändere mein Passwort"
+      ignore_email: "Wenn Sie dies nicht angefordert haben, ignorieren Sie bitte diese E-Mail."
+      password_change_info: "Ihr Passwort wird erst geändert, wenn Sie auf den obenstehenden Link zugreifen und ein neues erstellen."
+      account_locked: "Ihr Konto wurde aufgrund einer übermäßigen Anzahl von fehlgeschlagenen Anmeldeversuchen gesperrt."
+      unlock_link: "Klicken Sie auf den untenstehenden Link, um Ihr Konto zu entsperren:"
+      unlock_account_link: "Mein Konto entsperren"
+    passwords:
+      change_title: "Ändern Sie Ihr Passwort"
+      new_password_label: "Neues Passwort"
+      password_minimum_length: "(Mindestens %{length} Zeichen)"
+      password_confirmation_label: "Bestätigen Sie das neue Passwort"
+      change_password_button: "Passwort ändern"
+      forgot_title: "Passwort vergessen?"
+      email_label: "E-Mail"
+      reset_password_button: "Schick mir die Anweisungen zur Passwortzurücksetzung"
+      forgot: "Passwort vergessen?"
+    registrations:
+      edit_title: "%{resource_name} bearbeiten"
+      email_label: "E-Mail"
+      password_label: "Passwort"
+      password_placeholder: "Lass es leer, wenn du es nicht ändern möchtest"
+      password_confirmation_label: "Passwortbestätigung"
+      current_password_label: "Aktuelles Passwort"
+      update_button: "Aktualisieren"
+      cancel_account: "Konto löschen"
+      cancel_account_confirmation: "Bist du sicher?"
+      back_link: "Zurück"
+      sign_up_title: "Registrieren"
+      password_min_length: "Zeichen Mindestanzahl"
+      sign_up_button: "Registrieren"
+      sign_up: "Registrieren"
+    sessions:
+      log_in_title: "Einloggen"
+      email_label: "E-Mail"
+      password_label: "Passwort"
+      password_placeholder: "Geben Sie Ihr Passwort ein"
+      remember_me_label: "Erinnere dich an mich"
+      log_in_button: "Einloggen"
+      sign_in: "Einloggen"
+    messages:
+      not_saved: "Das %{resource} konnte aufgrund der folgenden Fehler nicht gespeichert werden:"
+    unlocks:
+      resend: "Haben Sie die Entsperranweisungen nicht erhalten?"
+    omniauth:
+      sign_in: "Mit %{provider} anmelden"

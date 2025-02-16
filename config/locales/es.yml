@@ -82,3 +82,63 @@ es:
     phone_number: "Número de teléfono"
     phone_number_placeholder: "Ingrese su número de teléfono"
     continue: "Continuar"
+
+  devise:
+    confirmations:
+      resend_instructions: "Reenviar las instrucciones de confirmación"
+      welcome: "¡Bienvenido %{email}!"
+      confirm_account: "Puedes confirmar tu correo electrónico a través del siguiente enlace:"
+      confirm_button: "Confirmar mi cuenta"
+      resend: "¿No recibiste las instrucciones de confirmación?"
+    shared:
+      error_messages: "Por favor verifique los errores abajo."
+    emails:
+      hello: "¡Hola %{email}!"
+      email_change_notify: "Nos estamos comunicando para notificarte que tu correo electrónico ha sido cambiado a %{new_email}."
+      email_being_changed: "Nos estamos comunicando para notificarte que tu correo electrónico está siendo cambiado a %{new_email}."
+      password_reset_request: "Alguien ha solicitado un enlace para cambiar tu contraseña. Puedes hacerlo a través del enlace de abajo."
+      change_password_link: "Cambia mi contraseña"
+      ignore_email: "Si no solicitaste esto, por favor ignora este correo electrónico."
+      password_change_info: "Tu contraseña no cambiará hasta que accedas al enlace de arriba y crees una nueva."
+      account_locked: "Tu cuenta ha sido bloqueada debido a un número excesivo de intentos fallidos de inicio de sesión."
+      unlock_link: "Haz clic en el enlace de abajo para desbloquear tu cuenta:"
+      unlock_account_link: "Desbloquear mi cuenta"
+    passwords:
+      change_title: "Cambia tu contraseña"
+      new_password_label: "Nueva contraseña"
+      password_minimum_length: "(%{length} caracteres mínimo)"
+      password_confirmation_label: "Confirmar nueva contraseña"
+      change_password_button: "Cambiar mi contraseña"
+      forgot_title: "¿Olvidaste tu contraseña?"
+      email_label: "Correo electrónico"
+      reset_password_button: "Envíame las instrucciones para restablecer la contraseña"
+      forgot: "¿Olvidaste tu contraseña?"
+    registrations:
+      edit_title: "Editar %{resource_name}"
+      email_label: "Correo electrónico"
+      password_label: "Contraseña"
+      password_placeholder: "Deja en blanco si no deseas cambiarla"
+      password_confirmation_label: "Confirmar contraseña"
+      current_password_label: "Contraseña actual"
+      update_button: "Actualizar"
+      cancel_account: "Cancelar mi cuenta"
+      cancel_account_confirmation: "¿Estás seguro?"
+      back_link: "Volver"
+      sign_up_title: "Registrarse"
+      password_min_length: "caracteres mínimo"
+      sign_up_button: "Registrarse"
+      sign_up: "Registrarse"
+    sessions:
+      log_in_title: "Iniciar sesión"
+      email_label: "Correo electrónico"
+      password_label: "Contraseña"
+      password_placeholder: "Ingresa tu contraseña"
+      remember_me_label: "Recuérdame"
+      log_in_button: "Iniciar sesión"
+      sign_in: "Iniciar sesión"
+    messages:
+      not_saved: "El %{resource} no pudo ser guardado debido a los siguientes errores:"
+    unlocks:
+      resend: "¿No recibiste las instrucciones para desbloquear?"
+    omniauth:
+      sign_in: "Iniciar sesión con %{provider}"

@@ -82,3 +82,63 @@ fr:
     phone_number: "Numéro de téléphone"
     phone_number_placeholder: "Entrez votre numéro de téléphone"
     continue: "Continuer"
+
+  devise:
+    confirmations:
+      resend_instructions: "Renvoyer les instructions de confirmation"
+      welcome: "Bienvenue %{email}!"
+      confirm_account: "Vous pouvez confirmer votre adresse email via le lien ci-dessous:"
+      confirm_button: "Confirmer mon compte"
+      resend: "Vous n'avez pas reçu les instructions de confirmation ?"
+    shared:
+      error_messages: "Veuillez vérifier les erreurs ci-dessous."
+    emails:
+      hello: "Bonjour %{email}!"
+      email_change_notify: "Nous vous contactons pour vous informer que votre adresse e-mail a été modifiée en %{new_email}."
+      email_being_changed: "Nous vous contactons pour vous informer que votre adresse e-mail est en cours de modification en %{new_email}."
+      password_reset_request: "Quelqu'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire via le lien ci-dessous."
+      change_password_link: "Changez mon mot de passe"
+      ignore_email: "Si vous n'avez pas fait cette demande, veuillez ignorer cet e-mail."
+      password_change_info: "Votre mot de passe ne sera pas changé tant que vous n'accéderez pas au lien ci-dessus et ne créerez pas un nouveau mot de passe."
+      account_locked: "Votre compte a été verrouillé en raison d'un nombre excessif de tentatives de connexion infructueuses."
+      unlock_link: "Cliquez sur le lien ci-dessous pour débloquer votre compte :"
+      unlock_account_link: "Débloquer mon compte"
+    passwords:
+      change_title: "Changez votre mot de passe"
+      new_password_label: "Nouveau mot de passe"
+      password_minimum_length: "(%{length} caractères minimum)"
+      password_confirmation_label: "Confirmer le nouveau mot de passe"
+      change_password_button: "Changer mon mot de passe"
+      forgot_title: "Mot de passe oublié ?"
+      email_label: "E-mail"
+      reset_password_button: "Envoyer les instructions de réinitialisation du mot de passe"
+      forgot: "Mot de passe oublié ?"
+    registrations:
+      edit_title: "Modifier %{resource_name}"
+      email_label: "E-mail"
+      password_label: "Mot de passe"
+      password_placeholder: "Laissez vide si vous ne voulez pas le changer"
+      password_confirmation_label: "Confirmation du mot de passe"
+      current_password_label: "Mot de passe actuel"
+      update_button: "Mettre à jour"
+      cancel_account: "Annuler mon compte"
+      cancel_account_confirmation: "Êtes-vous sûr ?"
+      back_link: "Retour"
+      sign_up_title: "S'inscrire"
+      password_min_length: "caractères minimum"
+      sign_up_button: "S'inscrire"
+      sign_up: "S'inscrire"
+    sessions:
+      log_in_title: "Se connecter"
+      email_label: "E-mail"
+      password_label: "Mot de passe"
+      password_placeholder: "Entrez votre mot de passe"
+      remember_me_label: "Se souvenir de moi"
+      log_in_button: "Se connecter"
+      sign_in: "Se connecter"
+    messages:
+      not_saved: "Le %{resource} n'a pas pu être enregistré en raison des erreurs suivantes :"
+    unlocks:
+      resend: "Vous n'avez pas reçu les instructions de déverrouillage ?"
+    omniauth:
+      sign_in: "Se connecter avec %{provider}"

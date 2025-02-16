@@ -82,3 +82,63 @@ en:
     phone_number: "Phone Number"
     phone_number_placeholder: "Enter your phone number"
     continue: "Continue"
+
+  devise:
+    confirmations:
+      resend_instructions: "Resend confirmation instructions"
+      welcome: "Welcome %{email}!"
+      confirm_account: "You can confirm your account email through the link below:"
+      confirm_button: "Confirm my account"
+      resend: "Didn't receive confirmation instructions?"
+    shared:
+      error_messages: "Please check the errors below."
+    emails:
+      hello: "Hello %{email}!"
+      email_change_notify: "We're contacting you to notify you that your email has been changed to %{new_email}."
+      email_being_changed: "We're contacting you to notify you that your email is being changed to %{new_email}."
+      password_reset_request: "Someone has requested a link to change your password. You can do this through the link below."
+      change_password_link: "Change my password"
+      ignore_email: "If you didn't request this, please ignore this email."
+      password_change_info: "Your password won't change until you access the link above and create a new one."
+      account_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+      unlock_link: "Click the link below to unlock your account:"
+      unlock_account_link: "Unlock my account"
+    passwords:
+      change_title: "Change your password"
+      new_password_label: "New password"
+      password_minimum_length: "(%{length} characters minimum)"
+      password_confirmation_label: "Confirm new password"
+      change_password_button: "Change my password"
+      forgot_title: "Forgot your password?"
+      email_label: "Email"
+      reset_password_button: "Send me reset password instructions"
+      forgot: "Forgot your password?"
+    registrations:
+      edit_title: "Edit %{resource_name}"
+      email_label: "Email"
+      password_label: "Password"
+      password_placeholder: "Leave blank if you don't want to change it"
+      password_confirmation_label: "Password confirmation"
+      current_password_label: "Current password"
+      update_button: "Update"
+      cancel_account: "Cancel my account"
+      cancel_account_confirmation: "Are you sure?"
+      back_link: "Back"
+      sign_up_title: "Sign up"
+      password_min_length: "characters minimum"
+      sign_up_button: "Sign up"
+      sign_up: "Sign up"
+    sessions:
+      log_in_title: "Log in"
+      email_label: "Email"
+      password_label: "Password"
+      password_placeholder: "Enter your password"
+      remember_me_label: "Remember me"
+      log_in_button: "Log in"
+      sign_in: "Log in"
+    messages:
+      not_saved: "The %{resource} could not be saved because of the following errors:"
+    unlocks:
+      resend: "Didn't receive unlock instructions?"
+    omniauth:
+      sign_in: "Sign in with %{provider}"

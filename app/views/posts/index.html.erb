@@ -10,8 +10,9 @@
 
 <!-- Become a Seller Button -->
 <div class="become-seller-container">
-  <%= link_to t('posts.index.become_seller'), become_a_seller_path, class: 'btn-seller' %> <!-- Translated "Become a Seller" button -->
+  <%= link_to t('posts.index.become_seller'), user_signed_in? ? become_a_seller_path : new_user_session_path, class: 'btn-seller' %> <!-- If not signed in, redirect to login page -->
 </div>
+
 
 <!-- Display Posts -->
 <div class="post-container">
