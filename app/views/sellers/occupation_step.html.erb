@@ -1,30 +1,25 @@
-<h1>Occupation & Skills</h1>
+<h1>Tell Us About Your Work</h1>
 
-<%= form_with(model: @seller_profile, url: security_step_seller_path(@seller_profile), method: :post) do |form| %>
-  <div class="form-group">
-    <%= form.label :occupation, "Your Occupation" %>
-    <%= form.text_field :occupation, placeholder: "Enter your occupation", required: true %>
+<%= form_for @seller_profile, url: occupation_step_seller_path(@seller_profile), method: :post do |f| %>
+  <div>
+    <%= f.label :occupation %>
+    <%= f.text_field :occupation, required: true %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :skills, "Your Skills" %>
-    <%= form.text_area :skills, placeholder: "List your skills", required: true %>
+  <div>
+    <%= f.label :skills %>
+    <%= f.text_field :skills, required: true %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :education, "Your Education (Optional)" %>
-    <%= form.text_area :education, placeholder: "List your educational background (optional)" %>
+  <div>
+    <%= f.label :education %>
+    <%= f.text_field :education %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :certifications, "Certifications (Optional)" %>
-    <%= form.text_area :certifications, placeholder: "List your certifications (optional)" %>
+  <div>
+    <%= f.label :certifications %>
+    <%= f.text_field :certifications %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :personal_website, "Personal Website (Optional)" %>
-    <%= form.text_field :personal_website, placeholder: "Add a link to your personal website (optional)" %>
-  </div>
-
-  <%= form.submit 'Continue', class: 'btn-submit' %>
+  <%= f.submit 'Continue', class: 'btn-seller' %>
 <% end %>
