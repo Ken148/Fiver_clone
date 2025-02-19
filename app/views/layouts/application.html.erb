@@ -20,9 +20,10 @@
     <!-- Stylesheets -->
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     
-    <!-- JavaScript (Ensures UJS is Loaded for DELETE Requests) -->
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_importmap_tags %>  <!-- Ensure this is after the previous line -->
+
+
   </head>
 
   <body>
@@ -32,13 +33,11 @@
     <!-- Navigation Bar -->
     <nav>
       <% if user_signed_in? %>
-        <p><%= t('home.welcome', email: current_user.email) %></p>
-        
-        <!-- Logout Button (Form with DELETE method) -->
-        <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do %>
-          <%= submit_tag t('home.logout'), class: "btn btn-danger" %>
+        <% if current_user.seller_profile.present? %>
+          <%= link_to "Account", account_seller_path(current_user.seller_profile) %>
+        <% else %>
+          <%= link_to "Create Seller Profile", new_seller_profile_path %>
         <% end %>
-
       <% else %>
         <%= link_to t('home.login'), new_user_session_path, class: 'btn btn-primary' %>
         <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>

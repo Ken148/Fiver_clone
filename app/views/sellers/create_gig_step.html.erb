@@ -1,8 +1,6 @@
-<h1><%= t('gig_creation.title') %></h1>
-
 <p><%= t('gig_creation.description') %></p>
 
-<%= form_with(model: @seller_profile, url: some_gig_creation_path, method: :post) do |form| %>
+<%= form_with(model: @seller_profile, url: update_create_gig_step_seller_path(@seller_profile), method: :patch) do |form| %>
   <div class="form-group">
     <%= form.label :gig_title, t('gig_creation.gig_title') %>
     <%= form.text_field :gig_title, placeholder: t('gig_creation.gig_title_placeholder') %>
@@ -13,5 +11,10 @@
     <%= form.text_area :gig_description, placeholder: t('gig_creation.gig_description_placeholder') %>
   </div>
 
-  <%= form.submit t('gig_creation.create_gig'), class: 'btn-submit' %>
+  <div class="form-group">
+    <%= form.label :gig_price, t('gig_creation.gig_price') %>
+    <%= form.number_field :gig_price, step: "0.01", placeholder: t('gig_creation.gig_price_placeholder') %>
+  </div>
+
+  <%= form.submit t('gig_creation.continue'), class: 'btn-submit' %>
 <% end %>

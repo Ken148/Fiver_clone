@@ -1,15 +1,65 @@
 <h1><%= t('security_info.title') %></h1>
 
-<%= form_with(model: @seller_profile, url: create_gig_step_seller_path(@seller_profile), method: :post) do |form| %>
+<%= form_for @seller_profile, url: update_security_step_seller_path(@seller_profile), method: :patch do |f| %>
+
   <div class="form-group">
-    <%= form.label :email, t('security_info.email') %>
-    <%= form.email_field :email, placeholder: t('security_info.email_placeholder') %>
+    <%= f.label :email, t('security_info.email') %>
+    <%= f.email_field :email, placeholder: t('security_info.email_placeholder') %>
   </div>
 
   <div class="form-group">
-    <%= form.label :phone_number, t('security_info.phone_number') %>
-    <%= form.telephone_field :phone_number, placeholder: t('security_info.phone_number_placeholder') %>
+    <%= f.label :phone_number, t('security_info.phone_number') %>
+
+    <!-- Country Code Dropdown -->
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <%= select_tag 'country_code', options_for_select([
+          ['USA (+1)', '+1'],
+          ['UK (+44)', '+44'],
+          ['Slovenia (+386)', '+386'],
+          ['France (+33)', '+33'],
+          ['India (+91)', '+91'],
+          # Add more countries as needed
+        ]), class: 'form-control' %>
+      </div>
+
+      <!-- Phone Number Input Field (just a basic input for numbers) -->
+      <%= f.text_field :phone_number, placeholder: t('security_info.phone_number_placeholder'), class: 'form-control phone-number', maxlength: 9 %>
+    </div>
   </div>
 
-  <%= form.submit t('security_info.continue'), class: 'btn-submit' %>
+  <%= f.submit t('security_info.continue'), class: 'btn-submit' %>
+
 <% end %>
+
+<!-- JavaScript to update phone number input based on country selection -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const countryCodeSelect = document.getElementById("country_code");
+    const phoneInput = document.querySelector('.phone-number');
+
+    // Ensure phone input is empty by default
+    phoneInput.value = '';
+
+    // When a country code is selected, it will not auto-prepend to the phone number
+    countryCodeSelect.addEventListener('change', function() {
+      // Get the selected country code
+      const selectedCountryCode = countryCodeSelect.value;
+
+      // Clear the phone input field (no country code)
+      phoneInput.value = '';
+    });
+
+    // If the user types in the phone number, restrict input to numbers only
+    phoneInput.addEventListener('input', function() {
+      let value = phoneInput.value.replace(/\D/g, ''); // Remove non-digits
+
+      // Limit the value to 9 digits
+      if (value.length > 9) {
+        value = value.substring(0, 9);
+      }
+
+      phoneInput.value = value; // Update the input with cleaned value
+    });
+  });
+</script>

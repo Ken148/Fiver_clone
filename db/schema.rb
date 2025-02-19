@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_202308) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_19_203052) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -33,6 +33,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_202308) do
     t.string "education"
     t.string "certifications"
     t.string "personal_website"
+    t.integer "start_year"
+    t.integer "end_year"
+    t.string "custom_occupation"
+    t.string "skill_level"
+    t.string "email"
+    t.string "phone_number"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_seller_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

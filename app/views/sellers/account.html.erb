@@ -1,0 +1,78 @@
+<h1><%= t('complete_seller_profile.title') %></h1>
+
+<%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch do |f| %>
+  
+  <!-- Displaying Full Name -->
+  <div>
+    <%= f.label :full_name, t('complete_seller_profile.full_name') %>
+    <%= f.text_field :full_name, value: @seller_profile.full_name %>  <!-- Allowing full name to be edited -->
+  </div>
+
+  <!-- Displaying Display Name -->
+  <div>
+    <%= f.label :display_name, t('complete_seller_profile.display_name') %>
+    <%= f.text_field :display_name, value: @seller_profile.display_name %>  <!-- Allowing display name to be edited -->
+  </div>
+
+  <!-- Displaying Profile Picture -->
+  <div>
+    <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
+    <% if @seller_profile.profile_picture.present? %>
+      <%= image_tag @seller_profile.profile_picture.url, alt: "Profile Picture", width: 150 %>
+    <% else %>
+      <p>No Profile Picture</p>
+    <% end %>
+  </div>
+
+  <!-- Displaying Description -->
+  <div>
+    <%= f.label :description, t('complete_seller_profile.description') %>
+    <%= f.text_area :description, value: @seller_profile.description %>  <!-- Allowing description to be edited -->
+  </div>
+
+  <!-- Displaying Language -->
+  <div>
+    <%= f.label :language, t('complete_seller_profile.language') %>
+    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language) %>  <!-- Allowing language to be edited -->
+  </div>
+
+  <!-- Display Occupations -->
+  <div>
+    <%= f.label :occupation, t('work_info.occupation') %><br />
+    <% if @seller_profile.occupation.present? %>
+      <p><%= @seller_profile.occupation %></p>
+    <% else %>
+      <p>No occupation specified.</p>
+    <% end %>
+  </div>
+
+  <!-- Display Skills -->
+  <div>
+    <%= f.label :skills, t('work_info.skills') %><br />
+    <% if @seller_profile.skills.any? %>
+      <ul>
+        <% @seller_profile.skills.each do |skill| %>
+          <li><%= skill.name %> - <%= skill.level %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No skills listed.</p>
+    <% end %>
+  </div>
+
+  <!-- Display Education -->
+  <div>
+    <%= f.label :education, t('complete_seller_profile.education') %><br />
+    <% if @seller_profile.educations.any? %>
+      <% @seller_profile.educations.each do |education| %>
+        <p><%= education.degree %> from <%= education.school_name %> (Graduated: <%= education.graduation_year %>)</p>
+      <% end %>
+    <% else %>
+      <p>No education listed.</p>
+    <% end %>
+  </div>
+
+  <!-- Submit Button to update Profile -->
+  <%= f.submit t('complete_seller_profile.continue'), class: 'btn-seller' %>
+
+<% end %>

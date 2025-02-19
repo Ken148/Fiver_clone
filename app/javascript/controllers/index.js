@@ -1,4 +1,10 @@
-// Import and register all your controllers from the importmap via controllers/**/*_controller
-import { application } from "controllers/application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-eagerLoadControllersFrom("controllers", application)
+// Import the main Stimulus application
+import { application } from "controllers/application";
+
+// Automatically load all controllers in controllers/ folder
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading";
+eagerLoadControllersFrom("controllers", application);
+
+// Manually import and register specific controllers
+import OccupationController from "./occupation_controller";
+application.register("occupation", OccupationController);

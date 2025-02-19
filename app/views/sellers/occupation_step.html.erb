@@ -1,25 +1,225 @@
 <h1><%= t('work_info.title') %></h1>
 
-<%= form_for @seller_profile, url: occupation_step_seller_path(@seller_profile), method: :post do |f| %>
-  <div>
-    <%= f.label :occupation, t('work_info.occupation') %>
-    <%= f.text_field :occupation, required: true %>
+<%= form_for @seller_profile, url: update_occupation_step_seller_path(@seller_profile), method: :patch do |f| %>
+  <!-- Occupation Dropdown -->
+  <div class="field">
+    <%= f.label :occupation, t('work_info.occupation') %><br />
+    <%= f.select :occupation, ["Music and Audio", "Software Development", "Marketing", "Design", "Writing", "Healthcare", "Other"], {}, { id: 'occupation-dropdown', required: true } %>
   </div>
 
-  <div>
-    <%= f.label :skills, t('work_info.skills') %>
-    <%= f.text_field :skills, required: true %>
+  <!-- Start Year Dropdown -->
+  <div class="field">
+    <%= f.label :start_year, "Start Year" %><br />
+    <%= f.select :start_year, (1950..2025).to_a.reverse, {}, { id: 'start-year-dropdown', required: true } %>
   </div>
 
-  <div>
-    <%= f.label :education, t('work_info.education') %>
-    <%= f.text_field :education %>
+  <!-- End Year Dropdown -->
+  <div class="field">
+    <%= f.label :end_year, "End Year" %><br />
+    <%= f.select :end_year, [], {}, { id: 'end-year-dropdown', required: true } %>
   </div>
 
-  <div>
-    <%= f.label :certifications, t('work_info.certifications') %>
-    <%= f.text_field :certifications %>
+  <!-- Dynamically populated checkboxes will be placed here -->
+  <div id="occupation-checkboxes">
+    <!-- Checkboxes will be added dynamically based on the selected occupation -->
   </div>
 
+  <!-- Custom Occupation Field -->
+  <div id="custom-occupation-container" style="display: none;">
+    <%= f.label :custom_occupation, "Custom Occupation" %><br />
+    <%= f.text_field :custom_occupation, placeholder: "Enter your occupation" %>
+  </div>
+
+  <!-- Occupation Selection Warning -->
+  <div id="occupation-warning" style="color: red; display: none;">
+    <p>You can only select up to 3 occupations. Please deselect some if you want to select a different one.</p>
+  </div>
+
+  <!-- Skill Dropdown with Level -->
+  <div class="field">
+    <%= f.label :skills, t('work_info.skills') %><br />
+    <%= f.select :skills, options_for_select(["Audio Editing", "Web Development", "SEO Optimization", "Graphic Design", "Content Writing", "Copywriting", "Front-end Development", "Back-end Development", "Social Media Marketing", "Data Science", "Mobile App Development"]), {}, { id: 'skill-dropdown' } %>
+    <%= f.select :skill_level, options_for_select(["Beginner", "Intermediate", "Expert"]), {}, { id: 'skill-level' } %>
+    <button type="button" id="add-skill-button">Add Skill</button>
+  </div>
+
+  <!-- Added Skills List -->
+  <div id="skills-list">
+    <!-- Dynamically added skills will appear here -->
+  </div>
+
+  <!-- Education Section -->
+  <div id="education-section">
+    <div class="education-entry">
+      <div class="field">
+        <label for="country-dropdown">Country:</label><br>
+        <select id="country-dropdown" class="country-dropdown">
+          <!-- Options will be populated dynamically by JavaScript -->
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="school-dropdown">School/University:</label><br>
+        <select id="school-dropdown" class="school-dropdown" disabled>
+          <!-- Options will be populated dynamically by JavaScript -->
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="graduation-year-dropdown">Graduation Year:</label><br>
+        <select id="graduation-year-dropdown" class="graduation-year-dropdown">
+          <!-- Options will be populated dynamically by JavaScript -->
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Website Section -->
+  <div class="field">
+    <label for="website-textarea">Your Website Link:</label><br>
+    <textarea id="website-textarea" name="seller_profile[website]" rows="4" cols="50" placeholder="Put your website link here"></textarea>
+  </div>
+
+  <!-- Submit Button -->
   <%= f.submit t('work_info.continue'), class: 'btn-seller' %>
 <% end %>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Start and End Year Code (Existing Code)
+    const startYearDropdown = document.getElementById("start-year-dropdown");
+    const endYearDropdown = document.getElementById("end-year-dropdown");
+
+    function updateEndYearOptions(selectedStartYear) {
+        endYearDropdown.innerHTML = "";
+        for (let year = parseInt(selectedStartYear); year <= 2025; year++) {
+            const option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            endYearDropdown.appendChild(option);
+        }
+    }
+
+    startYearDropdown.addEventListener("change", function() {
+        const selectedStartYear = startYearDropdown.value;
+        updateEndYearOptions(selectedStartYear);
+    });
+
+    if (startYearDropdown.value) {
+        updateEndYearOptions(startYearDropdown.value);
+    } else {
+        const firstStartYearOption = startYearDropdown.options[startYearDropdown.options.length - 1];
+        if (firstStartYearOption) {
+            updateEndYearOptions(firstStartYearOption.value);
+        }
+    }
+
+    // Occupation Code (Existing Code)
+    const occupationDropdown = document.getElementById("occupation-dropdown");
+    const occupationCheckboxes = document.getElementById("occupation-checkboxes");
+    const customOccupationContainer = document.getElementById("custom-occupation-container");
+    const occupationWarning = document.getElementById("occupation-warning");
+    const occupationCheckboxMapping = {
+      "Music and Audio": ["Audio Ads Production", "Audio Editing", "Audio Logo & Sonic Branding", "Audiobook Production", "Beat Making", "DJ Drops & Tags", "DJ Mixing", "Meditation Music", "Mixing & Mastering", "Music & Audio Advice", "Music Transcription", "Online Music Lessons", "Podcast Production", "Producers & Composers", "Remixing & Mashups", "Session Musicians", "Singers & Vocalists", "Songwriters", "Sound Design", "Synth Presets", "Vocal Tuning"],
+      "Software Development": ["Front-end Development", "Back-end Development", "Full-stack Development", "Web Development", "Mobile App Development", "Game Development", "Software Testing", "Database Administration"],
+      "Marketing": ["SEO Optimization", "Content Marketing", "Social Media Marketing", "Email Marketing", "Influencer Marketing", "Digital Advertising", "Affiliate Marketing", "Brand Strategy"],
+      "Design": ["Graphic Design", "UI/UX Design", "Logo Design", "Web Design", "Illustration", "3D Modeling", "Motion Graphics"],
+      "Writing": ["Content Writing", "Copywriting", "Technical Writing", "Creative Writing", "Blog Writing", "Proofreading & Editing", "Scriptwriting"],
+      "Healthcare": ["Medical Transcription", "Health Coaching", "Telemedicine", "Fitness Coaching", "Nutrition Counseling", "Mental Health Counseling"]
+    };
+
+    function generateCheckboxes(occupation) {
+      occupationCheckboxes.innerHTML = '';
+      if (occupation === "Other") {
+        customOccupationContainer.style.display = "block";
+      } else {
+        customOccupationContainer.style.display = "none";
+      }
+      if (occupationCheckboxMapping[occupation]) {
+        occupationCheckboxMapping[occupation].forEach(function(option) {
+          const checkboxContainer = document.createElement("div");
+          checkboxContainer.classList.add("checkbox-container");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.name = "occupation_options[]";
+          checkbox.value = option;
+          checkbox.id = `occupation-${option}`;
+          const label = document.createElement("label");
+          label.setAttribute("for", `occupation-${option}`);
+          label.textContent = option;
+          checkboxContainer.appendChild(checkbox);
+          checkboxContainer.appendChild(label);
+          occupationCheckboxes.appendChild(checkboxContainer);
+          checkbox.addEventListener("change", limitSelections);
+        });
+      }
+    }
+
+    function limitSelections() {
+      const selectedCheckboxes = document.querySelectorAll("#occupation-checkboxes input:checked");
+      if (selectedCheckboxes.length > 3) {
+        occupationWarning.style.display = "block";
+        this.checked = false;
+      } else {
+        occupationWarning.style.display = "none";
+      }
+    }
+
+    occupationDropdown.addEventListener("change", function() {
+      const selectedOccupation = occupationDropdown.value;
+      generateCheckboxes(selectedOccupation);
+    });
+    generateCheckboxes(occupationDropdown.value);
+
+    // Skill Code (Existing Code)
+    const addSkillButton = document.getElementById("add-skill-button");
+    const skillsListContainer = document.getElementById("skills-list");
+    const skillDropdown = document.getElementById("skill-dropdown");
+    const skillLevelDropdown = document.getElementById("skill-level");
+
+    function createSkillRow(skill, level) {
+        const skillRow = document.createElement("div");
+        skillRow.classList.add("skill-row");
+        skillRow.innerHTML =
+            `<span>${skill}</span> - <span>${level}</span>
+            <button type="button" class="edit-skill-button">Edit</button>
+            <button type="button" class="remove-skill-button">Remove</button>`;
+        skillsListContainer.appendChild(skillRow);
+
+        const editButton = skillRow.querySelector(".edit-skill-button");
+        const removeButton = skillRow.querySelector(".remove-skill-button");
+        editButton.addEventListener("click", () => {
+            skillDropdown.value = skill;
+            skillLevelDropdown.value = level;
+            skillRow.remove();
+        });
+        removeButton.addEventListener("click", () => {
+            skillRow.remove();
+        });
+    }
+
+    addSkillButton.addEventListener("click", function() {
+        const selectedSkill = skillDropdown.value;
+        const selectedLevel = skillLevelDropdown.value;
+        createSkillRow(selectedSkill, selectedLevel);
+    });
+
+    // Education Section Code (Existing Code)
+    const countryDropdown = document.querySelector(".country-dropdown");
+    const schoolDropdown = document.querySelector(".school-dropdown");
+    const graduationYearDropdown = document.querySelector(".graduation-year-dropdown");
+
+    fetch("https://api.worldpopulationreview.com/v1/countries")
+      .then(response => response.json())
+      .then(data => {
+          const countries = data.data;
+          countries.forEach(country => {
+              const option = document.createElement("option");
+              option.value = country.name;
+              option.textContent = country.name;
+              countryDropdown.appendChild(option);
+          });
+      });
+});
+</script>

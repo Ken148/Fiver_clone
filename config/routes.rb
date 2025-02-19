@@ -4,17 +4,20 @@ Rails.application.routes.draw do
   post 'create_seller_profile', to: 'sellers#create'  # Handles first step submission
   get 'set_language', to: 'application#set_language', as: :set_language
 
-
   resources :sellers, only: [:new, :create] do
     member do
-      get :occupation_step  # Page for occupation info
-      patch :update_occupation_step  # Handles occupation step submission
+      get :occupation_step          # Page for occupation info
+      patch :update_occupation_step # Handles occupation step submission
 
-      get :security_step  # Page for security info
-      patch :update_security_step  # Handles security step submission
+      get :security_step            # Page for security info
+      patch :update_security_step   # Handles security step submission
 
-      get :create_gig_step  # Page for creating a gig
-      patch :update_create_gig_step  # Handles gig creation submission
+      get :create_gig_step          # Page for creating a gig
+      patch :update_create_gig_step # Handles gig creation submission
+
+      # Account/Profile Page: View and Edit Seller Info
+      get :account                  # Display the seller's account/profile
+      patch :update_account         # Handle updating the account/profile
     end
   end
 

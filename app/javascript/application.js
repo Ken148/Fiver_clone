@@ -1,3 +1,4 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
+// app/javascript/application.js
+import "@hotwired/turbo-rails";
+import "controllers";  // This will load all controllers from app/javascript/controllers
+import "occupation_form";  // If you have a specific occupation form JS file
