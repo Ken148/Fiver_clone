@@ -1,39 +1,41 @@
 <h1><%= t('complete_seller_profile.title') %></h1>
 
-<%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch do |f| %>
+<%= form_for @seller_profile, url: update_seller_profile_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
   
   <!-- Displaying Full Name -->
   <div>
     <%= f.label :full_name, t('complete_seller_profile.full_name') %>
-    <%= f.text_field :full_name, value: @seller_profile.full_name %>  <!-- Allowing full name to be edited -->
+    <%= f.text_field :full_name, value: @seller_profile.full_name, disabled: true %>
   </div>
 
   <!-- Displaying Display Name -->
   <div>
     <%= f.label :display_name, t('complete_seller_profile.display_name') %>
-    <%= f.text_field :display_name, value: @seller_profile.display_name %>  <!-- Allowing display name to be edited -->
+    <%= f.text_field :display_name, value: @seller_profile.display_name, disabled: true %>
   </div>
 
   <!-- Displaying Profile Picture -->
   <div>
     <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
-    <% if @seller_profile.profile_picture.present? %>
-      <%= image_tag @seller_profile.profile_picture.url, alt: "Profile Picture", width: 150 %>
+    <% if @seller_profile.profile_picture.attached? %>
+      <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
       <p>No Profile Picture</p>
     <% end %>
+    <!-- Allow the user to upload a new profile picture -->
+    <%= f.file_field :profile_picture %>
   </div>
 
   <!-- Displaying Description -->
   <div>
     <%= f.label :description, t('complete_seller_profile.description') %>
-    <%= f.text_area :description, value: @seller_profile.description %>  <!-- Allowing description to be edited -->
+    <%= f.text_area :description, value: @seller_profile.description, disabled: true %>
   </div>
 
   <!-- Displaying Language -->
   <div>
     <%= f.label :language, t('complete_seller_profile.language') %>
-    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language) %>  <!-- Allowing language to be edited -->
+    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language), disabled: true %>
   </div>
 
   <!-- Display Occupations -->

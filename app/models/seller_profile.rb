@@ -1,7 +1,7 @@
 class SellerProfile < ApplicationRecord
   # Association with the User model
   belongs_to :user  # This defines the relationship between the seller profile and user
-
+  has_one_attached :profile_picture
   # Ensure that a user is present when creating a seller profile
   validates :user, presence: true  # This ensures that the user association is not null
 
