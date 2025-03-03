@@ -1,0 +1,22 @@
+ => 
+[32m#<SellerProfile:0x00007fd918b074c8[0m
+ id: [34m[1m1[0m,
+ full_name: [31m[1m"[0m[31masda[0m[31m[1m"[0m,
+ display_name: [31m[1m"[0m[31msada[0m[31m[1m"[0m,
+ profile_picture: [36m[1mnil[0m,
+ description: [31m[1m"[0m[31msda[0m[31m[1m"[0m,
+ language: [31m[1m"[0m[31mEnglish[0m[31m[1m"[0m,
+ created_at: [31m[1m"[0m[31m2025-03-03 12:40:30.252112000 +0000[0m[31m[1m"[0m,
+ updated_at: [31m[1m"[0m[31m2025-03-03 12:40:31.194352000 +0000[0m[31m[1m"[0m,
+ occupation: [36m[1mnil[0m,
+ skills: [36m[1mnil[0m,
+ education: [36m[1mnil[0m,
+ certifications: [36m[1mnil[0m,
+ personal_website: [36m[1mnil[0m,
+ start_year: [36m[1mnil[0m,
+ end_year: [36m[1mnil[0m,
+ custom_occupation: [36m[1mnil[0m,
+ skill_level: [36m[1mnil[0m,
+ email: [36m[1mnil[0m,
+ phone_number: [36m[1mnil[0m,
+ user_id: [34m[1m1[0m[32m>[0m 
