@@ -1,6 +1,7 @@
 <h1><%= t('complete_seller_profile.title') %></h1>
 
-<%= form_for @seller_profile, url: update_seller_profile_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
+<%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
+
   
   <!-- Displaying Full Name -->
   <div>
