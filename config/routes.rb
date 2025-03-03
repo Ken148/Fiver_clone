@@ -1,3 +1,4 @@
+
 Rails.application.routes.draw do
   get 'become_a_seller', to: 'sellers#info'  # Page explaining seller benefits
   get 'new_seller_profile', to: 'sellers#new'  # First step form
