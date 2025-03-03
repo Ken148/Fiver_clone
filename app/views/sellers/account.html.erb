@@ -52,7 +52,8 @@
   <!-- Display Skills -->
   <div>
     <%= f.label :skills, t('work_info.skills') %><br />
-    <% if @seller_profile.skills.any? %>
+    <% if @seller_profile.skills.present? %>
+
       <ul>
         <% @seller_profile.skills.each do |skill| %>
           <li><%= skill.name %> - <%= skill.level %></li>
