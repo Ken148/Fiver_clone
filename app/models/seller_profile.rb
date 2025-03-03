@@ -3,6 +3,9 @@ class SellerProfile < ApplicationRecord
   belongs_to :user  # This defines the relationship between the seller profile and user
   has_one_attached :profile_picture
 
+  # Association with education model (needs to be defined)
+  has_many :educations, dependent: :destroy  # Adding has_many association
+
   # Ensure that a user is present when creating a seller profile
   validates :user, presence: true  # This ensures that the user association is not null
 
@@ -19,7 +22,6 @@ class SellerProfile < ApplicationRecord
   validate :check_profile_picture_format, if: -> { profile_picture.attached? }
 
   # For attaching a profile picture (use CarrierWave or ActiveStorage depending on your implementation)
-  # You can add custom validations like file size or file type if needed
   def check_profile_picture_format
     if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/jpeg image/png])
       errors.add(:profile_picture, 'must be a JPEG or PNG')

@@ -1,7 +1,6 @@
 <h1><%= t('complete_seller_profile.title') %></h1>
 
 <%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
-
   
   <!-- Displaying Full Name -->
   <div>
@@ -53,7 +52,6 @@
   <div>
     <%= f.label :skills, t('work_info.skills') %><br />
     <% if @seller_profile.skills.present? %>
-
       <ul>
         <% @seller_profile.skills.each do |skill| %>
           <li><%= skill.name %> - <%= skill.level %></li>

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  seller_profile: one
+  degree: MyString
+  school_name: MyString
+  graduation_year: 1
+
+two:
+  seller_profile: two
+  degree: MyString
+  school_name: MyString
+  graduation_year: 1
