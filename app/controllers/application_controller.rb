@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
   before_action :set_locale
+  before_action :set_seller_profile, if: :user_signed_in? # ✅ Ensure seller profile is set
 
   def set_language
     if params[:locale].present? && I18n.available_locales.map(&:to_s).include?(params[:locale])
@@ -14,5 +13,10 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = session[:locale] || I18n.default_locale
+  end
+
+  # ✅ Set seller profile globally for all views
+  def set_seller_profile
+    @seller_profile = current_user.seller_profile
   end
 end
