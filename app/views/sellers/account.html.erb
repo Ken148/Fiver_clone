@@ -2,7 +2,6 @@
 
 <%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
 
-  
   <!-- Displaying Full Name -->
   <div>
     <%= f.label :full_name, t('complete_seller_profile.full_name') %>
@@ -18,7 +17,7 @@
   <!-- Displaying Profile Picture -->
   <div>
     <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
-    <% if @seller_profile.profile_picture.attached? %>
+    <% if @seller_profile.profile_picture&.attached? %> <!-- Using safe navigation operator -->
       <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
       <p>No Profile Picture</p>
@@ -50,19 +49,19 @@
   </div>
 
   <!-- Display Skills -->
-  <div>
-    <%= f.label :skills, t('work_info.skills') %><br />
-    <% if @seller_profile.skills.present? %>
-
-      <ul>
-        <% @seller_profile.skills.each do |skill| %>
-          <li><%= skill.name %> - <%= skill.level %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No skills listed.</p>
-    <% end %>
-  </div>
+<div>
+  <%= f.label :skills, t('work_info.skills') %><br />
+  <% if @seller_profile.skills.present? %>
+    <% skills_array = @seller_profile.skills.is_a?(String) ? @seller_profile.skills.split(',') : @seller_profile.skills %>
+    <ul>
+      <% skills_array.each do |skill| %>
+        <li><%= skill.strip %></li> <!-- Strip to remove any leading/trailing spaces -->
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No skills listed.</p>
+  <% end %>
+</div>
 
   <!-- Display Education -->
   <div>
