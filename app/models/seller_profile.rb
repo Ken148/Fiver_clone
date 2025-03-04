@@ -15,21 +15,23 @@ class SellerProfile < ApplicationRecord
   # So, you can validate presence only during the update process
   validate :check_occupation_and_skills, on: :update
 
-  # Optional: If you want to validate other fields, you can do it here
+  # Validate file format for the profile picture (JPEG or PNG)
   validate :check_profile_picture_format, if: :profile_picture_attached?
 
-  # For attaching a profile picture (use CarrierWave or ActiveStorage depending on your implementation)
-  # You can add custom validations like file size or file type if needed
-  def check_profile_picture_format
-    if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/jpeg image/png])
-      errors.add(:profile_picture, 'must be a JPEG or PNG')
-    end
-  end
+  # Attach a profile picture (ActiveStorage)
+  has_one_attached :profile_picture
 
   # Optional: Additional validation for skills or other fields
   def check_occupation_and_skills
     if occupation.blank? || skills.blank?
       errors.add(:occupation, "Occupation and skills must be provided when updating the profile")
+    end
+  end
+
+  # Validate the profile picture file type
+  def check_profile_picture_format
+    if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/jpeg image/png])
+      errors.add(:profile_picture, 'must be a JPEG or PNG')
     end
   end
 end
