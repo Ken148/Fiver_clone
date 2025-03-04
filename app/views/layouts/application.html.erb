@@ -56,50 +56,44 @@
     <!-- Main Content -->
     <div class="profile-info">
       <h2>Account Details</h2>
+      <p><strong>Full Name:</strong> <%= @seller_profile.full_name %></p>
+      <p><strong>Display Name:</strong> <%= @seller_profile.display_name %></p>
+      <p><strong>Profile Description:</strong> <%= @seller_profile.description %></p>
+      <p><strong>Preferred Language:</strong> <%= @seller_profile.language %></p>
 
-      <% if @seller_profile.present? %>
-        <p><strong>Full Name:</strong> <%= @seller_profile.full_name %></p>
-        <p><strong>Display Name:</strong> <%= @seller_profile.display_name %></p>
-        <p><strong>Profile Description:</strong> <%= @seller_profile.description %></p>
-        <p><strong>Preferred Language:</strong> <%= @seller_profile.language %></p>
-
-        <!-- Profile Picture -->
-        <% if @seller_profile.profile_picture.attached? %>
-          <p><strong>Profile Picture:</strong> <%= image_tag @seller_profile.profile_picture %></p>
-        <% else %>
-          <p><strong>Profile Picture:</strong> No picture available</p>
-        <% end %>
-
-        <!-- Occupation -->
-        <p><strong>Occupation:</strong> <%= @seller_profile.occupation.presence || "No occupation specified" %></p>
-
-        <!-- Skills -->
-        <% if @seller_profile.skills.present? %>
-          <p><strong>Skills:</strong></p>
-          <ul>
-            <% @seller_profile.skills.split(',').each do |skill| %>
-              <li><%= skill.strip %></li>  <!-- .strip removes any leading/trailing spaces -->
-            <% end %>
-          </ul>
-        <% else %>
-          <p>No skills listed.</p>
-        <% end %>
-
-        <!-- Education -->
-        <p><strong>Education:</strong> <%= @seller_profile.education.presence || "No education listed" %></p>
-
-        <!-- Certifications -->
-        <p><strong>Certifications:</strong> <%= @seller_profile.certifications.presence || "No certifications listed" %></p>
-
-        <!-- Personal Website -->
-        <% if @seller_profile.personal_website.present? %>
-          <p><strong>Personal Website:</strong> <%= link_to @seller_profile.personal_website, @seller_profile.personal_website, target: "_blank" %></p>
-        <% else %>
-          <p><strong>Personal Website:</strong> Not provided</p>
-        <% end %>
-
+      <!-- Profile Picture -->
+      <% if @seller_profile.profile_picture.attached? %>
+        <p><strong>Profile Picture:</strong> <%= image_tag @seller_profile.profile_picture %></p>
       <% else %>
-        <p>No seller profile found. <%= link_to "Create one here", new_seller_profile_path %></p>
+        <p><strong>Profile Picture:</strong> No picture available</p>
+      <% end %>
+
+      <!-- Occupation -->
+      <p><strong>Occupation:</strong> <%= @seller_profile.occupation || "No occupation specified" %></p>
+
+      <!-- Skills -->
+      <% if @seller_profile.skills.present? %>
+        <p><strong>Skills:</strong></p>
+        <ul>
+          <% @seller_profile.skills.split(',').each do |skill| %>
+            <li><%= skill.strip %></li>  <!-- .strip removes any leading/trailing spaces -->
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No skills listed.</p>
+      <% end %>
+
+      <!-- Education -->
+      <p><strong>Education:</strong> <%= @seller_profile.education || "No education listed" %></p>
+
+      <!-- Certifications -->
+      <p><strong>Certifications:</strong> <%= @seller_profile.certifications || "No certifications listed" %></p>
+
+      <!-- Personal Website -->
+      <% if @seller_profile.personal_website.present? %>
+        <p><strong>Personal Website:</strong> <%= link_to @seller_profile.personal_website, @seller_profile.personal_website, target: "_blank" %></p>
+      <% else %>
+        <p><strong>Personal Website:</strong> Not provided</p>
       <% end %>
     </div>
 

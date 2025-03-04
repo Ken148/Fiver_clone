@@ -2,10 +2,13 @@ class SellerProfile < ApplicationRecord
   # Association with the User model
   belongs_to :user  # This defines the relationship between the seller profile and user
   has_one_attached :profile_picture
+<<<<<<< HEAD
 
   # Association with education model (needs to be defined)
   has_many :educations, dependent: :destroy  # Adding has_many association
 
+=======
+>>>>>>> parent of 2f2f5bd (files)
   # Ensure that a user is present when creating a seller profile
   validates :user, presence: true  # This ensures that the user association is not null
 
@@ -16,10 +19,11 @@ class SellerProfile < ApplicationRecord
   validates :occupation, :skills, presence: true, on: :update
 
   # Optional: Ensure that occupation and skills only exist when the profile is being updated (not during creation)
+  # So, you can validate presence only during the update process
   validate :check_occupation_and_skills, on: :update
 
   # Optional: If you want to validate other fields, you can do it here
-  validate :check_profile_picture_format, if: -> { profile_picture.attached? }
+  validate :check_profile_picture_format, if: :profile_picture_attached?
 
   # For attaching a profile picture (use CarrierWave or ActiveStorage depending on your implementation)
   def check_profile_picture_format
