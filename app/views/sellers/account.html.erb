@@ -5,77 +5,75 @@
   <!-- Displaying Full Name -->
   <div>
     <%= f.label :full_name, t('complete_seller_profile.full_name') %>
-    <%= f.text_field :full_name, value: @seller_profile.full_name, disabled: true %>
+    <%= f.text_field :full_name, value: @seller_profile.full_name %>
   </div>
 
   <!-- Displaying Display Name -->
   <div>
     <%= f.label :display_name, t('complete_seller_profile.display_name') %>
-    <%= f.text_field :display_name, value: @seller_profile.display_name, disabled: true %>
+    <%= f.text_field :display_name, value: @seller_profile.display_name %>
   </div>
 
   <!-- Displaying Profile Picture -->
   <div>
     <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
-    <% if @seller_profile.profile_picture&.attached? %> <!-- Using safe navigation operator -->
+    <% if @seller_profile.profile_picture&.attached? %>
       <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
       <p>No Profile Picture</p>
     <% end %>
-    <!-- Allow the user to upload a new profile picture -->
     <%= f.file_field :profile_picture %>
   </div>
 
   <!-- Displaying Description -->
   <div>
     <%= f.label :description, t('complete_seller_profile.description') %>
-    <%= f.text_area :description, value: @seller_profile.description, disabled: true %>
+    <%= f.text_area :description, value: @seller_profile.description %>
   </div>
 
-  <!-- Displaying Language -->
+  <!-- Display Language -->
   <div>
     <%= f.label :language, t('complete_seller_profile.language') %>
-    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language), disabled: true %>
+    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language) %>
   </div>
 
   <!-- Display Occupations -->
   <div>
     <%= f.label :occupation, t('work_info.occupation') %><br />
-    <% if @seller_profile.occupation.present? %>
-      <p><%= @seller_profile.occupation %></p>
-    <% else %>
-      <p>No occupation specified.</p>
-    <% end %>
+    <%= f.text_field :occupation, value: @seller_profile.occupation %>
   </div>
 
   <!-- Display Skills -->
-<div>
-  <%= f.label :skills, t('work_info.skills') %><br />
-  <% if @seller_profile.skills.present? %>
-    <% skills_array = @seller_profile.skills.is_a?(String) ? @seller_profile.skills.split(',') : @seller_profile.skills %>
-    <ul>
-      <% skills_array.each do |skill| %>
-        <li><%= skill.strip %></li> <!-- Strip to remove any leading/trailing spaces -->
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No skills listed.</p>
-  <% end %>
-</div>
+  <div>
+    <%= f.label :skills, t('work_info.skills') %><br />
+    <%= f.text_area :skills, value: @seller_profile.skills %>
+  </div>
 
   <!-- Display Education -->
   <div>
     <%= f.label :education, t('complete_seller_profile.education') %><br />
     <% if @seller_profile.educations.any? %>
       <% @seller_profile.educations.each do |education| %>
-        <p><%= education.degree %> from <%= education.school_name %> (Graduated: <%= education.graduation_year %>)</p>
+        <div>
+          <%= f.fields_for :educations, education do |education_fields| %>
+            <%= education_fields.label :degree, "Degree" %>
+            <%= education_fields.text_field :degree, value: education.degree %>
+            <%= education_fields.label :school_name, "School Name" %>
+            <%= education_fields.text_field :school_name, value: education.school_name %>
+            <%= education_fields.label :graduation_year, "Graduation Year" %>
+            <%= education_fields.number_field :graduation_year, value: education.graduation_year %>
+          <% end %>
+        </div>
       <% end %>
     <% else %>
       <p>No education listed.</p>
     <% end %>
   </div>
 
-  <!-- Submit Button to update Profile -->
-  <%= f.submit t('complete_seller_profile.continue'), class: 'btn-seller' %>
+  <%= f.submit t('complete_seller_profile.save_profile'), class: 'btn-seller' %>
 
 <% end %>
+
+<!-- Add a button to logout -->
+<%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn-logout' %>
+

@@ -6,14 +6,11 @@ class SellersController < ApplicationController
   end
 
   def create
-    # Check if a seller profile already exists for the current user
     existing_profile = current_user.seller_profile
     if existing_profile
-      # Destroy the existing seller profile to avoid foreign key issues
       existing_profile.destroy
     end
 
-    # Now, build the new seller profile for the user
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
 
     Rails.logger.debug("Seller Profile Params: #{seller_profile_params.inspect}")  # Debugging the incoming parameters
@@ -106,7 +103,6 @@ class SellersController < ApplicationController
   end
 
   def gig_creation_step_params
-    # Add the required parameters for creating a gig here
     params.require(:seller_profile).permit(:gig_title, :gig_description, :gig_price)
   end
 end

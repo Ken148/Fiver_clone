@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_125337) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_04_083210) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_125337) do
     t.integer "graduation_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "new_column_name"
     t.index ["seller_profile_id"], name: "index_educations_on_seller_profile_id"
   end
 
@@ -78,6 +79,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_125337) do
     t.string "email"
     t.string "phone_number"
     t.integer "user_id"
+    t.string "gig_title"
+    t.text "gig_description"
+    t.decimal "gig_price"
     t.index ["user_id"], name: "index_seller_profiles_on_user_id"
   end
 

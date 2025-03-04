@@ -2,6 +2,9 @@ class SellerProfile < ApplicationRecord
   # Association with the User model
   belongs_to :user  # This defines the relationship between the seller profile and user
 
+  # Association with the Education model
+  has_many :educations  # A seller profile has many educations
+
   # Ensure that a user is present when creating a seller profile
   validates :user, presence: true  # This ensures that the user association is not null
 
@@ -22,6 +25,9 @@ class SellerProfile < ApplicationRecord
 
   # Validate file format for the profile picture (JPEG or PNG)
   validate :check_profile_picture_format, if: :profile_picture_attached?
+
+  # Validate the new gig fields (optional)
+  validates :gig_title, :gig_description, :gig_price, presence: true, on: :create_gig
 
   # Optional: Additional validation for skills or other fields
   def check_occupation_and_skills
