@@ -12,14 +12,16 @@ class SellerProfile < ApplicationRecord
   validates :occupation, :skills, presence: true, on: :update
 
   # Optional: Ensure that occupation and skills only exist when the profile is being updated (not during creation)
-  # So, you can validate presence only during the update process
   validate :check_occupation_and_skills, on: :update
-
-  # Validate file format for the profile picture (JPEG or PNG)
-  validate :check_profile_picture_format, if: :profile_picture_attached?
 
   # Attach a profile picture (ActiveStorage)
   has_one_attached :profile_picture
+
+  # Validate presence of the profile picture only when creating the profile
+  validates :profile_picture, presence: true, on: :create
+
+  # Validate file format for the profile picture (JPEG or PNG)
+  validate :check_profile_picture_format, if: :profile_picture_attached?
 
   # Optional: Additional validation for skills or other fields
   def check_occupation_and_skills
@@ -28,10 +30,17 @@ class SellerProfile < ApplicationRecord
     end
   end
 
-  # Validate the profile picture file type
+  # Validate the profile picture file type (JPEG or PNG)
   def check_profile_picture_format
     if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/jpeg image/png])
       errors.add(:profile_picture, 'must be a JPEG or PNG')
     end
+  end
+
+  private
+
+  # Helper method to check if profile picture is attached
+  def profile_picture_attached?
+    profile_picture.attached?
   end
 end
