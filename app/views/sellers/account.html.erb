@@ -5,19 +5,19 @@
   <!-- Displaying Full Name -->
   <div>
     <%= f.label :full_name, t('complete_seller_profile.full_name') %>
-    <%= f.text_field :full_name, value: @seller_profile.full_name %>
+    <%= f.text_field :full_name %>
   </div>
 
   <!-- Displaying Display Name -->
   <div>
     <%= f.label :display_name, t('complete_seller_profile.display_name') %>
-    <%= f.text_field :display_name, value: @seller_profile.display_name %>
+    <%= f.text_field :display_name %>
   </div>
 
   <!-- Displaying Profile Picture -->
   <div>
     <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
-    <% if @seller_profile.profile_picture&.attached? %>
+    <% if @seller_profile.profile_picture.attached? %>
       <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
       <p>No Profile Picture</p>
@@ -28,7 +28,7 @@
   <!-- Displaying Description -->
   <div>
     <%= f.label :description, t('complete_seller_profile.description') %>
-    <%= f.text_area :description, value: @seller_profile.description %>
+    <%= f.text_area :description %>
   </div>
 
   <!-- Display Language -->
@@ -37,16 +37,16 @@
     <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language) %>
   </div>
 
-  <!-- Display Occupations -->
+  <!-- Display Occupation -->
   <div>
     <%= f.label :occupation, t('work_info.occupation') %><br />
-    <%= f.text_field :occupation, value: @seller_profile.occupation %>
+    <%= f.text_field :occupation %>
   </div>
 
   <!-- Display Skills -->
   <div>
     <%= f.label :skills, t('work_info.skills') %><br />
-    <%= f.text_area :skills, value: @seller_profile.skills %>
+    <%= f.text_area :skills %>
   </div>
 
   <!-- Display Education -->
@@ -57,11 +57,11 @@
         <div>
           <%= f.fields_for :educations, education do |education_fields| %>
             <%= education_fields.label :degree, "Degree" %>
-            <%= education_fields.text_field :degree, value: education.degree %>
+            <%= education_fields.text_field :degree %>
             <%= education_fields.label :school_name, "School Name" %>
-            <%= education_fields.text_field :school_name, value: education.school_name %>
+            <%= education_fields.text_field :school_name %>
             <%= education_fields.label :graduation_year, "Graduation Year" %>
-            <%= education_fields.number_field :graduation_year, value: education.graduation_year %>
+            <%= education_fields.number_field :graduation_year %>
           <% end %>
         </div>
       <% end %>
@@ -76,4 +76,3 @@
 
 <!-- Add a button to logout -->
 <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn-logout' %>
-

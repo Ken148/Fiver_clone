@@ -1,5 +1,6 @@
 class SellersController < ApplicationController
-  before_action :set_seller_profile, only: [:occupation_step, :update_occupation_step, :security_step, :update_security_step, :account, :update_account, :create_gig_step, :update_create_gig_step]
+  # No longer restricting to specific actions with :only
+  before_action :set_seller_profile
 
   def new
     @seller_profile = SellerProfile.new
@@ -44,33 +45,23 @@ class SellersController < ApplicationController
 
   def update_security_step
     if @seller_profile.update(security_step_params)
-      redirect_to create_gig_step_seller_path(@seller_profile), notice: "Security step completed!"
+      # Instead of redirecting to the gig creation step, we redirect to the account page.
+      redirect_to account_seller_path(@seller_profile), notice: "Security step completed! Your profile is ready."
     else
       flash[:alert] = "Please fix the errors and try again!"
       render :security_step
     end
   end
 
-  def create_gig_step
-    # Render the create gig step form
-  end
-
-  def update_create_gig_step
-    if @seller_profile.update(gig_creation_step_params)
-      redirect_to account_seller_path(@seller_profile), notice: "Gig created! Now view your account."
-    else
-      flash[:alert] = "There was an error creating your gig."
-      render :create_gig_step
-    end
-  end
-
+  # The account page where the seller can view and edit their profile
   def account
-    # This renders the account page where the seller can view and edit their profile info
+    # Assuming that there's a 'has_many :gigs' relationship in SellerProfile
+    @gigs = @seller_profile.gigs  # Only works if SellerProfile has many Gigs
   end
 
   def update_account
     if @seller_profile.update(account_params)
-      redirect_to seller_account_path(@seller_profile), notice: "Profile updated successfully"
+      redirect_to account_seller_path(@seller_profile), notice: "Profile updated successfully"
     else
       flash[:alert] = "There was an error updating your profile!"
       render :account
@@ -100,9 +91,5 @@ class SellersController < ApplicationController
 
   def account_params
     params.require(:seller_profile).permit(:full_name, :display_name, :profile_picture, :description, :language, occupation_ids: [], skill_ids: [], education_ids: [])
-  end
-
-  def gig_creation_step_params
-    params.require(:seller_profile).permit(:gig_title, :gig_description, :gig_price)
   end
 end
