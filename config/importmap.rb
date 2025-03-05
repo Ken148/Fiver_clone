@@ -7,3 +7,5 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "occupation_form", to: "occupation_form.js"
 
+# Pin rails-ujs to handle AJAX form submissions (including DELETE)
+pin "@rails/ujs", to: "https://cdn.jsdelivr.net/npm/@rails/ujs@7.1.3/dist/rails-ujs.min.js"
