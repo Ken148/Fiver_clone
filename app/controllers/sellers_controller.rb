@@ -1,33 +1,25 @@
 class SellersController < ApplicationController
-  # No longer restricting to specific actions with :only
-  before_action :set_seller_profile
+  before_action :set_seller_profile, except: [:new, :create]
 
   def new
     @seller_profile = SellerProfile.new
   end
 
   def create
-    existing_profile = current_user.seller_profile
-    if existing_profile
-      existing_profile.destroy
-    end
+    current_user.seller_profile&.destroy  # Remove existing profile if any
 
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
-
-    Rails.logger.debug("Seller Profile Params: #{seller_profile_params.inspect}")  # Debugging the incoming parameters
 
     if @seller_profile.save
       flash[:notice] = "Profile saved! Now add your occupation and skills."
       redirect_to occupation_step_seller_path(@seller_profile)
     else
-      Rails.logger.error("Failed to create seller profile: #{@seller_profile.errors.full_messages.join(', ')}")
       flash[:alert] = "Error: " + @seller_profile.errors.full_messages.join(', ')
       render :new
     end
   end
 
   def occupation_step
-    # Render the occupation step form
   end
 
   def update_occupation_step
@@ -40,12 +32,10 @@ class SellersController < ApplicationController
   end
 
   def security_step
-    # Render the security step form
   end
 
   def update_security_step
     if @seller_profile.update(security_step_params)
-      # Instead of redirecting to the gig creation step, we redirect to the account page.
       redirect_to account_seller_path(@seller_profile), notice: "Security step completed! Your profile is ready."
     else
       flash[:alert] = "Please fix the errors and try again!"
@@ -53,10 +43,8 @@ class SellersController < ApplicationController
     end
   end
 
-  # The account page where the seller can view and edit their profile
   def account
-    # Assuming that there's a 'has_many :gigs' relationship in SellerProfile
-    @gigs = @seller_profile.gigs  # Only works if SellerProfile has many Gigs
+    @gigs = @seller_profile.gigs
   end
 
   def update_account
@@ -71,10 +59,10 @@ class SellersController < ApplicationController
   private
 
   def set_seller_profile
+    return if action_name == 'new' || action_name == 'create'
+
     @seller_profile = current_user.seller_profile
-    if @seller_profile.nil?
-      redirect_to new_seller_profile_path, alert: "You need to create a seller profile!"
-    end
+    redirect_to new_seller_profile_path, alert: "You need to create a seller profile!" if @seller_profile.nil?
   end
 
   def seller_profile_params
@@ -86,7 +74,7 @@ class SellersController < ApplicationController
   end
 
   def security_step_params
-    params.require(:seller_profile).permit(:email, :password, :password_confirmation)
+    params.require(:seller_profile).permit(:email, :phone_number) # Fixed parameter scope
   end
 
   def account_params

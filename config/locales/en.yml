@@ -64,8 +64,8 @@ en:
     profile_picture: "Profile Picture"
     description: "Profile Description"
     language: "Preferred Language"
-    select_language: "Select Your Language"
-    continue: "Continue"
+    save_profile: "Save Profile"  
+    education: "Education"
 
   work_info:
     title: "Work Information"
@@ -142,3 +142,4 @@ en:
       resend: "Didn't receive unlock instructions?"
     omniauth:
       sign_in: "Sign in with %{provider}"
+  

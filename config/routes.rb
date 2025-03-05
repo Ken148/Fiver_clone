@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   # Seller profile related routes
-  get 'become_a_seller', to: 'sellers#info'  # Page explaining seller benefits
-  get 'new_seller_profile', to: 'sellers#new'  # First step form for creating seller profile
-  post 'create_seller_profile', to: 'sellers#create'  # Handles first step profile creation
+  get 'become_a_seller', to: 'sellers#info', as: :become_a_seller  # Page explaining seller benefits
+  # First step form for creating a seller profile
+  get 'new_seller_profile', to: 'sellers#new', as: :new_seller_profile 
+  # Handles first step profile creation
+  post 'create_seller_profile', to: 'sellers#create', as: :create_seller_profile 
 
   # Step routes for seller profile creation
-  resources :sellers, only: [:new, :create] do
+  resources :sellers, only: [:show, :edit, :update] do
     member do
       # Profile creation steps
       get :occupation_step          # Page for occupation info
@@ -13,10 +15,6 @@ Rails.application.routes.draw do
 
       get :security_step            # Page for security info
       patch :update_security_step   # Handles security step submission
-
-      # Gig creation step
-      get :create_gig_step          # Page for creating a gig
-      patch :update_create_gig_step # Handles gig creation submission
 
       # Account/Profile Page: View and Edit Seller Info
       get :account                  # Display the seller's account/profile
@@ -28,6 +26,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
+
+  # Language selector
+  get 'set_language', to: 'application#set_language', as: :set_language
 
   # Root route for the site
   root 'posts#index'
