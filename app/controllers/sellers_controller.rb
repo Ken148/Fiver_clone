@@ -74,7 +74,7 @@ class SellersController < ApplicationController
   end
 
   def security_step_params
-    params.require(:seller_profile).permit(:email, :phone_number) # Fixed parameter scope
+    params.require(:seller_profile).permit(:email, :phone_number, :country_code) # Include country_code here
   end
 
   def account_params

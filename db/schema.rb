@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_05_092047) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_090501) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -92,6 +92,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_05_092047) do
     t.string "gig_title"
     t.text "gig_description"
     t.decimal "gig_price"
+    t.string "country_code"
+    t.string "website"
     t.index ["user_id"], name: "index_seller_profiles_on_user_id"
   end
 

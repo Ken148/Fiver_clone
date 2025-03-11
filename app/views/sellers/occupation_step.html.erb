@@ -14,7 +14,7 @@
   </div>
 
   <!-- End Year Dropdown -->
-  <div class="field">
+  <div class="field" id="end-year-field" style="display: none;">
     <%= f.label :end_year, "End Year" %><br />
     <%= f.select :end_year, [], {}, { id: 'end-year-dropdown', required: true } %>
   </div>
@@ -54,31 +54,35 @@
       <div class="field">
         <label for="country-dropdown">Country:</label><br>
         <select id="country-dropdown" class="country-dropdown">
-          <!-- Options will be populated dynamically by JavaScript -->
+          <option value="USA">USA</option>
+          <option value="Canada">Canada</option>
+          <option value="UK">United Kingdom</option>
+          <option value="Germany">Germany</option>
+          <option value="Australia">Australia</option>
+          <option value="India">India</option>
         </select>
       </div>
 
       <div class="field">
         <label for="school-dropdown">School/University:</label><br>
-        <select id="school-dropdown" class="school-dropdown" disabled>
-          <!-- Options will be populated dynamically by JavaScript -->
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="graduation-year-dropdown">Graduation Year:</label><br>
-        <select id="graduation-year-dropdown" class="graduation-year-dropdown">
-          <!-- Options will be populated dynamically by JavaScript -->
+        <select id="school-dropdown" class="school-dropdown">
+          <option value="Harvard University">Harvard University</option>
+          <option value="MIT">MIT</option>
+          <option value="Stanford University">Stanford University</option>
+          <option value="Oxford University">Oxford University</option>
+          <option value="University of Toronto">University of Toronto</option>
+          <option value="University of Melbourne">University of Melbourne</option>
         </select>
       </div>
     </div>
   </div>
 
-  <!-- Website Section -->
+  <!-- Website Section (Normal Text Box) -->
   <div class="field">
-    <label for="website-textarea">Your Website Link:</label><br>
-    <textarea id="website-textarea" name="seller_profile[website]" rows="4" cols="50" placeholder="Put your website link here"></textarea>
+    <%= f.label :website, "Your Website Link:" %><br />
+    <%= f.text_field :website, placeholder: "Put your website link here", id: 'website-textbox' %>
   </div>
+
 
   <!-- Submit Button -->
   <%= f.submit t('work_info.continue'), class: 'btn-seller' %>
@@ -87,9 +91,10 @@
 <!-- JavaScript -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Start and End Year Code (Existing Code)
+    // Start and End Year Code (Updated Code)
     const startYearDropdown = document.getElementById("start-year-dropdown");
     const endYearDropdown = document.getElementById("end-year-dropdown");
+    const endYearField = document.getElementById("end-year-field");
 
     function updateEndYearOptions(selectedStartYear) {
         endYearDropdown.innerHTML = "";
@@ -101,19 +106,19 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    startYearDropdown.addEventListener("change", function() {
-        const selectedStartYear = startYearDropdown.value;
-        updateEndYearOptions(selectedStartYear);
-    });
-
-    if (startYearDropdown.value) {
-        updateEndYearOptions(startYearDropdown.value);
-    } else {
-        const firstStartYearOption = startYearDropdown.options[startYearDropdown.options.length - 1];
-        if (firstStartYearOption) {
-            updateEndYearOptions(firstStartYearOption.value);
+    function toggleEndYearVisibility() {
+        if (startYearDropdown.value) {
+            endYearField.style.display = "block"; // Show the End Year field
+            updateEndYearOptions(startYearDropdown.value);
+        } else {
+            endYearField.style.display = "none"; // Hide the End Year field
         }
     }
+
+    startYearDropdown.addEventListener("change", toggleEndYearVisibility);
+
+    // Initial visibility check
+    toggleEndYearVisibility();
 
     // Occupation Code (Existing Code)
     const occupationDropdown = document.getElementById("occupation-dropdown");
@@ -172,28 +177,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     generateCheckboxes(occupationDropdown.value);
 
-    // Skill Code (Existing Code)
+    // Skill Code (Updated - Prevent Duplicate Skills and No Edit Button)
     const addSkillButton = document.getElementById("add-skill-button");
     const skillsListContainer = document.getElementById("skills-list");
     const skillDropdown = document.getElementById("skill-dropdown");
     const skillLevelDropdown = document.getElementById("skill-level");
 
     function createSkillRow(skill, level) {
+        // Prevent duplicate skills
+        const existingSkills = Array.from(skillsListContainer.children).map(row => row.querySelector('span').textContent);
+        if (existingSkills.includes(skill)) {
+            alert("This skill has already been added!");
+            return;
+        }
+
         const skillRow = document.createElement("div");
         skillRow.classList.add("skill-row");
         skillRow.innerHTML =
             `<span>${skill}</span> - <span>${level}</span>
-            <button type="button" class="edit-skill-button">Edit</button>
             <button type="button" class="remove-skill-button">Remove</button>`;
         skillsListContainer.appendChild(skillRow);
 
-        const editButton = skillRow.querySelector(".edit-skill-button");
         const removeButton = skillRow.querySelector(".remove-skill-button");
-        editButton.addEventListener("click", () => {
-            skillDropdown.value = skill;
-            skillLevelDropdown.value = level;
-            skillRow.remove();
-        });
         removeButton.addEventListener("click", () => {
             skillRow.remove();
         });
@@ -208,8 +213,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Education Section Code (Existing Code)
     const countryDropdown = document.querySelector(".country-dropdown");
     const schoolDropdown = document.querySelector(".school-dropdown");
-    const graduationYearDropdown = document.querySelector(".graduation-year-dropdown");
 
+    // Prepopulate countries
     fetch("https://api.worldpopulationreview.com/v1/countries")
       .then(response => response.json())
       .then(data => {

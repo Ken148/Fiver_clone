@@ -66,6 +66,7 @@ en:
     language: "Preferred Language"
     save_profile: "Save Profile"  
     education: "Education"
+    continue: "Continue"
 
   work_info:
     title: "Work Information"
