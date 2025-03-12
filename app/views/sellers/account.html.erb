@@ -1,22 +1,22 @@
-<h1><%= t('complete_seller_profile.title') %></h1>
+<h1><%= t('account.title') %></h1>
 
 <%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
 
-  <!-- Displaying Full Name -->
+  <!-- Full Name -->
   <div>
-    <%= f.label :full_name, t('complete_seller_profile.full_name') %>
-    <%= f.text_field :full_name %>
+    <strong><%= t('complete_seller_profile.full_name') %>:</strong>
+    <%= f.text_field :full_name, value: @seller_profile.full_name %>
   </div>
 
-  <!-- Displaying Display Name -->
+  <!-- Display Name -->
   <div>
-    <%= f.label :display_name, t('complete_seller_profile.display_name') %>
-    <%= f.text_field :display_name %>
+    <strong><%= t('complete_seller_profile.display_name') %>:</strong>
+    <%= f.text_field :display_name, value: @seller_profile.display_name %>
   </div>
 
-  <!-- Displaying Profile Picture -->
+  <!-- Profile Picture -->
   <div>
-    <%= f.label :profile_picture, t('complete_seller_profile.profile_picture') %><br>
+    <strong><%= t('complete_seller_profile.profile_picture') %>:</strong><br>
     <% if @seller_profile.profile_picture.attached? %>
       <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
@@ -25,51 +25,108 @@
     <%= f.file_field :profile_picture %>
   </div>
 
-  <!-- Displaying Description -->
+  <!-- Profile Description -->
   <div>
-    <%= f.label :description, t('complete_seller_profile.description') %>
-    <%= f.text_area :description %>
+    <strong><%= t('complete_seller_profile.description') %>:</strong>
+    <%= f.text_area :description, value: @seller_profile.description %>
   </div>
 
-  <!-- Display Language -->
+  <!-- Preferred Language -->
   <div>
-    <%= f.label :language, t('complete_seller_profile.language') %>
-    <%= f.select :language, options_for_select(LanguageList::COMMON_LANGUAGES.map { |lang| [lang.name, lang.name] }, @seller_profile.language) %>
+    <strong><%= t('complete_seller_profile.language') %>:</strong>
+    <%= f.select :language, options_for_select(["English", "Spanish", "French", "German", "Chinese", "Japanese", "Other"], @seller_profile.language), {}, { id: 'language-dropdown' } %>
   </div>
 
-  <!-- Display Occupation -->
-  <div>
+  <!-- Work Information -->
+  <h2><%= t('work_info.title') %></h2>
+
+  <!-- Occupation -->
+  <div class="field">
     <%= f.label :occupation, t('work_info.occupation') %><br />
-    <%= f.text_field :occupation %>
+    <%= f.select :occupation, ["Music and Audio", "Software Development", "Marketing", "Design", "Writing", "Healthcare", "Other"], {}, { id: 'occupation-dropdown', required: true } %>
   </div>
 
-  <!-- Display Skills -->
-  <div>
+  <!-- Skills -->
+  <div class="field">
     <%= f.label :skills, t('work_info.skills') %><br />
-    <%= f.text_area :skills %>
+    <%= f.select :skills, options_for_select(["Audio Editing", "Web Development", "SEO Optimization", "Graphic Design", "Content Writing", "Copywriting", "Front-end Development", "Back-end Development", "Social Media Marketing", "Data Science", "Mobile App Development"]), {}, { id: 'skill-dropdown' } %>
+    <%= f.select :skill_level, options_for_select(["Beginner", "Intermediate", "Expert"]), {}, { id: 'skill-level' } %>
+    <button type="button" id="add-skill-button">Add Skill</button>
   </div>
 
-  <!-- Display Education -->
-  <div>
-    <%= f.label :education, t('complete_seller_profile.education') %><br />
-    <% if @seller_profile.educations.any? %>
-      <% @seller_profile.educations.each do |education| %>
-        <div>
-          <%= f.fields_for :educations, education do |education_fields| %>
-            <%= education_fields.label :degree, "Degree" %>
-            <%= education_fields.text_field :degree %>
-            <%= education_fields.label :school_name, "School Name" %>
-            <%= education_fields.text_field :school_name %>
-            <%= education_fields.label :graduation_year, "Graduation Year" %>
-            <%= education_fields.number_field :graduation_year %>
-          <% end %>
-        </div>
-      <% end %>
+  <!-- Added Skills List -->
+  <div id="skills-list">
+    <!-- Dynamically added skills will appear here -->
+  </div>
+
+  <!-- Country -->
+  <div class="field">
+    <%= f.label :country, "Country" %><br />
+    <%= f.select :country, options_for_select(["USA", "Canada", "UK", "Germany", "Australia", "India"], @seller_profile.country), {}, { id: 'country-dropdown' } %>
+  </div>
+
+  <!-- Education Section -->
+  <h2><%= t('complete_seller_profile.education') %></h2>
+  <div id="education-section">
+    <!-- Remove School/University section -->
+  </div>
+
+  <!-- Website Link -->
+  <div class="field">
+    <%= f.label :website, "Your Website Link:" %><br />
+    <%= f.text_field :website, placeholder: "Put your website link here", value: @seller_profile.website, id: 'website-textbox' %><br />
+    
+    <% if @seller_profile.website.present? %>
+      <!-- Display the saved website as a link if available -->
+      <strong>Website: </strong>
+      <%= link_to @seller_profile.website, @seller_profile.website, target: "_blank" %>
     <% else %>
-      <p>No education listed.</p>
+      <!-- Display a message if no website is saved yet -->
+      <p>No website added yet.</p>
     <% end %>
   </div>
 
+  <!-- Save Profile Button -->
   <%= f.submit t('complete_seller_profile.save_profile'), class: 'btn-seller' %>
 
 <% end %>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Skills Section: Add new skills
+    const addSkillButton = document.getElementById("add-skill-button");
+    const skillsListContainer = document.getElementById("skills-list");
+    const skillDropdown = document.getElementById("skill-dropdown");
+    const skillLevelDropdown = document.getElementById("skill-level");
+
+    function createSkillRow(skill, level) {
+        // Prevent duplicate skills
+        const existingSkills = Array.from(skillsListContainer.children).map(row => row.querySelector('span').textContent);
+        if (existingSkills.includes(skill)) {
+            alert("This skill has already been added!");
+            return;
+        }
+
+        const skillRow = document.createElement("div");
+        skillRow.classList.add("skill-row");
+        skillRow.innerHTML =
+            `<span>${skill}</span> - <span>${level}</span>
+            <button type="button" class="remove-skill-button">Remove</button>`;
+        skillsListContainer.appendChild(skillRow);
+
+        const removeButton = skillRow.querySelector(".remove-skill-button");
+        removeButton.addEventListener("click", () => {
+            skillRow.remove();
+        });
+    }
+
+    addSkillButton.addEventListener("click", function() {
+        const selectedSkill = skillDropdown.value;
+        const selectedLevel = skillLevelDropdown.value;
+        createSkillRow(selectedSkill, selectedLevel);
+    });
+
+    // Education Section: Dynamically handle school names (removed)
+});
+</script>

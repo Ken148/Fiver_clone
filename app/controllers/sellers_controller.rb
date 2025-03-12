@@ -6,7 +6,8 @@ class SellersController < ApplicationController
   end
 
   def create
-    current_user.seller_profile&.destroy  # Remove existing profile if any
+    # Remove existing profile if any
+    current_user.seller_profile&.destroy
 
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
 
@@ -44,7 +45,7 @@ class SellersController < ApplicationController
   end
 
   def account
-    @gigs = @seller_profile.gigs
+    @gigs = @seller_profile.gigs # Assuming SellerProfile has an association with Gigs
   end
 
   def update_account
@@ -60,9 +61,11 @@ class SellersController < ApplicationController
 
   def set_seller_profile
     return if action_name == 'new' || action_name == 'create'
-
+    
     @seller_profile = current_user.seller_profile
-    redirect_to new_seller_profile_path, alert: "You need to create a seller profile!" if @seller_profile.nil?
+    unless @seller_profile
+      redirect_to new_seller_profile_path, alert: "You need to create a seller profile first!"
+    end
   end
 
   def seller_profile_params
