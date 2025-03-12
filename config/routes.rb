@@ -17,17 +17,17 @@ Rails.application.routes.draw do
     end
   end
 
-  # Devise user authentication routes
+  # Devise user authentication routes with omniauth callback handling
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # Language selector
+  # Language selector route
   get 'set_language', to: 'application#set_language', as: :set_language
 
   # Root route for the site
   root 'posts#index'
 
-  # Post related routes (assuming you're using posts for gigs)
+  # Post related routes
   resources :posts, only: [:index, :new, :create, :show, :edit, :update]
 end
