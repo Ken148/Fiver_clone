@@ -30,4 +30,7 @@ Rails.application.routes.draw do
 
   # Root route for the site
   root 'posts#index'
+
+  # Post related routes
+  resources :posts, only: [:index, :new, :create, :show, :edit, :update]
 end
