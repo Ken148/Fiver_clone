@@ -22,6 +22,12 @@
     <%= form.text_area :content %>
   </div>
 
+  <!-- Select a gig for the post -->
+  <div class="field">
+    <%= form.label :gig_id, t('posts.form.select_gig') %> <!-- Translated label for "Select Gig" -->
+    <%= form.collection_select :gig_id, @gigs, :id, :title, { prompt: t('posts.form.select_gig_prompt') } %>
+  </div>
+
   <div class="actions">
     <%= form.submit t('posts.form.update_post') %> <!-- Translated button text for "Update Post" -->
   </div>

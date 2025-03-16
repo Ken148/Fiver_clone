@@ -1,11 +1,11 @@
 <h1><%= t('posts.new.title') %></h1> <!-- Translated title for "Create a New Post" -->
 
-<%= form_with(model: @seller_profile, local: true, html: { multipart: true }) do |form| %>
-  <% if @seller_profile.errors.any? %>
+<%= form_with(model: @post, local: true, html: { multipart: true }) do |form| %>
+  <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@seller_profile.errors.count, t('errors.count_errors')) %> <%= t('errors.prohibited_post') %></h2> <!-- Translated error message -->
+      <h2><%= pluralize(@post.errors.count, t('errors.count_errors')) %> <%= t('errors.prohibited_post') %></h2> <!-- Translated error message -->
       <ul>
-        <% @seller_profile.errors.full_messages.each do |message| %>
+        <% @post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -13,32 +13,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :full_name, t('posts.new.full_name_label') %> <!-- Translated label for "Full Name" -->
-    <%= form.text_field :full_name %>
+    <%= form.label :title, t('posts.new.title_label') %> <!-- Translated label for "Title" -->
+    <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :display_name, t('posts.new.display_name_label') %> <!-- Translated label for "Display Name" -->
-    <%= form.text_field :display_name %>
+    <%= form.label :content, t('posts.new.content_label') %> <!-- Translated label for "Content" -->
+    <%= form.text_area :content %>
   </div>
 
+  <!-- Select a gig for the post -->
   <div class="field">
-    <%= form.label :profile_picture, t('posts.new.profile_picture_label') %> <!-- Translated label for "Profile Picture" -->
-    <%= form.file_field :profile_picture %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description, t('posts.new.description_label') %> <!-- Translated label for "Description" -->
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :language, t('posts.new.language_label') %> <!-- Translated label for "Language" -->
-    <%= form.text_field :language %>
+    <%= form.label :gig_id, t('posts.new.select_gig') %> <!-- Translated label for "Select Gig" -->
+    <%= form.collection_select :gig_id, @gigs, :id, :title, { prompt: t('posts.new.select_gig_prompt') } %> <!-- List available gigs -->
   </div>
 
   <div class="actions">
-    <%= form.submit t('posts.new.create_post') %> <!-- Translated submit button text -->
+    <%= form.submit t('posts.new.create_post') %> <!-- Translated button text for "Create Post" -->
   </div>
 <% end %>
 

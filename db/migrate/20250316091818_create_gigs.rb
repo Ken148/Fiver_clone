@@ -4,7 +4,7 @@ class CreateGigs < ActiveRecord::Migration[8.0]
       t.string :title
       t.text :description
       t.decimal :price
-      t.references :seller_profile, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end

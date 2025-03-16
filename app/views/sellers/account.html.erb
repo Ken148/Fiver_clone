@@ -65,12 +65,6 @@
     <%= f.select :country, options_for_select(["USA", "Canada", "UK", "Germany", "Australia", "India"], @seller_profile.country), {}, { id: 'country-dropdown' } %>
   </div>
 
-  <!-- Education Section -->
-  <h2><%= t('complete_seller_profile.education') %></h2>
-  <div id="education-section">
-    <!-- Remove School/University section -->
-  </div>
-
   <!-- Website Link -->
   <div class="field">
     <%= f.label :website, "Your Website Link:" %><br />
@@ -89,9 +83,26 @@
   <!-- Save Profile Button -->
   <%= f.submit t('complete_seller_profile.save_profile'), class: 'btn-seller' %>
 
+  <!-- Gigs Section (Display posts as gigs) -->
+  <div>
+    <strong>Gigs (Posts):</strong>
+    <% if @seller_profile.gigs.any? %>
+      <% @seller_profile.gigs.each do |gig| %>
+        <%= link_to gig.title, gig_path(gig) %><br>
+      <% end %>
+    <% else %>
+      <p>No gigs (posts) created yet.</p>
+    <% end %>
+  </div>
+
+  <% if @seller_profile.gigs.empty? %>
+    <!-- Button to create the first gig (post) -->
+    <%= link_to 'Create Your First Gig', new_post_path, class: 'btn-create-gig' %>
+  <% end %>
+
 <% end %>
 
-<!-- JavaScript -->
+<!-- JavaScript for dynamically adding skills -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Skills Section: Add new skills
@@ -126,7 +137,5 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedLevel = skillLevelDropdown.value;
         createSkillRow(selectedSkill, selectedLevel);
     });
-
-    // Education Section: Dynamically handle school names (removed)
 });
 </script>

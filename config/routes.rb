@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     end
   end
 
+  # Nested Gigs under Posts
+  resources :posts, only: [:index, :new, :create, :show, :edit, :update] do
+    resources :gigs, only: [:new, :create, :show, :edit, :update]  # Allow creating and showing gigs under posts
+  end
+
   # Devise user authentication routes with omniauth callback handling
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
@@ -28,6 +33,6 @@ Rails.application.routes.draw do
   # Root route for the site
   root 'posts#index'
 
-  # Post related routes
-  resources :posts, only: [:index, :new, :create, :show, :edit, :update]
+  # Post related routes (this line seems redundant since it's already included above in resources :posts)
+  # resources :posts, only: [:index, :new, :create, :show, :edit, :update]  # This line is redundant and can be removed
 end

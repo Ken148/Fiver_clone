@@ -1,6 +1,6 @@
 class SellersController < ApplicationController
   before_action :set_seller_profile, except: [:new, :create]
-
+  
   def new
     @seller_profile = SellerProfile.new
   end
@@ -10,6 +10,11 @@ class SellersController < ApplicationController
     current_user.seller_profile&.destroy
 
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
+
+    # Optional: Associate the seller profile with a post (if needed)
+    if current_user.posts.exists?
+      @seller_profile.post = current_user.posts.first # Or prompt the user to create a post first
+    end
 
     if @seller_profile.save
       flash[:notice] = "Profile saved! Now add your occupation and skills."
@@ -46,6 +51,7 @@ class SellersController < ApplicationController
 
   def account
     @gigs = @seller_profile.gigs # Assuming SellerProfile has an association with Gigs
+    @post = @seller_profile.post # Ensure post is set here as well
   end
 
   def update_account
