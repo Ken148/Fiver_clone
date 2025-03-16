@@ -6,23 +6,28 @@ class PostsController < ApplicationController
     if params[:search].present?
       # Perform a search on both post and gig titles, and post content and gig descriptions
       @posts = Post.joins(:gig)
-                   .where("posts.title LIKE ? OR gigs.title LIKE ? OR posts.content LIKE ? OR gigs.description LIKE ?", 
-                          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+                   .where("posts.title LIKE :search OR gigs.title LIKE :search OR posts.content LIKE :search OR gigs.description LIKE :search", 
+                          search: "%#{params[:search]}%")
     else
       @posts = Post.all
     end
   end
 
   def show
-    @post = Post.find(params[:id])
+    # @post is already set by before_action, no need to fetch it again
   end
 
   def new
     @post = current_user.posts.new
+    # If needed, add logic to allow the user to select a gig here, or assign a default
+    # For example, you could populate @gigs to display them for the user to choose
+    @gigs = current_user.gigs  # Assuming a user has multiple gigs (posts) 
   end
 
   def create
+    # Ensure the post is associated with a gig
     @post = current_user.posts.new(post_params)
+    # If gig_id is not provided, redirect back with an error or automatically associate it
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
@@ -31,7 +36,8 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = current_user.posts.find(params[:id])
+    # @post is already set by before_action, no need to fetch it again
+    @gigs = current_user.gigs  # Allow user to change the gig association
   end
 
   def update
@@ -45,11 +51,12 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find_by(id: params[:id])
-    redirect_to posts_path, alert: 'Post not found.' if @post.nil?
+    @post = Post.find(params[:id])  # This will raise ActiveRecord::RecordNotFound if the post doesn't exist
+  rescue ActiveRecord::RecordNotFound
+    redirect_to posts_path, alert: 'Post not found.'
   end
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :gig_id)  # Ensure gig_id is included
   end
 end
