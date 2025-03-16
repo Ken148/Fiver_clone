@@ -1,13 +1,6 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.content %></p>
 
-<!-- Display associated gig details -->
-<% if @post.gig.present? %>
-  <h2><%= t('posts.show.gig_title') %>: <%= @post.gig.title %></h2> <!-- Translated "Gig Title" -->
-  <p><%= t('posts.show.gig_description', description: @post.gig.description) %></p> <!-- Translated "Gig Description" -->
-  <p><%= t('posts.show.gig_price', price: @post.gig.price) %></p> <!-- Translated "Gig Price" -->
-<% end %>
-
 <% if @post.user == current_user %> <!-- Only show "Edit" for the post creator -->
   <%= link_to t('posts.show.edit'), edit_post_path(@post), class: 'button' %> <!-- Translated "Edit" button -->
   |
