@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_12_071823) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_16_105540) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,14 +40,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_071823) do
   end
 
   create_table "educations", force: :cascade do |t|
-    t.integer "seller_profile_id", null: false
-    t.string "degree"
     t.string "school_name"
-    t.integer "graduation_year"
+    t.string "degree"
+    t.string "field_of_study"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "new_column_name"
-    t.index ["seller_profile_id"], name: "index_educations_on_seller_profile_id"
   end
 
   create_table "gigs", force: :cascade do |t|
@@ -66,6 +65,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_071823) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gig_id"
+    t.decimal "basic_price"
+    t.decimal "standard_price"
+    t.decimal "premium_price"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -78,7 +81,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_071823) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "occupation"
-    t.string "skills"
+    t.text "skills"
     t.string "education"
     t.string "certifications"
     t.string "personal_website"
@@ -114,7 +117,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_071823) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "educations", "seller_profiles"
+  add_foreign_key "educations", "users"
   add_foreign_key "gigs", "seller_profiles"
   add_foreign_key "posts", "users"
 end

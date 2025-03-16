@@ -14,12 +14,11 @@ class PostsController < ApplicationController
   end
 
   def show
-    # No need to call Post.find since set_post already loads the post
+    @post = Post.find(params[:id])
   end
 
   def new
     @post = current_user.posts.new
-    @gigs = current_user.gigs # Allow the user to select a gig
   end
 
   def create
@@ -27,20 +26,18 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
-      @gigs = current_user.gigs # Allow the user to choose gigs again if errors occur
       render :new
     end
   end
 
   def edit
-    @gigs = current_user.gigs # Allow the user to select a gig for the post
+    @post = current_user.posts.find(params[:id])
   end
 
   def update
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
-      @gigs = current_user.gigs # Allow the user to choose gigs again if errors occur
       render :edit
     end
   end
@@ -53,6 +50,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :gig_id) # Ensure gig_id is permitted for the form
+    params.require(:post).permit(:title, :content)
   end
 end
