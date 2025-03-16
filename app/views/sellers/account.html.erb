@@ -1,17 +1,17 @@
 <h1><%= t('account.title') %></h1>
 
-<%= form_for @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
+<%= form_with model: @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
 
   <!-- Full Name -->
   <div>
     <strong><%= t('complete_seller_profile.full_name') %>:</strong>
-    <%= f.text_field :full_name, value: @seller_profile.full_name %>
+    <%= f.text_field :full_name %>
   </div>
 
   <!-- Display Name -->
   <div>
     <strong><%= t('complete_seller_profile.display_name') %>:</strong>
-    <%= f.text_field :display_name, value: @seller_profile.display_name %>
+    <%= f.text_field :display_name %>
   </div>
 
   <!-- Profile Picture -->
@@ -28,7 +28,7 @@
   <!-- Profile Description -->
   <div>
     <strong><%= t('complete_seller_profile.description') %>:</strong>
-    <%= f.text_area :description, value: @seller_profile.description %>
+    <%= f.text_area :description %>
   </div>
 
   <!-- Preferred Language -->
@@ -68,26 +68,48 @@
   <!-- Education Section -->
   <h2><%= t('complete_seller_profile.education') %></h2>
   <div id="education-section">
-    <!-- Remove School/University section -->
+    <!-- Removed School/University section -->
   </div>
 
   <!-- Website Link -->
   <div class="field">
     <%= f.label :website, "Your Website Link:" %><br />
-    <%= f.text_field :website, placeholder: "Put your website link here", value: @seller_profile.website, id: 'website-textbox' %><br />
+    <%= f.text_field :website, placeholder: "Put your website link here", id: 'website-textbox' %><br />
     
     <% if @seller_profile.website.present? %>
-      <!-- Display the saved website as a link if available -->
       <strong>Website: </strong>
       <%= link_to @seller_profile.website, @seller_profile.website, target: "_blank" %>
     <% else %>
-      <!-- Display a message if no website is saved yet -->
       <p>No website added yet.</p>
     <% end %>
   </div>
 
   <!-- Save Profile Button -->
   <%= f.submit t('complete_seller_profile.save_profile'), class: 'btn-seller' %>
+
+  <h2>Gigs (Posts):</h2>
+
+  <!-- Add Create Gig Button -->
+  <%= link_to 'Create New Gig', new_post_path, class: 'btn-create-gig' %> <!-- This button will take the user to the gig creation page -->
+
+  <% if @gigs.any? %>
+    <% @gigs.each do |gig| %>
+      <p><%= link_to gig.title, gig_path(gig) %></p>
+      
+      <!-- Display the posts related to each gig -->
+      <% if gig.posts.any? %> <!-- This checks if the gig has posts -->
+        <ul>
+          <% gig.posts.each do |post| %> <!-- Iterate through each post related to the gig -->
+            <li><%= link_to post.title, post_path(post) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No posts for this gig.</p>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>No gigs (posts) created yet.</p>
+  <% end %>
 
 <% end %>
 
@@ -126,7 +148,5 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedLevel = skillLevelDropdown.value;
         createSkillRow(selectedSkill, selectedLevel);
     });
-
-    // Education Section: Dynamically handle school names (removed)
 });
 </script>

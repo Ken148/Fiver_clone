@@ -1,6 +1,28 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.content %></p>
 
+<p><strong>Created by:</strong> <%= @post.user.seller_profile.full_name %></p> <!-- Fetching full name from seller_profile -->
+
+<h3>Gig Details:</h3>
+<p><strong>Gig Title:</strong> <%= @post.gig.title %></p>
+<p><strong>Description:</strong> <%= @post.gig.description %></p>
+
+<!-- Displaying the images for the different gig tiers -->
+<% if @post.gig.basic_image.present? %>
+  <p><strong>Basic Plan:</strong> <%= image_tag(@post.gig.basic_image) %></p>
+  <p>Price: <%= @post.gig.basic_price %></p>
+<% end %>
+
+<% if @post.gig.standard_image.present? %>
+  <p><strong>Standard Plan:</strong> <%= image_tag(@post.gig.standard_image) %></p>
+  <p>Price: <%= @post.gig.standard_price %></p>
+<% end %>
+
+<% if @post.gig.premium_image.present? %>
+  <p><strong>Premium Plan:</strong> <%= image_tag(@post.gig.premium_image) %></p>
+  <p>Price: <%= @post.gig.premium_price %></p>
+<% end %>
+
 <% if @post.user == current_user %> <!-- Only show "Edit" for the post creator -->
   <%= link_to t('posts.show.edit'), edit_post_path(@post), class: 'button' %> <!-- Translated "Edit" button -->
   |

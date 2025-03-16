@@ -22,6 +22,57 @@
     <%= form.text_area :content %>
   </div>
 
+  <!-- Select a gig for the post -->
+  <div class="field">
+    <%= form.label :gig_id, t('posts.form.select_gig') %> <!-- Translated label for "Select Gig" -->
+    <%= form.collection_select :gig_id, @gigs, :id, :title, { prompt: t('posts.form.select_gig_prompt') } %>
+  </div>
+
+  <!-- Nested Gig Fields -->
+  <div class="nested-fields">
+    <%= form.fields_for :gig do |gig_form| %>
+      <div class="field">
+        <%= gig_form.label :title, t('posts.form.gig_title') %> <!-- Translated label for "Gig Title" -->
+        <%= gig_form.text_field :title %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :description, t('posts.form.gig_description') %> <!-- Translated label for "Gig Description" -->
+        <%= gig_form.text_area :description %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :basic_price, t('posts.form.gig_basic_price') %> <!-- Translated label for "Gig Basic Price" -->
+        <%= gig_form.number_field :basic_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :standard_price, t('posts.form.gig_standard_price') %> <!-- Translated label for "Gig Standard Price" -->
+        <%= gig_form.number_field :standard_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_price, t('posts.form.gig_premium_price') %> <!-- Translated label for "Gig Premium Price" -->
+        <%= gig_form.number_field :premium_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :basic_image, t('posts.form.gig_basic_image') %> <!-- Translated label for "Basic Image" -->
+        <%= gig_form.file_field :basic_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :standard_image, t('posts.form.gig_standard_image') %> <!-- Translated label for "Standard Image" -->
+        <%= gig_form.file_field :standard_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_image, t('posts.form.gig_premium_image') %> <!-- Translated label for "Premium Image" -->
+        <%= gig_form.file_field :premium_image %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= form.submit t('posts.form.update_post') %> <!-- Translated button text for "Update Post" -->
   </div>

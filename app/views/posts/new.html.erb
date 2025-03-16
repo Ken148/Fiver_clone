@@ -1,41 +1,76 @@
 <h1><%= t('posts.new.title') %></h1> <!-- Translated title for "Create a New Post" -->
 
-<%= form_with(model: @seller_profile, local: true, html: { multipart: true }) do |form| %>
-  <% if @seller_profile.errors.any? %>
+<%= form_with(model: @post, local: true, html: { multipart: true }) do |form| %>
+  <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@seller_profile.errors.count, t('errors.count_errors')) %> <%= t('errors.prohibited_post') %></h2> <!-- Translated error message -->
+      <h2><%= pluralize(@post.errors.count, t('errors.count_errors')) %> <%= t('errors.prohibited_post') %></h2> <!-- Translated error message -->
       <ul>
-        <% @seller_profile.errors.full_messages.each do |message| %>
+        <% @post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
+  <!-- Post Fields -->
   <div class="field">
-    <%= form.label :full_name, t('posts.new.full_name_label') %> <!-- Translated label for "Full Name" -->
-    <%= form.text_field :full_name %>
+    <%= form.label :title, t('posts.new.title_label') %>
+    <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :display_name, t('posts.new.display_name_label') %> <!-- Translated label for "Display Name" -->
-    <%= form.text_field :display_name %>
+    <%= form.label :content, t('posts.new.content_label') %>
+    <%= form.text_area :content %>
   </div>
 
-  <div class="field">
-    <%= form.label :profile_picture, t('posts.new.profile_picture_label') %> <!-- Translated label for "Profile Picture" -->
-    <%= form.file_field :profile_picture %>
-  </div>
+  <!-- Gig Fields -->
+  <fieldset>
+    <legend><%= t('posts.new.gig_details') %></legend>
 
-  <div class="field">
-    <%= form.label :description, t('posts.new.description_label') %> <!-- Translated label for "Description" -->
-    <%= form.text_area :description %>
-  </div>
+    <%= form.fields_for :gig, @post.gig do |gig_form| %>
+      <div class="field">
+        <%= gig_form.label :title, t('posts.new.gig_title_label') %>
+        <%= gig_form.text_field :title %>
+      </div>
 
-  <div class="field">
-    <%= form.label :language, t('posts.new.language_label') %> <!-- Translated label for "Language" -->
-    <%= form.text_field :language %>
-  </div>
+      <div class="field">
+        <%= gig_form.label :description, t('posts.new.gig_description_label') %>
+        <%= gig_form.text_area :description %>
+      </div>
+
+      <!-- Pricing Fields -->
+      <div class="field">
+        <%= gig_form.label :basic_price, t('posts.new.basic_price_label') %>
+        <%= gig_form.number_field :basic_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :standard_price, t('posts.new.standard_price_label') %>
+        <%= gig_form.number_field :standard_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_price, t('posts.new.premium_price_label') %>
+        <%= gig_form.number_field :premium_price %>
+      </div>
+
+      <!-- Image Fields (Optional) -->
+      <div class="field">
+        <%= gig_form.label :basic_image, t('posts.new.basic_image_label') %>
+        <%= gig_form.file_field :basic_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :standard_image, t('posts.new.standard_image_label') %>
+        <%= gig_form.file_field :standard_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_image, t('posts.new.premium_image_label') %>
+        <%= gig_form.file_field :premium_image %>
+      </div>
+    <% end %>
+  </fieldset>
 
   <div class="actions">
     <%= form.submit t('posts.new.create_post') %> <!-- Translated submit button text -->

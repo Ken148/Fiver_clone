@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_16_105540) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,6 +56,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_105540) do
     t.integer "seller_profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "basic_price", default: "0.0", null: false
+    t.decimal "standard_price", default: "0.0", null: false
+    t.decimal "premium_price", default: "0.0", null: false
+    t.text "basic_description"
+    t.text "standard_description"
+    t.text "premium_description"
+    t.string "basic_image"
+    t.string "standard_image"
+    t.string "premium_image"
     t.index ["seller_profile_id"], name: "index_gigs_on_seller_profile_id"
   end
 
@@ -119,5 +128,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_105540) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "educations", "users"
   add_foreign_key "gigs", "seller_profiles"
+  add_foreign_key "posts", "gigs"
   add_foreign_key "posts", "users"
 end

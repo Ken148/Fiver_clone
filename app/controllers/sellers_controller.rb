@@ -20,8 +20,7 @@ class SellersController < ApplicationController
     end
   end
 
-  def occupation_step
-  end
+  def occupation_step; end
 
   def update_occupation_step
     if @seller_profile.update(occupation_step_params)
@@ -32,8 +31,7 @@ class SellersController < ApplicationController
     end
   end
 
-  def security_step
-  end
+  def security_step; end
 
   def update_security_step
     if @seller_profile.update(security_step_params)
@@ -45,7 +43,7 @@ class SellersController < ApplicationController
   end
 
   def account
-    @gigs = @seller_profile.gigs # Assuming SellerProfile has an association with Gigs
+    @gigs = @seller_profile.gigs.includes(:posts) # Preload posts for efficiency
   end
 
   def update_account
@@ -60,9 +58,10 @@ class SellersController < ApplicationController
   private
 
   def set_seller_profile
-    return if action_name == 'new' || action_name == 'create'
-    
+    return if action_name.in?(%w[new create])
+
     @seller_profile = current_user.seller_profile
+
     unless @seller_profile
       redirect_to new_seller_profile_path, alert: "You need to create a seller profile first!"
     end
@@ -77,7 +76,7 @@ class SellersController < ApplicationController
   end
 
   def security_step_params
-    params.require(:seller_profile).permit(:email, :phone_number, :country_code) # Include country_code here
+    params.require(:seller_profile).permit(:email, :phone_number, :country_code)
   end
 
   def account_params
