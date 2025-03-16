@@ -4,7 +4,10 @@ class PostsController < ApplicationController
 
   def index
     if params[:search].present?
-      @posts = Post.joins(:gig).where("posts.title LIKE ? OR gigs.title LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      # Perform a search on both post and gig titles, and post content and gig descriptions
+      @posts = Post.joins(:gig)
+                   .where("posts.title LIKE ? OR gigs.title LIKE ? OR posts.content LIKE ? OR gigs.description LIKE ?", 
+                          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
     else
       @posts = Post.all
     end
@@ -34,7 +37,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    # No need to call current_user.posts.find as @post is already set by set_post
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
@@ -47,7 +49,6 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find_by(id: params[:id])
-    # If no post is found, redirect to posts list with an alert
     redirect_to posts_path, alert: 'Post not found.' if @post.nil?
   end
 

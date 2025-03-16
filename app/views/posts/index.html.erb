@@ -3,7 +3,7 @@
 <!-- Search Bar -->
 <div class="search-container">
   <%= form_with url: posts_path, method: :get, local: true do %>
-    <input type="text" name="search" class="search-box" placeholder="<%= t('posts.index.search_placeholder') %>"> <!-- Translated placeholder for "Search posts..." -->
+    <input type="text" name="search" class="search-box" placeholder="<%= t('posts.index.search_placeholder') %>" value="<%= params[:search] %>"> <!-- Pre-fill the search box with the current query -->
     <button type="submit" class="btn-search"><%= t('posts.index.search_button') %></button> <!-- Translated button for "Search" -->
   <% end %>
 </div>
@@ -12,7 +12,6 @@
 <div class="become-seller-container">
   <%= link_to t('posts.index.become_seller'), user_signed_in? ? become_a_seller_path : new_user_session_path, class: 'btn-seller' %> <!-- If not signed in, redirect to login page -->
 </div>
-
 
 <!-- Display Posts -->
 <div class="post-container">
