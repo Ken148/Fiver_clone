@@ -40,13 +40,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
   end
 
   create_table "educations", force: :cascade do |t|
-    t.string "school_name"
+    t.integer "seller_profile_id", null: false
     t.string "degree"
-    t.string "field_of_study"
-    t.integer "user_id"
+    t.string "school_name"
+    t.integer "graduation_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "new_column_name"
+    t.index ["seller_profile_id"], name: "index_educations_on_seller_profile_id"
   end
 
   create_table "gigs", force: :cascade do |t|
@@ -62,9 +63,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
     t.text "basic_description"
     t.text "standard_description"
     t.text "premium_description"
-    t.string "basic_image"
-    t.string "standard_image"
-    t.string "premium_image"
     t.index ["seller_profile_id"], name: "index_gigs_on_seller_profile_id"
   end
 
@@ -74,10 +72,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "gig_id"
     t.decimal "basic_price"
     t.decimal "standard_price"
     t.decimal "premium_price"
+    t.integer "gig_id", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -90,7 +88,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "occupation"
-    t.text "skills"
+    t.string "skills"
     t.string "education"
     t.string "certifications"
     t.string "personal_website"
@@ -126,7 +124,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "educations", "users"
+  add_foreign_key "educations", "seller_profiles"
   add_foreign_key "gigs", "seller_profiles"
   add_foreign_key "posts", "gigs"
   add_foreign_key "posts", "users"
