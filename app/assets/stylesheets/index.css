@@ -1,0 +1,134 @@
+/* General body styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F4F4F4; /* Light Gray */
+}
+
+/* Search container styling */
+.search-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-box {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.btn-search {
+    padding: 8px 15px; /* Reduced padding for smaller buttons */
+    border: none;
+    border-radius: 5px;
+    background-color: #1DBF73; /* Fiverr Green */
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    min-width: 120px; /* Ensures button does not become too small */
+}
+
+.btn-search:hover {
+    background-color: #138c53; /* Darker Fiverr Green */
+}
+
+/* Post container styling */
+.post-container {
+    margin-top: 20px;
+}
+
+.post {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.post h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.post p {
+    margin: 10px 0 0;
+}
+
+/* Become a Seller button styling */
+.become-seller-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-seller {
+    padding: 8px 15px; /* Reduced padding for smaller buttons */
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745; /* Darker Green */
+    color: white;
+    cursor: pointer;
+    min-width: 120px; /* Ensures button does not become too small */
+}
+
+.btn-seller:hover {
+    background-color: #218838; /* Darker Green */
+}
+
+/* Generic button styling for other buttons */
+.btn {
+    padding: 8px 15px; /* Reduced padding for a more compact size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 120px; /* Prevents the buttons from being too small */
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #1DBF73; /* Fiverr Green */
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #138c53; /* Darker Fiverr Green */
+}
+
+.btn-info {
+    background-color: #17a2b8; /* Light Blue */
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Yellow */
+    color: black;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-success {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}

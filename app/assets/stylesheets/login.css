@@ -1,0 +1,80 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F4F4F4; /* Light Gray */
+    color: black;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Login Form Container */
+.login-container {
+    background-color: #4A4A4A; /* Dark Gray */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Form Fields */
+.field {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input[type="email"], 
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Remember Me Checkbox */
+.field input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Buttons */
+.actions input[type="submit"], 
+button {
+    background-color: #1DBF73; /* Fiverr Green */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto;
+    min-width: 120px;
+}
+
+.actions input[type="submit"]:hover, 
+button:hover {
+    background-color: #138c53; /* Darker Fiverr Green */
+}
+
+/* Links */
+a {
+    color: #1DBF73; /* Fiverr Green */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

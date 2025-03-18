@@ -24,3 +24,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+<%= yield :stylesheets %>  <!-- This allows specific pages to insert styles -->

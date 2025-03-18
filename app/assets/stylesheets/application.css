@@ -1,148 +1,96 @@
-/* General Styles */
+/* General body styling */
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-}
-
-h1, h2 {
-    color: #007bff;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-form div {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-form label {
-    font-weight: bold;
-}
-
-form input[type="text"],
-form input[type="file"],
-form select,
-form textarea {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-form input[type="file"] {
-    padding: 3px;
-}
-
-form textarea {
-    resize: vertical;
-    height: 100px;
-}
-
-/* Button Styles */
-.btn-seller, .btn-create-gig {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-.btn-seller:hover, .btn-create-gig:hover {
-    background-color: #0056b3;
-}
-
-/* Skills Section */
-#skills-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.skill-row {
+  }
+  
+  /* Navigation bar styling */
+  nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.remove-skill-button {
-    background-color: #ff4d4d;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Fiverb button styling (top left) */
+  nav .btn-primary {
+    margin-right: auto; /* Pushes everything else to the right */
+    background-color: #1dbf73; /* Fiverr-like green color */
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 8px 16px;
     border-radius: 4px;
-    cursor: pointer;
-}
-
-.remove-skill-button:hover {
-    background-color: #cc0000;
-}
-
-/* Gigs Section */
-#gigs-section {
-    margin-top: 20px;
-}
-
-#gigs-section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#gigs-section ul li {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ddd;
+    font-weight: bold;
+  }
+  
+  nav .btn-primary:hover {
+    background-color: #19a463; /* Darker green on hover */
+  }
+  
+  /* Right side of the nav bar */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds spacing between elements */
+  }
+  
+  /* Login and Sign Up buttons styling */
+  .nav-right .btn-primary,
+  .nav-right .btn-success {
+    background-color: transparent;
+    color: #1dbf73; /* Fiverr-like green color */
+    border: 1px solid #1dbf73;
+    padding: 8px 16px;
     border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-#gigs-section ul li a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-#gigs-section ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-    form input[type="text"],
-    form input[type="file"],
-    form select,
-    form textarea {
-        width: 100%;
-    }
-}
+    font-weight: bold;
+  }
+  
+  .nav-right .btn-primary:hover,
+  .nav-right .btn-success:hover {
+    background-color: #1dbf73;
+    color: white;
+  }
+  
+  /* Account and Logout buttons styling */
+  .nav-right .btn-info,
+  .nav-right .btn-warning,
+  .nav-right .btn-danger {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .nav-right .btn-info {
+    background-color: #17a2b8; /* Info button color */
+    color: white;
+    border: none;
+  }
+  
+  .nav-right .btn-warning {
+    background-color: #ffc107; /* Warning button color */
+    color: black;
+    border: none;
+  }
+  
+  .nav-right .btn-danger {
+    background-color: #dc3545; /* Danger button color */
+    color: white;
+    border: none;
+  }
+  
+  /* Language selector styling */
+  .nav-right select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-weight: bold;
+  }
+  
+  /* Main content styling */
+  .main-content {
+    padding: 20px;
+  }
