@@ -1,0 +1,15 @@
+<h1>Order Details</h1>
+
+<p><strong>Post Title:</strong> <%= @order.post.title %></p>
+<p><strong>Customer:</strong> <%= @order.user.email %></p>
+<p><strong>Message from Customer:</strong></p>
+<p><%= @order.customer_message %></p>
+
+<h3>Your Reply:</h3>
+<%= form_with model: @order, url: reply_order_path(@order), method: :patch do |form| %>
+  <%= form.label :creator_reply, "Reply to the customer" %><br>
+  <%= form.text_area :creator_reply, rows: 4 %><br><br>
+  <%= form.submit "Send Reply", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to 'Back to Orders', orders_path %>

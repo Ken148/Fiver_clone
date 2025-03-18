@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_post, only: [:edit, :update, :show, :buy, :contact_creator]  # Add contact_creator to before_action
-  before_action :set_gigs, only: [:edit, :new]  # Ensure @gigs is available for both new and edit actions
+  before_action :set_post, only: [:edit, :update, :show, :buy, :contact_creator, :send_message]
 
   def index
     if params[:search].present?
@@ -55,8 +54,7 @@ class PostsController < ApplicationController
 
   # Placeholder buy action
   def buy
-    # This action will do nothing, or you can handle redirects or logging here
-    # Example of returning a simple response
+    # This action will do nothing for now, you can handle redirects or logging here
     head :ok
   end
 
@@ -65,6 +63,24 @@ class PostsController < ApplicationController
     @user = @post.user  # Get the user (creator) of the post
     # No need to process the message here; the contact form will handle that
     render 'contact'  # This will render the contact.html.erb template
+  end
+
+  # Action to handle the form submission
+  def send_message
+    message = params[:message]
+    price_range = params[:price_range]
+
+    # Ensure message and price range are present
+    if message.present? && price_range.present?
+      # Create the message object or handle the contact request here
+      Message.create(post: @post, user: current_user, content: message, price_range: price_range)
+      
+      # Optionally, send an email or notification to the creator here.
+      
+      redirect_to @post, notice: 'Your message has been sent to the creator.'
+    else
+      redirect_to contact_creator_post_path(@post), alert: 'Message and price range are required.'
+    end
   end
 
   private

@@ -22,13 +22,14 @@ Rails.application.routes.draw do
     # Add the buy action route here
     member do
       get 'buy', to: 'posts#buy', as: 'buy'
-      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'  # This is the correct route for contact creator
-      post 'send_message', to: 'posts#send_message', as: 'send_message'  # Route for sending a message to the creator
+      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'  # This is the correct route for contacting the creator
+      post 'send_message', to: 'posts#send_message', as: 'send_message'  # Correct POST route for sending a message to the creator
     end
   end
 
   # Routes for gigs
   resources :gigs, only: [:new, :create, :index, :show] do
+    # Nested posts under gigs
     resources :posts, only: [:index, :new, :create] # Posts associated with a gig
   end
 

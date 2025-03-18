@@ -47,7 +47,7 @@
 <h2>Send an Order</h2>
 <p>If you're interested in placing an order or have specific requirements, use the form below to send a detailed description to the creator.</p>
 
-<%= form_with(url: contact_creator_post_path(@post), method: :post, local: true) do |form| %>
+<%= form_with(url: send_message_post_path(@post), method: :post, local: true) do |form| %>
   <div class="form-group">
     <%= form.label :message, "Describe your order:" %>
     <%= form.text_area :message, class: "form-control", placeholder: "Describe your order details here" %>
