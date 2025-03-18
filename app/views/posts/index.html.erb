@@ -15,6 +15,47 @@
       <div class="post">
         <h2><%= link_to post.title, post_path(post) %></h2>
         <p><%= post.content.truncate(100) %></p>
+
+        <!-- Slideshow for Gig Images -->
+        <% if post.gig.basic_image.attached? || post.gig.standard_image.attached? || post.gig.premium_image.attached? %>
+          <div class="gig-slideshow">
+            <!-- Slideshow Container -->
+            <div class="image-container">
+              <!-- Basic Image -->
+              <div class="image-slide basic-image active">
+                <%= image_tag url_for(post.gig.basic_image), alt: "Basic Plan Image", class: 'gig-image' if post.gig.basic_image.attached? %>
+              </div>
+
+              <!-- Standard Image -->
+              <div class="image-slide standard-image">
+                <%= image_tag url_for(post.gig.standard_image), alt: "Standard Plan Image", class: 'gig-image' if post.gig.standard_image.attached? %>
+              </div>
+
+              <!-- Premium Image -->
+              <div class="image-slide premium-image">
+                <%= image_tag url_for(post.gig.premium_image), alt: "Premium Plan Image", class: 'gig-image' if post.gig.premium_image.attached? %>
+              </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <div class="slider-nav">
+              <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+              <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+
+            <!-- Price and Description for the Active Plan -->
+            <div class="gig-info">
+              <p id="gig-price"><strong><%= t('posts.index.basic_price') %>: <%= post.gig.basic_price %></strong></p>
+              <p id="gig-description"><%= post.gig.basic_description %></p>
+            </div>
+
+            <!-- "Buy" Button that Leads to the Post -->
+            <div class="buy-button">
+              <%= link_to t('posts.index.buy_button'), post_path(post), class: 'btn-buy' %>
+            </div>
+          </div>
+        <% end %>
+
       </div>
     <% end %>
   <% else %>
@@ -28,4 +69,3 @@
     <%= link_to t('posts.index.become_seller'), new_seller_profile_path, class: 'btn-seller' %> <!-- Link to create a seller profile if not logged in or no seller profile exists -->
   </div>
 <% end %>
-
