@@ -94,7 +94,7 @@
 
   <% if @gigs.any? %>
     <% @gigs.each do |gig| %>
-      <p><%= link_to gig.title, gig_path(gig) %></p>
+      <h3><%= link_to gig.title, gig_path(gig) %></h3>
       
       <!-- Display the posts related to each gig -->
       <% if gig.posts.any? %> <!-- This checks if the gig has posts -->

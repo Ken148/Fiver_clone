@@ -18,7 +18,12 @@ Rails.application.routes.draw do
   end
 
   # Routes for posts (gigs as well)
-  resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+  resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    # Add the buy action route here
+    member do
+      get 'buy', to: 'posts#buy', as: 'buy'
+    end
+  end
 
   # Routes for gigs
   resources :gigs, only: [:new, :create, :index, :show] do

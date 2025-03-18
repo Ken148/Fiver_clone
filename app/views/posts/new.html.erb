@@ -23,52 +23,72 @@
     <%= form.text_area :content %>
   </div>
 
-  <!-- Gig Fields -->
+  <!-- Pricing, Description, and Image Fields for Basic, Standard, and Premium -->
   <fieldset>
     <legend><%= t('posts.new.gig_details') %></legend>
 
     <%= form.fields_for :gig, @post.gig do |gig_form| %>
-      <div class="field">
-        <%= gig_form.label :title, t('posts.new.gig_title_label') %>
-        <%= gig_form.text_field :title %>
+
+      <!-- Basic Plan -->
+      <div class="pricing-group">
+        <h3><%= t('posts.new.basic_plan') %></h3>
+
+        <div class="field">
+          <%= gig_form.label :basic_price, t('posts.new.basic_price_label') %>
+          <%= gig_form.number_field :basic_price %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :basic_description, t('posts.new.basic_description_label') %>
+          <%= gig_form.text_area :basic_description, placeholder: "Enter description for Basic plan" %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :basic_image, t('posts.new.basic_image_label') %>
+          <%= gig_form.file_field :basic_image %>
+        </div>
       </div>
 
-      <div class="field">
-        <%= gig_form.label :description, t('posts.new.gig_description_label') %>
-        <%= gig_form.text_area :description %>
+      <!-- Standard Plan -->
+      <div class="pricing-group">
+        <h3><%= t('posts.new.standard_plan') %></h3>
+
+        <div class="field">
+          <%= gig_form.label :standard_price, t('posts.new.standard_price_label') %>
+          <%= gig_form.number_field :standard_price %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :standard_description, t('posts.new.standard_description_label') %>
+          <%= gig_form.text_area :standard_description, placeholder: "Enter description for Standard plan" %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :standard_image, t('posts.new.standard_image_label') %>
+          <%= gig_form.file_field :standard_image %>
+        </div>
       </div>
 
-      <!-- Pricing Fields -->
-      <div class="field">
-        <%= gig_form.label :basic_price, t('posts.new.basic_price_label') %>
-        <%= gig_form.number_field :basic_price %>
+      <!-- Premium Plan -->
+      <div class="pricing-group">
+        <h3><%= t('posts.new.premium_plan') %></h3>
+
+        <div class="field">
+          <%= gig_form.label :premium_price, t('posts.new.premium_price_label') %>
+          <%= gig_form.number_field :premium_price %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :premium_description, t('posts.new.premium_description_label') %>
+          <%= gig_form.text_area :premium_description, placeholder: "Enter description for Premium plan" %>
+        </div>
+
+        <div class="field">
+          <%= gig_form.label :premium_image, t('posts.new.premium_image_label') %>
+          <%= gig_form.file_field :premium_image %>
+        </div>
       </div>
 
-      <div class="field">
-        <%= gig_form.label :standard_price, t('posts.new.standard_price_label') %>
-        <%= gig_form.number_field :standard_price %>
-      </div>
-
-      <div class="field">
-        <%= gig_form.label :premium_price, t('posts.new.premium_price_label') %>
-        <%= gig_form.number_field :premium_price %>
-      </div>
-
-      <!-- Image Fields (Optional) -->
-      <div class="field">
-        <%= gig_form.label :basic_image, t('posts.new.basic_image_label') %>
-        <%= gig_form.file_field :basic_image %>
-      </div>
-
-      <div class="field">
-        <%= gig_form.label :standard_image, t('posts.new.standard_image_label') %>
-        <%= gig_form.file_field :standard_image %>
-      </div>
-
-      <div class="field">
-        <%= gig_form.label :premium_image, t('posts.new.premium_image_label') %>
-        <%= gig_form.file_field :premium_image %>
-      </div>
     <% end %>
   </fieldset>
 

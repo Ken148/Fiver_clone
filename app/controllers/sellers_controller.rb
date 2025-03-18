@@ -1,4 +1,5 @@
 class SellersController < ApplicationController
+  before_action :authenticate_user! # Ensure the user is authenticated
   before_action :set_seller_profile, except: [:new, :create]
 
   def new
@@ -9,6 +10,7 @@ class SellersController < ApplicationController
     # Remove existing profile if any
     current_user.seller_profile&.destroy
 
+    # Build a new seller profile for the logged-in user
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
 
     if @seller_profile.save
@@ -20,7 +22,8 @@ class SellersController < ApplicationController
     end
   end
 
-  def occupation_step; end
+  def occupation_step
+  end
 
   def update_occupation_step
     if @seller_profile.update(occupation_step_params)
@@ -31,7 +34,8 @@ class SellersController < ApplicationController
     end
   end
 
-  def security_step; end
+  def security_step
+  end
 
   def update_security_step
     if @seller_profile.update(security_step_params)
@@ -58,8 +62,7 @@ class SellersController < ApplicationController
   private
 
   def set_seller_profile
-    return if action_name.in?(%w[new create])
-
+    # Check if user has a seller profile, if not redirect to create it
     @seller_profile = current_user.seller_profile
 
     unless @seller_profile

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_post, only: [:edit, :update, :show]
+  before_action :set_post, only: [:edit, :update, :show, :buy]  # Ensure `buy` action is included here
   before_action :set_gigs, only: [:edit, :new]  # Ensure @gigs is available for both new and edit actions
 
   def index
@@ -51,6 +51,13 @@ class PostsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  # Placeholder buy action
+  def buy
+    # This action will do nothing, or you can handle redirects or logging here
+    # Example of returning a simple response
+    head :ok
   end
 
   private

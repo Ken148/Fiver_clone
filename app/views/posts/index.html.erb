@@ -23,7 +23,9 @@
 </div>
 
 <!-- Become a Seller Button -->
-<div class="become-seller-container">
-  <button class="btn-seller">Become a Seller</button>
-</div>
+<% if current_user.nil? || current_user.seller_profile.nil? %>
+  <div class="become-seller-container">
+    <%= link_to t('posts.index.become_seller'), new_seller_profile_path, class: 'btn-seller' %> <!-- Link to create a seller profile if not logged in or no seller profile exists -->
+  </div>
+<% end %>
 
