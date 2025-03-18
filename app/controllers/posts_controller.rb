@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_post, only: [:edit, :update, :show, :buy]  # Ensure `buy` action is included here
+  before_action :set_post, only: [:edit, :update, :show, :buy, :contact_creator]  # Add contact_creator to before_action
   before_action :set_gigs, only: [:edit, :new]  # Ensure @gigs is available for both new and edit actions
 
   def index
@@ -58,6 +58,13 @@ class PostsController < ApplicationController
     # This action will do nothing, or you can handle redirects or logging here
     # Example of returning a simple response
     head :ok
+  end
+
+  # Action to render the contact page
+  def contact_creator
+    @user = @post.user  # Get the user (creator) of the post
+    # No need to process the message here; the contact form will handle that
+    render 'contact'  # This will render the contact.html.erb template
   end
 
   private

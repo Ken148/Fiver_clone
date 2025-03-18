@@ -132,3 +132,97 @@ body {
 .btn-success:hover {
     background-color: #218838;
 }
+
+/* Image Styling for Gig */
+.gig-image {
+    max-width: 500px;
+    height: 300px;  /* Set the height to match the black-gray box */
+    width: 100%;
+    object-fit: cover; /* Ensures image fills the box without distortion */
+    display: block;
+    margin: auto;
+}
+
+/* Slideshow Container */
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Slide Styling */
+.mySlides {
+    display: none;
+    width: 100%;
+    transition: opacity 1s ease-in-out; /* Smooth transition for fade effect */
+}
+
+/* Slide Image */
+.slide-image {
+    height: 300px;  /* Set the height to match the black-gray box */
+    width: 100%;
+    object-fit: cover; /* Ensures image fills the box without distortion */
+    display: block;
+    margin: auto;
+}
+
+/* Navigation arrows */
+.cursor {
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* Caption styling */
+.caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+
+.caption-container h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.caption-container p {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.caption-container strong {
+    font-weight: bold;
+}
