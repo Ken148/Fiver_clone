@@ -3,6 +3,8 @@
 
 <!-- Search Bar -->
 <div class="search-container">
+  <!-- Add your search bar here -->
+</div>
 
 <!-- Display Posts -->
 <div class="post-container">
@@ -73,8 +75,9 @@
 
   // Function to handle next/previous for each post's slideshow
   function plusSlides(postIndex, n) {
-    if (!slideIndices[postIndex]) {
-      slideIndices[postIndex] = 1; // Initialize if undefined
+    // Initialize if undefined
+    if (typeof slideIndices[postIndex] === 'undefined') {
+      slideIndices[postIndex] = 1; // Initialize the slide for this post
     }
 
     slideIndices[postIndex] += n;
