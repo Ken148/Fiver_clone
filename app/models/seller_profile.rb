@@ -1,6 +1,10 @@
 class SellerProfile < ApplicationRecord
+  # Associations
   belongs_to :user
+  has_many :educations, dependent: :destroy
   has_many :gigs, dependent: :destroy  # A seller profile can have many gigs
+
+  # ActiveStorage attachment for profile picture
   has_one_attached :profile_picture
 
   # Validations for required fields
@@ -29,15 +33,17 @@ class SellerProfile < ApplicationRecord
     end
   end
 
-  # Validate profile picture format and size
+  # Validate profile picture format and size in one method
   def check_profile_picture
     allowed_formats = %w[image/jpeg image/png]
     max_size = 5.megabytes
 
+    # Check format
     unless profile_picture.content_type.in?(allowed_formats)
       errors.add(:profile_picture, 'must be a JPEG or PNG')
     end
 
+    # Check size
     if profile_picture.byte_size > max_size
       errors.add(:profile_picture, "must be less than #{max_size / 1.megabyte} MB")
     end

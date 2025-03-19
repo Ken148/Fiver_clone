@@ -42,12 +42,9 @@
       <!-- Right side of the nav bar -->
       <div class="nav-right">
         <% if user_signed_in? %>
+          <!-- If the user is logged in -->
           <% if current_user.seller_profile.present? %>
             <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
-
-            <!-- My Orders Button -->
-            <%= link_to "My Orders", user_orders_path(current_user), class: "btn btn-success" %> <!-- Updated the link to user_orders_path -->
-
           <% else %>
             <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
           <% end %>

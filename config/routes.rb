@@ -4,46 +4,35 @@ Rails.application.routes.draw do
   get 'new_seller_profile', to: 'sellers#new', as: :new_seller_profile
   post 'create_seller_profile', to: 'sellers#create', as: :create_seller_profile
 
-  # Seller routes (show, edit, update)
   resources :sellers, only: [:show, :edit, :update] do
     member do
-      get :occupation_step            # Seller's occupation step
-      patch :update_occupation_step   # Update occupation step
-      get :security_step              # Seller's security step
-      patch :update_security_step     # Update security step
+      get :occupation_step          
+      patch :update_occupation_step 
+
+      get :security_step            
+      patch :update_security_step   
+
       get :account                    # Seller account page
-      patch :update_account           # Update seller account page
+      patch :update_account           # Update seller account
     end
   end
 
   # Routes for posts (gigs as well)
   resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    # Add the buy action route here
     member do
       get 'buy', to: 'posts#buy', as: 'buy'
-      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'
-      post 'send_message', to: 'posts#send_message', as: 'send_message'  # Updated this to route to send_message
-      resources :orders, only: [:create]  # Creating an order for a post
+      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'  # This is the correct route for contact creator
+      post 'send_message', to: 'posts#send_message', as: 'send_message'  # Route for sending a message to the creator
     end
   end
 
-  # Routes for gigs (associated posts)
+  # Routes for gigs
   resources :gigs, only: [:new, :create, :index, :show] do
     resources :posts, only: [:index, :new, :create] # Posts associated with a gig
   end
 
-  # Orders routes for sellers (general orders for sellers)
-  resources :orders, only: [:index, :show] do
-    member do
-      patch 'reply', to: 'orders#reply'  # Seller replying to an order
-    end
-  end
-
-  # Add a custom route to handle orders for the current user
-  resources :users, only: [] do
-    resources :orders, only: [:index]  # User-specific orders route
-  end
-
-  # Devise user authentication routes (with omniauth)
+  # Devise user authentication routes
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
@@ -51,6 +40,6 @@ Rails.application.routes.draw do
   # Language selector route
   get 'set_language', to: 'application#set_language', as: :set_language
 
-  # Root route for the site (home page)
+  # Root route for the site
   root 'posts#index'
 end

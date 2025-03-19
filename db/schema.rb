@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_090004) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_16_162525) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,29 +64,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_090004) do
     t.text "standard_description"
     t.text "premium_description"
     t.index ["seller_profile_id"], name: "index_gigs_on_seller_profile_id"
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
-    t.string "price_range"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "content"
-    t.index ["post_id"], name: "index_messages_on_post_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "user_id", null: false
-    t.string "status"
-    t.text "customer_message"
-    t.text "creator_reply"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_orders_on_post_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -149,10 +126,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_090004) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "educations", "seller_profiles"
   add_foreign_key "gigs", "seller_profiles"
-  add_foreign_key "messages", "posts"
-  add_foreign_key "messages", "users"
-  add_foreign_key "orders", "posts"
-  add_foreign_key "orders", "users"
   add_foreign_key "posts", "gigs"
   add_foreign_key "posts", "users"
 end
