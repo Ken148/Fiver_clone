@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get 'buy', to: 'posts#buy', as: 'buy'
       get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'  # This is the correct route for contacting the creator
       post 'send_message', to: 'posts#send_message', as: 'send_message'  # Correct POST route for sending a message to the creator
+      post 'submit_review', to: 'posts#submit_review', as: 'submit_review'  # New route for submitting reviews
     end
   end
 

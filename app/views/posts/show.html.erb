@@ -13,9 +13,6 @@
   <p>No Avatar</p> <!-- Fallback if no profile picture exists -->
 <% end %>
 
-<!-- Display creator's occupation -->
-<p><strong>Occupation:</strong> <%= @post.user.seller_profile.occupation %></p>
-
 <!-- Image Gallery Container -->
 <div class="container">
   <% plan_images = [
@@ -43,21 +40,47 @@
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
-<!-- Contact Form to send an order to the creator -->
-<h2>Send an Order</h2>
-<p>If you're interested in placing an order or have specific requirements, use the form below to send a detailed description to the creator.</p>
+<!-- Comment Form and Rating Form -->
+<h2>Leave a Comment and Rate the Post</h2>
+<p>If you would like to leave a comment and rate this post, please use the form below.</p>
+
+<%= form_with(url: submit_review_post_path(@post), method: :post, local: true) do |form| %>
+  <!-- Comment Section -->
+  <div class="form-group">
+    <%= form.label :comment, "Your Comment:" %>
+    <%= form.text_area :comment, class: "form-control", placeholder: "Write your comment here" %>
+  </div>
+
+  <!-- Rating Section -->
+  <div class="form-group">
+    <%= form.label :rating, "Rate this Post:" %>
+    <%= form.select :rating, options_for_select([1, 2, 3, 4, 5], selected: nil), class: "form-control", prompt: "Choose a rating" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Submit Comment & Rating", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<!-- Display Reviews -->
+<h3>Reviews:</h3>
+<% if @reviews.any? %>
+  <ul>
+    <% @reviews.each do |review| %>
+      <li>
+        <strong><%= review.user.seller_profile.full_name %></strong> says:
+        <p><%= review.comment %></p>
+        <p><strong>Rating:</strong> <%= review.rating %> / 5</p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No reviews yet. Be the first to leave one!</p>
+<% end %>
+
+
 
 <%= form_with(url: send_message_post_path(@post), method: :post, local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :message, "Describe your order:" %>
-    <%= form.text_area :message, class: "form-control", placeholder: "Describe your order details here" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :price_range, "Choose a plan:" %>
-    <%= form.select :price_range, [["Basic Plan", "basic"], ["Standard Plan", "standard"], ["Premium Plan", "premium"]], class: "form-control" %>
-  </div>
-
   <div class="form-group">
     <%= form.submit "Send Order", class: "btn btn-primary" %>
   </div>
@@ -148,7 +171,7 @@
     width: 100%;
     height: auto;
     object-fit: cover;
-    max-height: 400px; /* Ensures images don't overflow vertically */
+    max-height: 400px;
   }
 
   .cursor {

@@ -37,6 +37,17 @@
     <%= f.select :language, options_for_select(["English", "Spanish", "French", "German", "Chinese", "Japanese", "Other"], @seller_profile.language), {}, { id: 'language-dropdown' } %>
   </div>
 
+  <!-- Contact Information -->
+  <div>
+    <strong>Email:</strong>
+    <%= @seller_profile.email %>
+  </div>
+  <div>
+    <strong>Phone Number:</strong>
+    <%= f.telephone_field :phone_number, value: @seller_profile.phone_number, maxlength: 9, minlength: 9, pattern: '\d{9}' %> 
+    <!-- Ensuring the phone number is exactly 9 digits -->
+  </div>
+
   <!-- Work Information -->
   <h2><%= t('work_info.title') %></h2>
 
@@ -55,30 +66,34 @@
   </div>
 
   <!-- Added Skills List -->
-  <div id="skills-list">
-    <!-- Dynamically added skills will appear here -->
-  </div>
+  <div id="skills-list"></div>
 
-  <!-- Country -->
-  <div class="field">
-    <%= f.label :country, "Country" %><br />
-    <%= f.select :country, options_for_select(["USA", "Canada", "UK", "Germany", "Australia", "India"], @seller_profile.country), {}, { id: 'country-dropdown' } %>
-  </div>
-
-  <!-- Education Section -->
+  <!-- Education -->
   <h2><%= t('complete_seller_profile.education') %></h2>
-  <div id="education-section">
-    <!-- Removed School/University section -->
+  <div>
+    <strong>Start Year:</strong>
+    <%= f.number_field :start_year, maxlength: 4, min: 1000, max: 9999, oninput: "validateYears()" %>
+    <!-- Ensure 4 digits only for the start year -->
+  </div>
+  <div>
+    <strong>End Year:</strong>
+    <%= f.number_field :end_year, maxlength: 4, min: 1000, max: 9999, oninput: "validateYears()" %>
+    <!-- Ensure 4 digits only for the end year -->
   </div>
 
   <!-- Website Link -->
   <div class="field">
     <%= f.label :website, "Your Website Link:" %><br />
     <%= f.text_field :website, placeholder: "Put your website link here", id: 'website-textbox' %><br />
-    
+
     <% if @seller_profile.website.present? %>
-      <strong>Website: </strong>
-      <%= link_to @seller_profile.website, @seller_profile.website, target: "_blank" %>
+      <% url = @seller_profile.website.strip %>
+      <% if url =~ /\A(http:\/\/|https:\/\/)/ %> <!-- Check if the URL starts with http:// or https:// -->
+        <strong>Website: </strong>
+        <%= link_to url, url, target: "_blank" %>
+      <% else %>
+        <p>The website link is not valid.</p> <!-- Optional: show a message if the link is invalid -->
+      <% end %>
     <% else %>
       <p>No website added yet.</p>
     <% end %>
@@ -90,16 +105,14 @@
   <h2>Gigs (Posts):</h2>
 
   <!-- Add Create Gig Button -->
-  <%= link_to 'Create New Gig', new_post_path, class: 'btn-create-gig' %> <!-- This button will take the user to the gig creation page -->
+  <%= link_to 'Create New Gig', new_post_path, class: 'btn-create-gig' %>
 
   <% if @gigs.any? %>
     <% @gigs.each do |gig| %>
       <h3><%= link_to gig.title, gig_path(gig) %></h3>
-      
-      <!-- Display the posts related to each gig -->
-      <% if gig.posts.any? %> <!-- This checks if the gig has posts -->
+      <% if gig.posts.any? %>
         <ul>
-          <% gig.posts.each do |post| %> <!-- Iterate through each post related to the gig -->
+          <% gig.posts.each do |post| %>
             <li><%= link_to post.title, post_path(post) %></li>
           <% end %>
         </ul>
@@ -113,40 +126,35 @@
 
 <% end %>
 
-<!-- JavaScript -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Skills Section: Add new skills
-    const addSkillButton = document.getElementById("add-skill-button");
-    const skillsListContainer = document.getElementById("skills-list");
-    const skillDropdown = document.getElementById("skill-dropdown");
-    const skillLevelDropdown = document.getElementById("skill-level");
-
-    function createSkillRow(skill, level) {
-        // Prevent duplicate skills
-        const existingSkills = Array.from(skillsListContainer.children).map(row => row.querySelector('span').textContent);
-        if (existingSkills.includes(skill)) {
-            alert("This skill has already been added!");
-            return;
-        }
-
-        const skillRow = document.createElement("div");
-        skillRow.classList.add("skill-row");
-        skillRow.innerHTML =
-            `<span>${skill}</span> - <span>${level}</span>
-            <button type="button" class="remove-skill-button">Remove</button>`;
-        skillsListContainer.appendChild(skillRow);
-
-        const removeButton = skillRow.querySelector(".remove-skill-button");
-        removeButton.addEventListener("click", () => {
-            skillRow.remove();
-        });
+  const startYearField = document.querySelector('input[name="seller_profile[start_year]"]');
+  const endYearField = document.querySelector('input[name="seller_profile[end_year]"]');
+  
+  function validateYears() {
+    const startYear = parseInt(startYearField.value);
+    const endYear = parseInt(endYearField.value);
+    
+    if (startYear && endYear && startYear > endYear) {
+      endYearField.value = startYear;  // Set end year to start year if start year is greater
     }
+  }
 
-    addSkillButton.addEventListener("click", function() {
-        const selectedSkill = skillDropdown.value;
-        const selectedLevel = skillLevelDropdown.value;
-        createSkillRow(selectedSkill, selectedLevel);
-    });
+  startYearField.addEventListener("input", validateYears);
+  endYearField.addEventListener("input", validateYears);
+
+  // For phone validation
+  const phoneField = document.querySelector('input[name="seller_profile[phone_number]"]');
+  phoneField.addEventListener('input', function(event) {
+    const value = phoneField.value.replace(/\D/g, ''); // Remove non-digit characters
+    if (value.length > 9) {
+      phoneField.value = value.slice(0, 9);  // Limit to 9 digits
+    }
+    if (value.length < 9) {
+      phoneField.setCustomValidity('Phone number must be exactly 9 digits.');
+    } else {
+      phoneField.setCustomValidity('');
+    }
+  });
 });
 </script>

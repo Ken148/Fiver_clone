@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_18_180949) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -103,6 +103,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_180949) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "user_id", null: false
+    t.text "comment"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_reviews_on_post_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "seller_profiles", force: :cascade do |t|
     t.string "full_name"
     t.string "display_name"
@@ -156,4 +167,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_180949) do
   add_foreign_key "orders", "users"
   add_foreign_key "posts", "gigs"
   add_foreign_key "posts", "users"
+  add_foreign_key "reviews", "posts"
+  add_foreign_key "reviews", "users"
 end

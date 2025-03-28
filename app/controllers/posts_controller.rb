@@ -1,6 +1,6 @@
-class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_post, only: [:edit, :update, :show, :buy, :contact_creator, :send_message]
+class PostsController < ApplicationController 
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :submit_review]
+  before_action :set_post, only: [:edit, :update, :show, :buy, :contact_creator, :send_message, :submit_review]
 
   def index
     if params[:search].present?
@@ -14,6 +14,7 @@ class PostsController < ApplicationController
 
   def show
     # @post is already set by the before_action, no need to fetch it again
+    @reviews = @post.reviews  # Load all reviews associated with the post
   end
 
   def new
@@ -23,7 +24,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    # Create a new Gig instance and associate it with the post
+    # Build a new gig and associate it with the post
     @gig = Gig.new(gig_params)
     @gig.seller_profile = current_user.seller_profile  # Ensure gig is associated with seller_profile
 
@@ -31,7 +32,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.new(post_params)
     @post.gig = @gig  # Link the gig to the post
 
-    if @post.save
+    if @post.save && @gig.save
       redirect_to @post, notice: 'Post (Gig) was successfully created.'
     else
       render :new
@@ -39,7 +40,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @gig = @post.gig  # Ensure that you are accessing the associated gig in the edit form
+    @gig = @post.gig  # Ensure you're accessing the associated gig in the edit form
   end
 
   def update
@@ -83,6 +84,18 @@ class PostsController < ApplicationController
     end
   end
 
+  # Action to handle review submission
+  def submit_review
+    @review = @post.reviews.new(review_params)  # Use the updated review_params
+    @review.user = current_user  # Associate the current user with the review
+
+    if @review.save
+      redirect_to @post, notice: 'Your review has been submitted successfully.'
+    else
+      redirect_to @post, alert: 'Failed to submit review.'
+    end
+  end
+
   private
 
   # Set the post object before actions
@@ -110,5 +123,10 @@ class PostsController < ApplicationController
       :standard_price, :standard_description, :standard_image,
       :premium_price, :premium_description, :premium_image
     )
+  end
+
+  # Strong parameters for review submission
+  def review_params
+    params.permit(:comment, :rating)  # Allow top-level comment and rating parameters directly
   end
 end

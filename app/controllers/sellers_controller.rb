@@ -13,7 +13,8 @@ class SellersController < ApplicationController
     # Build a new seller profile for the logged-in user
     @seller_profile = current_user.build_seller_profile(seller_profile_params)
 
-    if @seller_profile.save
+    # Validate profile before saving
+    if validate_profile && @seller_profile.save
       flash[:notice] = "Profile saved! Now add your occupation and skills."
       redirect_to occupation_step_seller_path(@seller_profile)
     else
@@ -62,7 +63,6 @@ class SellersController < ApplicationController
   private
 
   def set_seller_profile
-    # Check if user has a seller profile, if not redirect to create it
     @seller_profile = current_user.seller_profile
 
     unless @seller_profile
@@ -70,19 +70,59 @@ class SellersController < ApplicationController
     end
   end
 
+  # Profile validation for phone number and start/end years
+  def validate_profile
+    errors = []
+
+    # Phone Number Validation (must be exactly 9 digits)
+    if params[:seller_profile][:phone_number].present?
+      phone_number = params[:seller_profile][:phone_number].gsub(/\D/, '') # Remove non-digit characters
+      unless phone_number.length == 9
+        errors << "Phone number must be exactly 9 digits."
+      end
+    end
+
+    # Start and End Year Validation
+    if params[:seller_profile][:start_year].present? && params[:seller_profile][:end_year].present?
+      start_year = params[:seller_profile][:start_year].to_i
+      end_year = params[:seller_profile][:end_year].to_i
+      if start_year > end_year
+        params[:seller_profile][:end_year] = start_year # Auto-adjust end year
+      end
+    end
+
+    # Check if there are any errors
+    if errors.any?
+      flash[:alert] = errors.join(" ")
+      return false
+    end
+
+    true
+  end
+
   def seller_profile_params
-    params.require(:seller_profile).permit(:full_name, :display_name, :profile_picture, :description, :language)
+    params.require(:seller_profile).permit(
+      :full_name, :display_name, :profile_picture, :description, :language, 
+      :phone_number, :website, :start_year, :end_year, :occupation, :country_code,
+      skill_ids: [], education_ids: []
+    )
   end
 
   def occupation_step_params
-    params.require(:seller_profile).permit(:occupation, :start_year, :end_year, :skills, :education, :certifications, :personal_website)
+    params.require(:seller_profile).permit(
+      :occupation, :start_year, :end_year, :skills, :education, :certifications, :personal_website
+    )
   end
 
   def security_step_params
-    params.require(:seller_profile).permit(:email, :phone_number, :country_code)
+    params.require(:seller_profile).permit(:phone_number, :country_code)
   end
 
   def account_params
-    params.require(:seller_profile).permit(:full_name, :display_name, :profile_picture, :description, :language, occupation_ids: [], skill_ids: [], education_ids: [])
+    params.require(:seller_profile).permit(
+      :full_name, :display_name, :profile_picture, :description, :language, 
+      :phone_number, :website, :start_year, :end_year, :occupation, :country_code,
+      skill_ids: [], education_ids: []
+    )
   end
 end
