@@ -3,10 +3,7 @@
 
 <!-- Search Bar -->
 <div class="search-container">
-  <%= form_with url: posts_path, method: :get, local: true do %>
-    <input type="text" name="search" class="search-box" placeholder="<%= t('posts.index.search_placeholder') %>" value="<%= params[:search] %>"> <!-- Pre-fill the search box with the current query -->
-    <button type="submit" class="btn-search"><%= t('posts.index.search_button') %></button> <!-- Translated button for "Search" -->
-  <% end %>
+  <!-- Add your search bar here -->
 </div>
 
 <!-- Display Posts -->
@@ -78,8 +75,9 @@
 
   // Function to handle next/previous for each post's slideshow
   function plusSlides(postIndex, n) {
-    if (!slideIndices[postIndex]) {
-      slideIndices[postIndex] = 1; // Initialize if undefined
+    // Initialize if undefined
+    if (typeof slideIndices[postIndex] === 'undefined') {
+      slideIndices[postIndex] = 1; // Initialize the slide for this post
     }
 
     slideIndices[postIndex] += n;

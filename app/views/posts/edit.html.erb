@@ -1,6 +1,6 @@
 <h1><%= t('posts.edit.title') %></h1> <!-- Translated "Edit Post" -->
 
-<%= form_with(model: @post, local: true, html: { multipart: true }) do |form| %>
+<%= form_with(model: @post, local: true) do |form| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('errors.prohibited', count: @post.errors.count) %></h2> <!-- Translated error heading -->
@@ -14,96 +14,62 @@
 
   <div class="field">
     <%= form.label :title, t('posts.form.title') %> <!-- Translated label for "Title" -->
-    <%= form.text_field :title, value: @post.title, required: true %> <!-- Keep the existing title -->
+    <%= form.text_field :title %>
   </div>
 
   <div class="field">
     <%= form.label :content, t('posts.form.content') %> <!-- Translated label for "Content" -->
-    <%= form.text_area :content, value: @post.content, required: true %> <!-- Keep the existing content -->
+    <%= form.text_area :content %>
   </div>
 
-  <!-- Gig-related fields -->
+  <!-- Select a gig for the post -->
+  <div class="field">
+    <%= form.label :gig_id, t('posts.form.select_gig') %> <!-- Translated label for "Select Gig" -->
+    <%= form.collection_select :gig_id, @gigs, :id, :title, { prompt: t('posts.form.select_gig_prompt') } %>
+  </div>
+
+  <!-- Nested Gig Fields -->
   <div class="nested-fields">
     <%= form.fields_for :gig do |gig_form| %>
-
-      <!-- Basic Plan -->
-      <div class="pricing-group">
-        <h3><%= t('posts.edit.basic_plan') %></h3>
-
-        <div class="field">
-          <%= gig_form.label :basic_price, t('posts.form.gig_basic_price') %> <!-- Translated label for "Gig Basic Price" -->
-          <%= gig_form.number_field :basic_price, value: @post.gig.basic_price, required: true %> <!-- Pre-populate with existing price -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :basic_description, t('posts.form.gig_basic_description') %> <!-- Translated label for "Gig Basic Description" -->
-          <%= gig_form.text_area :basic_description, value: @post.gig.basic_description, placeholder: "Enter description for Basic plan", required: true %> <!-- Pre-populate with existing description -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :basic_image, t('posts.form.gig_basic_image') %> <!-- Translated label for "Basic Image" -->
-          <%= gig_form.file_field :basic_image %> <!-- Let the user upload a new image, or leave blank -->
-          <% if @post.gig.basic_image.attached? %> <!-- Display the current image if it exists -->
-            <div class="existing-image">
-              <%= image_tag url_for(@post.gig.basic_image), alt: "Basic Plan Image", width: 150 %> <!-- Display existing image -->
-              <%= check_box_tag "gig[remove_basic_image]", "1" %> <%= t('posts.form.remove_image') %> <!-- Option to remove the image -->
-            </div>
-          <% end %>
-        </div>
+      <div class="field">
+        <%= gig_form.label :title, t('posts.form.gig_title') %> <!-- Translated label for "Gig Title" -->
+        <%= gig_form.text_field :title %>
       </div>
 
-      <!-- Standard Plan -->
-      <div class="pricing-group">
-        <h3><%= t('posts.edit.standard_plan') %></h3>
-
-        <div class="field">
-          <%= gig_form.label :standard_price, t('posts.form.gig_standard_price') %> <!-- Translated label for "Gig Standard Price" -->
-          <%= gig_form.number_field :standard_price, value: @post.gig.standard_price, required: true %> <!-- Pre-populate with existing price -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :standard_description, t('posts.form.gig_standard_description') %> <!-- Translated label for "Gig Standard Description" -->
-          <%= gig_form.text_area :standard_description, value: @post.gig.standard_description, placeholder: "Enter description for Standard plan", required: true %> <!-- Pre-populate with existing description -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :standard_image, t('posts.form.gig_standard_image') %> <!-- Translated label for "Standard Image" -->
-          <%= gig_form.file_field :standard_image %> <!-- Let the user upload a new image, or leave blank -->
-          <% if @post.gig.standard_image.attached? %> <!-- Display the current image if it exists -->
-            <div class="existing-image">
-              <%= image_tag url_for(@post.gig.standard_image), alt: "Standard Plan Image", width: 150 %> <!-- Display existing image -->
-              <%= check_box_tag "gig[remove_standard_image]", "1" %> <%= t('posts.form.remove_image') %> <!-- Option to remove the image -->
-            </div>
-          <% end %>
-        </div>
+      <div class="field">
+        <%= gig_form.label :description, t('posts.form.gig_description') %> <!-- Translated label for "Gig Description" -->
+        <%= gig_form.text_area :description %>
       </div>
 
-      <!-- Premium Plan -->
-      <div class="pricing-group">
-        <h3><%= t('posts.edit.premium_plan') %></h3>
-
-        <div class="field">
-          <%= gig_form.label :premium_price, t('posts.form.gig_premium_price') %> <!-- Translated label for "Gig Premium Price" -->
-          <%= gig_form.number_field :premium_price, value: @post.gig.premium_price, required: true %> <!-- Pre-populate with existing price -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :premium_description, t('posts.form.gig_premium_description') %> <!-- Translated label for "Gig Premium Description" -->
-          <%= gig_form.text_area :premium_description, value: @post.gig.premium_description, placeholder: "Enter description for Premium plan", required: true %> <!-- Pre-populate with existing description -->
-        </div>
-
-        <div class="field">
-          <%= gig_form.label :premium_image, t('posts.form.gig_premium_image') %> <!-- Translated label for "Premium Image" -->
-          <%= gig_form.file_field :premium_image %> <!-- Let the user upload a new image, or leave blank -->
-          <% if @post.gig.premium_image.attached? %> <!-- Display the current image if it exists -->
-            <div class="existing-image">
-              <%= image_tag url_for(@post.gig.premium_image), alt: "Premium Plan Image", width: 150 %> <!-- Display existing image -->
-              <%= check_box_tag "gig[remove_premium_image]", "1" %> <%= t('posts.form.remove_image') %> <!-- Option to remove the image -->
-            </div>
-          <% end %>
-        </div>
+      <div class="field">
+        <%= gig_form.label :basic_price, t('posts.form.gig_basic_price') %> <!-- Translated label for "Gig Basic Price" -->
+        <%= gig_form.number_field :basic_price %>
       </div>
 
+      <div class="field">
+        <%= gig_form.label :standard_price, t('posts.form.gig_standard_price') %> <!-- Translated label for "Gig Standard Price" -->
+        <%= gig_form.number_field :standard_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_price, t('posts.form.gig_premium_price') %> <!-- Translated label for "Gig Premium Price" -->
+        <%= gig_form.number_field :premium_price %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :basic_image, t('posts.form.gig_basic_image') %> <!-- Translated label for "Basic Image" -->
+        <%= gig_form.file_field :basic_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :standard_image, t('posts.form.gig_standard_image') %> <!-- Translated label for "Standard Image" -->
+        <%= gig_form.file_field :standard_image %>
+      </div>
+
+      <div class="field">
+        <%= gig_form.label :premium_image, t('posts.form.gig_premium_image') %> <!-- Translated label for "Premium Image" -->
+        <%= gig_form.file_field :premium_image %>
+      </div>
     <% end %>
   </div>
 
