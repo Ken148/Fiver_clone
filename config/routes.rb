@@ -33,11 +33,14 @@ Rails.application.routes.draw do
   # Creator route (for displaying the creator's profile page)
   get 'creator/:id', to: 'creators#show', as: 'creator'
 
+  # Orders routes
   get 'orders', to: 'orders#index', as: 'orders'
 
   # Routes for requests
-  get 'requests', to: 'requests#index', as: 'requests'   # Route to view requests
-  resources :requests, only: [:index, :create]            # Routes to create and list requests
+  resources :requests, only: [:index, :create] do
+    # Nested resources for messages within a specific request
+    resources :messages, only: [:create]  # Allow messages to be sent under specific requests
+  end
 
   # Devise user authentication routes
   devise_for :users, controllers: {

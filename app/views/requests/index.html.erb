@@ -1,16 +1,44 @@
 <h1>All Requests</h1>
 
-<% @requests.each do |request| %>
-  <div class="request">
-    <h3>
-      <% if request.user.seller_profile.present? %>
-        <%= request.user.seller_profile.full_name %>
+<% if @requests.any? %>
+  <% @requests.each do |request| %>
+    <div class="request">
+      <h3>
+        <% if request.user.seller_profile.present? %>
+          <%= request.user.seller_profile.full_name %> <!-- Display the seller's full name -->
+        <% else %>
+          <%= request.user.email %> <!-- Fallback to email if no seller profile exists -->
+        <% end %> - <%= request.post.title %> <!-- Display the post title -->
+      </h3>
+      
+      <p><strong>Message:</strong> <%= request.message %></p> <!-- Display the message sent by the user -->
+      <p><strong>Price Range:</strong> <%= request.price_range.capitalize %></p> <!-- Display the price range -->
+      <p><strong>Posted on:</strong> <%= request.created_at.strftime("%B %d, %Y") %></p> <!-- Display the request date -->
+      
+      <!-- Display all messages related to this request (if there are any) -->
+      <h4>Messages</h4>
+      <% if request.messages.any? %>
+        <ul>
+          <% request.messages.each do |message| %>
+            <li>
+              <strong><%= message.user.email %>:</strong> <%= message.content %>
+              <p><%= message.created_at.strftime("%B %d, %Y %H:%M") %></p>
+            </li>
+          <% end %>
+        </ul>
       <% else %>
-        <%= request.user.email %>
-      <% end %> - <%= request.post.title %>
-    </h3>
-    <p><strong>Message:</strong> <%= request.message %></p>
-    <p><strong>Price Range:</strong> <%= request.price_range.capitalize %></p>
-    <p><strong>Posted on:</strong> <%= request.created_at.strftime("%B %d, %Y") %></p>
-  </div>
+        <p>No messages yet.</p>
+      <% end %>
+
+      <!-- Form to add a new message -->
+      <%= form_with(model: [request, Message.new], local: true) do |form| %>
+        <div class="form-group">
+          <%= form.label :content, "Send a message" %>
+          <%= form.text_area :content, rows: 3, class: "form-control" %>
+        </div>
+        <%= form.submit "Send Message", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
 <% end %>
