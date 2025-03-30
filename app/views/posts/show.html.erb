@@ -8,6 +8,9 @@
 <% if @post.user.seller_profile.profile_picture.attached? %>
   <div class="creator-avatar">
     <%= image_tag url_for(@post.user.seller_profile.profile_picture), alt: "#{@post.user.seller_profile.full_name}'s Avatar", class: 'avatar-image', width: 150 %>
+    <div class="creator-button">
+      <%= link_to 'Creator', creator_path(@post.user.id), class: "btn btn-info ml-3" %> <!-- Link to the Creator's page -->
+    </div>
   </div>
 <% else %>
   <p>No Avatar</p> <!-- Fallback if no profile picture exists -->
@@ -142,6 +145,11 @@
   .avatar-image {
     border-radius: 50%;
     border: 2px solid #ddd;
+  }
+  .creator-button {
+    margin-top: 30px; 
+    margin-bottom: 80px; 
+    text-align: center;
   }
   .form-group {
     margin-bottom: 15px;

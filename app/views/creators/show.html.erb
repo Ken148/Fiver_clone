@@ -1,0 +1,96 @@
+<h1><%= t('account.title') %></h1>
+
+<% if @seller_profile.present? %>
+
+  <!-- Profile Picture -->
+  <div>
+    <strong><%= t('complete_seller_profile.profile_picture') %>:</strong><br>
+    <% if @seller_profile.profile_picture&.attached? %>
+      <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
+    <% else %>
+      <p>No Profile Picture</p>
+    <% end %>
+  </div>
+
+  <!-- Full Name -->
+  <div>
+    <strong><%= t('complete_seller_profile.full_name') %>:</strong>
+    <p><%= @seller_profile.full_name.presence || "N/A" %></p>
+  </div>
+
+  <!-- Display Name -->
+  <div>
+    <strong><%= t('complete_seller_profile.display_name') %>:</strong>
+    <p><%= @seller_profile.display_name.presence || "N/A" %></p>
+  </div>
+
+  <!-- Profile Description -->
+  <div>
+    <strong><%= t('complete_seller_profile.description') %>:</strong>
+    <p><%= @seller_profile.description.presence || "No description available." %></p>
+  </div>
+
+  <!-- Preferred Language -->
+  <div>
+    <strong><%= t('complete_seller_profile.language') %>:</strong>
+    <p><%= @seller_profile.language.presence || "Not specified" %></p>
+  </div>
+
+  <!-- Contact Information -->
+  <div>
+    <strong>Email:</strong>
+    <p><%= @seller_profile.email.presence || "Not provided" %></p>
+  </div>
+  <div>
+    <strong>Phone Number:</strong>
+    <p><%= @seller_profile.phone_number.presence || "Not provided" %></p>
+  </div>
+
+  <!-- Work Information -->
+  <h2><%= t('work_info.title') %></h2>
+
+  <!-- Occupation -->
+  <div>
+    <strong><%= t('work_info.occupation') %>:</strong>
+    <p><%= @seller_profile.occupation.presence || "Not specified" %></p>
+  </div>
+
+  <!-- Skills -->
+  <div>
+    <strong><%= t('work_info.skills') %>:</strong>
+    <% if @seller_profile.skills.present? %>
+      <p><%= @seller_profile.skills %> - <%= @seller_profile.skill_level.presence || "N/A" %></p>
+    <% else %>
+      <p>No skills listed.</p>
+    <% end %>
+  </div>
+
+  <!-- Education -->
+  <h2><%= t('complete_seller_profile.education') %></h2>
+  <div>
+    <strong>Start Year:</strong>
+    <p><%= @seller_profile.start_year.presence || "N/A" %></p>
+  </div>
+  <div>
+    <strong>End Year:</strong>
+    <p><%= @seller_profile.end_year.presence || "N/A" %></p>
+  </div>
+
+  <!-- Website Link -->
+  <div>
+    <strong>Your Website:</strong>
+    <% if @seller_profile.website.present? %>
+      <% url = @seller_profile.website.strip %>
+      <% if url =~ /\A(http:\/\/|https:\/\/)/ %>
+        <p><%= link_to url, url, target: "_blank" %></p>
+      <% else %>
+        <p>The website link is not valid.</p>
+      <% end %>
+    <% else %>
+      <p>No website added yet.</p>
+    <% end %>
+  </div>
+
+<% else %>
+  <p>Seller profile not found.</p>
+<% end %>

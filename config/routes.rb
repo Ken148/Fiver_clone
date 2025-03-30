@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :new, :create] # Posts associated with a gig
   end
 
+  # Creator route (for displaying the creator's profile page)
+  get 'creator/:id', to: 'creators#show', as: 'creator'
+
+
   # Devise user authentication routes
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'

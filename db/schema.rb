@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_28_215953) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "dislikes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "review_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_dislikes_on_review_id"
+    t.index ["user_id"], name: "index_dislikes_on_user_id"
+  end
+
   create_table "educations", force: :cascade do |t|
     t.integer "seller_profile_id", null: false
     t.string "degree"
@@ -64,6 +73,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
     t.text "standard_description"
     t.text "premium_description"
     t.index ["seller_profile_id"], name: "index_gigs_on_seller_profile_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "review_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_likes_on_review_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -103,6 +121,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.integer "review_id", null: false
+    t.integer "user_id", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_replies_on_review_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "user_id", null: false
@@ -110,6 +138,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "likes_count"
+    t.integer "dislikes_count"
     t.index ["post_id"], name: "index_reviews_on_post_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
@@ -159,14 +189,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_205925) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "dislikes", "reviews"
+  add_foreign_key "dislikes", "users"
   add_foreign_key "educations", "seller_profiles"
   add_foreign_key "gigs", "seller_profiles"
+  add_foreign_key "likes", "reviews"
+  add_foreign_key "likes", "users"
   add_foreign_key "messages", "posts"
   add_foreign_key "messages", "users"
   add_foreign_key "orders", "posts"
   add_foreign_key "orders", "users"
   add_foreign_key "posts", "gigs"
   add_foreign_key "posts", "users"
+  add_foreign_key "replies", "reviews"
+  add_foreign_key "replies", "users"
   add_foreign_key "reviews", "posts"
   add_foreign_key "reviews", "users"
 end
