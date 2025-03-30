@@ -40,26 +40,36 @@
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
+<!-- Average Rating Display -->
+<div class="average-rating">
+  <% if @reviews.any? %>
+    <% average_rating = @reviews.average(:rating).round(1) %>
+    <h3>Average Rating: <%= average_rating %> / 5</h3>
+  <% else %>
+    <h3>No Ratings Yet</h3>
+  <% end %>
+</div>
+
 <!-- Comment Form and Rating Form -->
-<h2>Leave a Comment and Rate the Post</h2>
-<p>If you would like to leave a comment and rate this post, please use the form below.</p>
+<% unless current_user == @post.user %>
+  <h2>Leave a Comment and Rate the Post</h2>
+  <p>If you would like to leave a comment and rate this post, please use the form below.</p>
 
-<%= form_with(url: submit_review_post_path(@post), method: :post, local: true) do |form| %>
-  <!-- Comment Section -->
-  <div class="form-group">
-    <%= form.label :comment, "Your Comment:" %>
-    <%= form.text_area :comment, class: "form-control", placeholder: "Write your comment here" %>
-  </div>
+  <%= form_with(url: submit_review_post_path(@post), method: :post, local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :comment, "Your Comment:" %>
+      <%= form.text_area :comment, class: "form-control", placeholder: "Write your comment here" %>
+    </div>
 
-  <!-- Rating Section -->
-  <div class="form-group">
-    <%= form.label :rating, "Rate this Post:" %>
-    <%= form.select :rating, options_for_select([1, 2, 3, 4, 5], selected: nil), class: "form-control", prompt: "Choose a rating" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :rating, "Rate this Post:" %>
+      <%= form.select :rating, options_for_select([1, 2, 3, 4, 5], selected: nil), class: "form-control", prompt: "Choose a rating" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.submit "Submit Comment & Rating", class: "btn btn-primary" %>
-  </div>
+    <div class="form-group">
+      <%= form.submit "Submit Comment & Rating", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>
 
 <!-- Display Reviews -->
@@ -78,8 +88,6 @@
   <p>No reviews yet. Be the first to leave one!</p>
 <% end %>
 
-
-
 <%= form_with(url: send_message_post_path(@post), method: :post, local: true) do |form| %>
   <div class="form-group">
     <%= form.submit "Send Order", class: "btn btn-primary" %>
@@ -90,12 +98,10 @@
   let slideIndex = 1;
   showSlides(slideIndex);
 
-  // Next/previous controls
   function plusSlides(n) {
     showSlides(slideIndex += n);
   }
 
-  // Thumbnail image controls
   function currentSlide(n) {
     showSlides(slideIndex = n);
   }
@@ -106,41 +112,32 @@
     if (n > slides.length) { slideIndex = 1 }
     if (n < 1) { slideIndex = slides.length }
 
-    // Hide all slides
     for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  // Hide all slides
+      slides[i].style.display = "none";
     }
 
-    // Show the current slide
-    slides[slideIndex - 1].style.display = "block";  // Only show the current slide
+    slides[slideIndex - 1].style.display = "block";
   }
 </script>
 
 <style>
-  /* Styling for Avatar */
   .creator-avatar {
     margin-top: 20px;
     text-align: center;
   }
-
-  /* Styling for Avatar Image */
   .avatar-image {
     border-radius: 50%;
     border: 2px solid #ddd;
   }
-
-  /* Form Styling */
   .form-group {
     margin-bottom: 15px;
   }
-
   .form-control {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     margin-top: 5px;
   }
-
   .btn-primary {
     background-color: #1DBF73;
     color: white;
@@ -148,36 +145,26 @@
     border-radius: 5px;
     font-size: 16px;
   }
-
   .btn-primary:hover {
     background-color: #138c53;
   }
-
-  /* Styling for the Image Gallery */
   .container {
     position: relative;
     width: 100%;
     max-width: 600px;
     margin: auto;
   }
-
   .mySlides {
     display: none;
     width: 100%;
     transition: opacity 1s ease-in-out;
   }
-
   .slide-image {
     width: 100%;
     height: auto;
     object-fit: cover;
     max-height: 400px;
   }
-
-  .cursor {
-    cursor: pointer;
-  }
-
   .prev, .next {
     cursor: pointer;
     position: absolute;
@@ -190,30 +177,24 @@
     font-size: 20px;
     border-radius: 0 3px 3px 0;
     user-select: none;
-    -webkit-user-select: none;
   }
-
   .next {
     right: 0;
     border-radius: 3px 0 0 3px;
   }
-
   .prev:hover, .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
-
-  .numbertext {
-    color: #f2f2f2;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-  }
-
   .caption-container {
     text-align: center;
     background-color: #222;
     padding: 2px 16px;
     color: white;
+  }
+  .average-rating {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: bold;
   }
 </style>

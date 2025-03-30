@@ -1,20 +1,42 @@
 <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
-<h1><%= t('posts.index.title') %></h1> <!-- Translated title for "All gigs" -->
+<h1><%= t('posts.index.title') %></h1>
 
-<!-- Search Bar -->
-<div class="search-container">
-  <!-- Add your search bar here -->
+<!-- Search and Filter Section -->
+<div class="filter-container">
+  <input type="text" id="search-input" placeholder="Search..." onkeyup="filterPosts()">
+
+  <div class="filter-options">
+    <label><input type="checkbox" id="filter-name" checked> Name</label>
+    <label><input type="checkbox" id="filter-description" checked> Description</label>
+  </div>
+
+  <div class="rating-filter">
+    <label>Rating: <span id="rating-range">1 - 5</span> ⭐</label>
+    <input type="range" id="rating-slider" min="1" max="5" step="1" value="1" oninput="updateRating()">
+    <input type="range" id="rating-slider-max" min="1" max="5" step="1" value="5" oninput="updateRating()">
+  </div>
 </div>
 
 <!-- Display Posts -->
-<div class="post-container">
+<div class="post-container" id="post-container">
   <% if @posts.any? %>
-    <% @posts.each_with_index do |post, post_index| %> <!-- Added post_index to differentiate each post -->
-      <div class="post">
+    <% @posts.each_with_index do |post, post_index| %>
+      <% average_rating = post.reviews.any? ? (post.reviews.average(:rating).to_f.round(1)) : 0 %>
+
+      <div class="post" 
+           data-title="<%= post.title.downcase %>" 
+           data-description="<%= post.content.downcase %>"
+           data-rating="<%= average_rating %>">
         <h2><%= link_to post.title, post_path(post) %></h2>
         <p><%= post.content.truncate(100) %></p>
 
-        <!-- Image Gallery Container for each Post -->
+        <% if post.reviews.any? %>
+          <p><strong>Rating:</strong> <%= average_rating %> ⭐ (<%= post.reviews.count %> reviews)</p>
+        <% else %>
+          <p><strong>No reviews yet.</strong></p>
+        <% end %>
+
+        <!-- Image Gallery -->
         <div class="container">
           <% plan_images = [
             { image: post.gig.basic_image, name: "Basic Plan", price: post.gig.basic_price, description: post.gig.basic_description },
@@ -36,87 +58,164 @@
             <% end %>
           <% end %>
 
-          <!-- Navigation arrows -->
           <a class="prev" onclick="plusSlides(<%= post_index %>, -1)">&#10094;</a>
           <a class="next" onclick="plusSlides(<%= post_index %>, 1)">&#10095;</a>
         </div>
 
-        <!-- Order Now Button (under description) -->
-        <div class="order-now-container" style="text-align: center; margin-top: 10px;">
-          <%= link_to "Order Now", post_path(post), class: "btn btn-primary", id: "order-now-#{post.id}", data: { post_id: post.id } %>
+        <div class="order-now-container">
+          <%= link_to "Order Now", post_path(post), class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>
   <% else %>
-    <p><%= t('posts.index.no_posts') %></p> <!-- Translated "No gigs available." -->
+    <p><%= t('posts.index.no_posts') %></p>
   <% end %>
 </div>
 
-<!-- Add the necessary JavaScript to handle the slideshow and dynamic content update -->
 <script>
+  function filterPosts() {
+    let input = document.getElementById('search-input').value.toLowerCase();
+    let filterName = document.getElementById('filter-name').checked;
+    let filterDescription = document.getElementById('filter-description').checked;
+    let minRating = parseFloat(document.getElementById('rating-slider').value);
+    let maxRating = parseFloat(document.getElementById('rating-slider-max').value);
+    let posts = document.querySelectorAll('.post');
+
+    posts.forEach(post => {
+      let title = post.getAttribute('data-title');
+      let description = post.getAttribute('data-description');
+      let rating = parseFloat(post.getAttribute('data-rating'));
+
+      let matchesText = (!input || (filterName && title.includes(input)) || (filterDescription && description.includes(input)));
+      let matchesRating = (rating >= minRating && rating <= maxRating);
+
+      if (matchesText && matchesRating) {
+        post.style.display = "block";
+      } else {
+        post.style.display = "none";
+      }
+    });
+  }
+
+  function updateRating() {
+    let min = document.getElementById('rating-slider').value;
+    let max = document.getElementById('rating-slider-max').value;
+    if (parseInt(min) > parseInt(max)) {
+      [min, max] = [max, min]; // Swap values if min > max
+      document.getElementById('rating-slider').value = min;
+      document.getElementById('rating-slider-max').value = max;
+    }
+    document.getElementById('rating-range').innerText = min + " - " + max;
+    filterPosts();
+  }
+
   // Initialize slideIndex for each post
   let slideIndices = [];
 
-  // Function to handle showing slides for each post independently
   function showSlides(postIndex) {
     let slides = document.querySelectorAll(`[data-post-index="${postIndex}"]`);
     let totalSlides = slides.length;
 
-    // Hide all slides for the current post
     slides.forEach(slide => slide.style.display = "none");
 
-    // Wrap around the index to keep it within bounds
     if (slideIndices[postIndex] > totalSlides) slideIndices[postIndex] = 1;
     if (slideIndices[postIndex] < 1) slideIndices[postIndex] = totalSlides;
 
-    // Show the current slide
     slides[slideIndices[postIndex] - 1].style.display = "block";
   }
 
-  // Function to handle next/previous for each post's slideshow
   function plusSlides(postIndex, n) {
-    // Initialize if undefined
     if (typeof slideIndices[postIndex] === 'undefined') {
-      slideIndices[postIndex] = 1; // Initialize the slide for this post
+      slideIndices[postIndex] = 1;
     }
 
     slideIndices[postIndex] += n;
     showSlides(postIndex);
   }
 
-  // Initialize slideshows after the page loads
   window.onload = function() {
-    // Initialize all slideshows
     let posts = document.querySelectorAll('.container');
     posts.forEach((post, index) => {
-      slideIndices[index] = 1; // Set initial slide for each post's slideshow
-      showSlides(index); // Show the first slide for each post
+      slideIndices[index] = 1;
+      showSlides(index);
     });
-
-    // Order Now Button Click Event
-    const orderButtons = document.querySelectorAll('.btn-primary');
-    orderButtons.forEach((button) => {
-      button.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent default link behavior
-
-        if (!document.body.classList.contains('signed-in')) {  // If not logged in
-          // Store the current post's URL in session storage before redirecting to login
-          sessionStorage.setItem('redirect_to', this.href);
-
-          // Redirect to login page
-          window.location.href = '<%= new_user_session_path %>';
-        } else {
-          // If logged in, allow the normal link behavior
-          window.location.href = this.href;
-        }
-      });
-    });
-
-    // After login, redirect user to the saved URL (if they were redirected)
-    if (sessionStorage.getItem('redirect_to')) {
-      const redirectUrl = sessionStorage.getItem('redirect_to');
-      sessionStorage.removeItem('redirect_to'); // Clear the saved URL
-      window.location.href = redirectUrl; // Redirect to the post page
-    }
   };
 </script>
+
+<style>
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .filter-options {
+    display: flex;
+    gap: 10px;
+  }
+
+  .rating-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rating-filter input {
+    width: 50px;
+  }
+
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .mySlides {
+    display: none;
+    width: 100%;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 400px;
+  }
+
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+  }
+
+  .next { right: 0; }
+  .prev:hover, .next:hover { background-color: rgba(0, 0, 0, 0.8); }
+
+  .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 10px;
+    color: white;
+  }
+
+  .order-now-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
