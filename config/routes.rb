@@ -8,10 +8,8 @@ Rails.application.routes.draw do
     member do
       get :occupation_step          
       patch :update_occupation_step 
-
       get :security_step            
       patch :update_security_step   
-
       get :account                    # Seller account page
       patch :update_account           # Update seller account
     end
@@ -19,24 +17,25 @@ Rails.application.routes.draw do
 
   # Routes for posts (gigs as well)
   resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
-    # Add the buy action route here
     member do
       get 'buy', to: 'posts#buy', as: 'buy'
-      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'  # This is the correct route for contacting the creator
-      post 'send_message', to: 'posts#send_message', as: 'send_message'  # Correct POST route for sending a message to the creator
-      post 'submit_review', to: 'posts#submit_review', as: 'submit_review'  # New route for submitting reviews
+      get 'contact_creator', to: 'posts#contact_creator', as: 'contact_creator'
+      post 'send_message', to: 'posts#send_message', as: 'send_message'
+      post 'submit_review', to: 'posts#submit_review', as: 'submit_review' 
     end
   end
 
   # Routes for gigs
   resources :gigs, only: [:new, :create, :index, :show] do
-    # Nested posts under gigs
-    resources :posts, only: [:index, :new, :create] # Posts associated with a gig
+    resources :posts, only: [:index, :new, :create]  # Posts associated with a gig
   end
 
   # Creator route (for displaying the creator's profile page)
   get 'creator/:id', to: 'creators#show', as: 'creator'
 
+  # Routes for requests
+  get 'requests', to: 'requests#index', as: 'requests'   # Route to view requests
+  resources :requests, only: [:index, :create]            # Routes to create and list requests
 
   # Devise user authentication routes
   devise_for :users, controllers: {

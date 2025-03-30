@@ -41,6 +41,7 @@
           <!-- If the user is logged in -->
           <% if current_user.seller_profile.present? %>
             <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
+            <%= link_to "Requests", requests_path, class: "btn btn-warning ml-2" %> <!-- Requests Button -->
           <% else %>
             <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
           <% end %>

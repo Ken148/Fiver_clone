@@ -75,13 +75,16 @@
   <% end %>
 <% end %>
 
-<!-- Display Reviews -->
 <h3>Reviews:</h3>
 <% if @reviews.any? %>
   <ul>
     <% @reviews.each do |review| %>
       <li>
-        <strong><%= review.user.seller_profile.full_name %></strong> says:
+        <% if review.user.seller_profile.present? %>
+          <strong><%= review.user.seller_profile.full_name %></strong> says:
+        <% else %>
+          <strong><%= review.user.email %></strong> says:
+        <% end %>
         <p><%= review.comment %></p>
         <p><strong>Rating:</strong> <%= review.rating %> / 5</p>
       </li>
@@ -90,6 +93,7 @@
 <% else %>
   <p>No reviews yet. Be the first to leave one!</p>
 <% end %>
+
 
 <!-- Send Order Button -->
 <%= form_with(url: send_message_post_path(@post), method: :post, local: true, id: 'send-order-form') do |form| %>

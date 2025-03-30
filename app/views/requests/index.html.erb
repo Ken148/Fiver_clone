@@ -1,0 +1,12 @@
+<h1>All Requests</h1>
+
+<% @requests.each do |request| %>
+  <div class="request">
+    <h3><%= request.user.seller_profile.full_name %> - <%= request.post.title %></h3>
+    <p><strong>Message:</strong> <%= request.message %></p>
+    <p><strong>Price Range:</strong> <%= request.price_range.capitalize %></p>
+    <p><strong>Posted on:</strong> <%= request.created_at.strftime("%B %d, %Y") %></p>
+  </div>
+<% end %>
+
+<%= link_to 'Back', posts_path, class: "btn btn-secondary" %>

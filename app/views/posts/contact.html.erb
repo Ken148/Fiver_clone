@@ -1,7 +1,7 @@
 <h2>Contact the Creator</h2>
 <p>If you're interested in placing an order or have specific requirements, use the form below to send a detailed description to the creator.</p>
 
-<%= form_with(url: send_message_post_path(@post), method: :post, local: true) do |form| %>
+<%= form_with(model: Request.new, url: requests_path, method: :post, local: true) do |form| %>
   <div class="form-group">
     <%= form.label :message, "Describe your order:" %>
     <%= form.text_area :message, class: "form-control", placeholder: "Describe your order details here" %>
@@ -11,6 +11,8 @@
     <%= form.label :price_range, "Choose a plan:" %>
     <%= form.select :price_range, [["Basic Plan", "basic"], ["Standard Plan", "standard"], ["Premium Plan", "premium"]], class: "form-control" %>
   </div>
+
+  <%= form.hidden_field :post_id, value: @post.id %> <!-- Add post_id to link request to a specific post -->
 
   <div class="form-group">
     <%= form.submit "Send Order", class: "btn btn-primary" %>
