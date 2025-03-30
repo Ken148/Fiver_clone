@@ -39,6 +39,10 @@
       <div class="nav-right">
         <% if user_signed_in? %>
           <!-- If the user is logged in -->
+          
+          <!-- Show "Orders" button for all logged-in users -->
+          <%= link_to "Orders", orders_path, class: "btn btn-success ml-2" %> <!-- Orders Button -->
+          
           <% if current_user.seller_profile.present? %>
             <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
             <%= link_to "Requests", requests_path, class: "btn btn-warning ml-2" %> <!-- Requests Button -->

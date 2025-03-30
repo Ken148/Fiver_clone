@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Associations
-  has_many :orders
+  has_many :requests  # Change from orders to requests if you're referring to requests
+  has_many :messages
   has_many :posts, dependent: :destroy
   has_one :seller_profile, dependent: :destroy  # Ensure the seller profile is destroyed when the user is deleted
 

@@ -1,29 +1,15 @@
-<h1>My Orders</h1>
+<h1>Your Orders</h1>
 
-<% if @orders.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Post Title</th>
-        <th>Customer</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.each do |order| %>
-        <tr>
-          <td><%= order.title %></td>
-          <td><%= order.user.email %></td>
-          <td><%= order.status %></td>
-          <td>
-            <%= link_to 'View Order', order_path(order) %> |
-            <%= link_to 'Reply', reply_order_path(order), method: :patch %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<% if @requests.any? %>
+  <ul>
+    <% @requests.each do |request| %>
+      <li>
+        <strong>Post Title:</strong> <%= request.post.title %> <br>
+        <strong>Message:</strong> <%= request.message %> <br>
+        <strong>Price Range:</strong> <%= request.price_range.capitalize %> <br>
+      </li>
+    <% end %>
+  </ul>
 <% else %>
-  <p>No orders yet.</p>
+  <p>You have no orders yet.</p>
 <% end %>

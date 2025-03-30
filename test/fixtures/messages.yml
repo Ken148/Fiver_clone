@@ -2,12 +2,10 @@
 
 one:
   user: one
-  post: one
-  message: MyText
-  price_range: MyString
+  request: one
+  content: MyText
 
 two:
   user: two
-  post: two
-  message: MyText
-  price_range: MyString
+  request: two
+  content: MyText
