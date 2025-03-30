@@ -88,13 +88,27 @@
   <p>No reviews yet. Be the first to leave one!</p>
 <% end %>
 
-<%= form_with(url: send_message_post_path(@post), method: :post, local: true) do |form| %>
+<!-- Send Order Button -->
+<%= form_with(url: send_message_post_path(@post), method: :post, local: true, id: 'send-order-form') do |form| %>
   <div class="form-group">
-    <%= form.submit "Send Order", class: "btn btn-primary" %>
+    <%= form.submit "Send Order", class: "btn btn-primary", id: "send-order-btn" %>
   </div>
 <% end %>
 
+<!-- Back Button to All Posts (Positioned at the Bottom Right Corner) -->
+<%= link_to 'Back', posts_path, class: "btn btn-secondary back-btn" %>
+
 <script>
+  document.getElementById('send-order-btn').addEventListener('click', function(event) {
+    const isLoggedIn = <%= user_signed_in? ? 'true' : 'false' %>; // Checks if the user is signed in
+
+    if (!isLoggedIn) {
+      event.preventDefault(); // Prevent the form submission
+      alert('You need to be logged in to send an order.'); // Alert the user
+      window.location.href = '/users/sign_in'; // Redirect to login page
+    }
+  });
+
   let slideIndex = 1;
   showSlides(slideIndex);
 
@@ -147,6 +161,30 @@
   }
   .btn-primary:hover {
     background-color: #138c53;
+  }
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  .back-btn {
+    bottom: 20px;
+    right: 20px;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .back-btn:hover {
+    background-color: #5a6268;
   }
   .container {
     position: relative;

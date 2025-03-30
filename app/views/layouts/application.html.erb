@@ -33,11 +33,7 @@
     <!-- Navigation Bar -->
     <nav>
       <!-- Fiverb button on the top left -->
-      <% if user_signed_in? %>
-        <%= link_to t('home.fiverb'), posts_path, class: "btn btn-primary" %>
-      <% else %>
-        <%= link_to t('home.fiverb'), new_user_session_path, class: "btn btn-primary" %>
-      <% end %>
+      <%= link_to t('home.fiverb'), posts_path, class: "btn btn-primary" %>
 
       <!-- Right side of the nav bar -->
       <div class="nav-right">
