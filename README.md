@@ -20,23 +20,18 @@ Fiverr Clone is a marketplace where users can find skilled creators to bring the
 - 🔐 **Secure Login & Registration**: Sign up and manage your account securely.
 
 ### 🛠️ Technology Stack
-- 🌐 **Frontend**: HTML, CSS, TailwindCSS, JavaScript
-- 🖥️ **Backend**: PHP, MySQL
-- 🎨 **Design**: Figma
+- 🌐 **Frontend**: HTML, CSS, JavaScript
+- 🖥️ **Backend**: PHP, SQLite3
 
 ## ⏳ Development Timeline
 | **Days**       | Description                                                    | Type               |
 |---------------|----------------------------------------------------------------|--------------------|
-| **Day 1**     | 📂 Setting up database and project structure                   | Design + Code     |
-| **Day 2-5**   | 🎨 Designing the UI in Figma                                   | Design            |
+| **Day 1-5**   | 🎨 Designing the UI in Figma                                   | Design            |
 | **Day 6-14**  | 💻 Developing front-end with HTML, CSS, and TailwindCSS        | Code              |
 | **Day 15-20** | 🔑 Implementing login, signup, and user authentication         | Code              |
 | **Day 21-26** | 🏠 Building user dashboard and seller profiles                 | Code              |
 | **Day 27**    | 🛍️ Developing search functionality and order system            | Code              |
 | **Day 28**    | 🛠️ Bug fixing, optimizations, and final testing                | Code + UI         |
 
-## 🌐 Live Website
-Link: [Fiverr Clone](https://yourwebsite.com)
-
-## 📧 Contact
-For inquiries, email: your.email@example.com
+## 🌐 Website
+Link: [Fiverr Clone](https://fiverrclone.kentooo6.eu)
