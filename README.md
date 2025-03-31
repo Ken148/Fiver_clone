@@ -3,10 +3,6 @@
 ## 🏠 Home Page
 ![image](https://github.com/user-attachments/assets/765a372e-a0e4-4c6f-bffa-70f445c0c36b)
 
-## 🔍 Searching for a Creator
-
-## 🎨 Creator Profile
-
 ## 📌 Overview
 Fiverr Clone is a marketplace where users can find skilled creators to bring their ideas to life. Whether you need a custom product, a design, or any service, you can search for a creator, check their portfolio, and place an order. The platform allows users to not only buy but also sell their own work by creating a seller profile.
 
