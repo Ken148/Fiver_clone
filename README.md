@@ -1,6 +1,7 @@
 # Fiverr Clone
 
 ## 🏠 Home Page
+![image](https://github.com/user-attachments/assets/765a372e-a0e4-4c6f-bffa-70f445c0c36b)
 
 ## 🔍 Searching for a Creator
 
