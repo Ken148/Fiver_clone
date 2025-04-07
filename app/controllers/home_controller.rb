@@ -7,5 +7,6 @@ class HomeController < ApplicationController
     @posts = Post.all  # Fetch all posts to display on the homepage
   end
   def manifest
+    render template: "pwa/manifest", layout: false
   end
 end
