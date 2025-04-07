@@ -52,4 +52,7 @@ Rails.application.routes.draw do
 
   # Root route for the site
   root 'posts#index'
+
+  # Add route for manifest.json
+  get '/manifest.json', to: 'home#manifest', defaults: { format: :json }
 end
