@@ -5,6 +5,7 @@
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
+    "id": "/",
     "icons": [
       {
         "src": "/assets/Mojster na Klik 192x192.png",
