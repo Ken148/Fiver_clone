@@ -15,7 +15,7 @@ Fiverr Clone is a marketplace where users can find skilled creators to bring the
 
 ### 🛠️ Technology Stack
 - 🌐 **Frontend**: HTML, CSS, JavaScript
-- 🖥️ **Backend**: PHP, SQLite3
+- 🖥️ **Backend**: SQLite3
 
 ## ⏳ Development Timeline
 | **Days**       | Description                                                    | Type               |
