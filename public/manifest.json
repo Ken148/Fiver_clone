@@ -1,16 +1,21 @@
 {
-    "name": "Mojster na Klik",
-    "short_name": "MNK",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#000000",
-    "id": "/",
-    "icons": [
-      {
-        "src": "/assets/Mojster na Klik 192x192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      }
-    ]
-  }
+  "name": "Mojster na Klik",
+  "short_name": "MNK",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "id": "/",
+  "icons": [
+    {
+      "src": "/assets/MNK(192x192).png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/MNK(512x512).png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
