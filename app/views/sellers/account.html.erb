@@ -1,5 +1,10 @@
 <h1><%= t('account.title') %></h1>
 
+<!-- Sign out form -->
+<%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do |form| %>
+  <%= form.submit "Logout", class: "btn btn-danger" %>
+<% end %>
+
 <%= form_with model: @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
 
   <!-- Full Name -->

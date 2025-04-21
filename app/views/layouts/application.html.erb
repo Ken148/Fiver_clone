@@ -12,55 +12,139 @@
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
-    
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Stylesheets -->
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-
-    <!-- Include application.js as a module -->
     <script type="module" src="<%= asset_path('application.js') %>"></script>
+    <%= javascript_importmap_tags %>
 
-    <%= javascript_importmap_tags %> <!-- Ensure this is after the script inclusion -->
+    <style>
+      body {
+        background-color: #121212;
+        color: #fff;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 1.5em;
+      }
+
+      nav {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1em;
+        background-color: #1e1e1e;
+        border-bottom: 1px solid #2a2a2a;
+        margin-bottom: 2em;
+      }
+
+      .btn {
+        padding: 0.5em 1em;
+        border-radius: 8px;
+        font-size: 0.9em;
+        text-decoration: none;
+        margin-left: 0.5em;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: #007c91;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #009bb3;
+      }
+
+      .btn-success {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background-color: #2ecc71;
+      }
+
+      .btn-info {
+        background-color: #17a2b8;
+        color: white;
+      }
+
+      .btn-info:hover {
+        background-color: #20c5dc;
+      }
+
+      .btn-warning {
+        background-color: #ffc107;
+        color: black;
+      }
+
+      .btn-warning:hover {
+        background-color: #ffdd57;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background-color: #e55353;
+      }
+
+      .notice, .alert {
+        text-align: center;
+        margin-bottom: 1em;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .inline-form {
+        display: inline;
+      }
+      
+      .btn-storitve {
+        background-color: #6f42c1; /* Bootstrap-ish purple */
+        color: white;
+      }
+
+      .btn-storitve:hover {
+        background-color: #8e5be0;
+      }
+    </style>
   </head>
 
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <!-- Navigation Bar -->
-    <nav>
-      <!-- Right side of the nav bar -->
-      <div class="nav-right">
-        <% if user_signed_in? %>
-          <!-- If the user is logged in -->
-          
-          <!-- Show "Orders" button for all logged-in users -->
-          <%= link_to "Orders", orders_path, class: "btn btn-success ml-2" %> <!-- Orders Button -->
-          
-          <% if current_user.seller_profile.present? %>
-            <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
-            <%= link_to "Requests", requests_path, class: "btn btn-warning ml-2" %> <!-- Requests Button -->
-          <% else %>
-            <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
-          <% end %>
+<% if (controller_name == 'posts' && action_name == 'index') || 
+      (controller_name == 'orders' && action_name == 'index') ||
+      (controller_name == 'requests' && action_name == 'index') ||
+      (controller_name == 'sellers' && action_name == 'account') %>
 
-          <!-- Sign out form -->
-          <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do |form| %>
-            <%= form.submit "Logout", class: "btn btn-danger" %>
-          <% end %>
+      <nav>
+        <div class="nav-right">
+          <% if user_signed_in? %>
+            <%= link_to "Storitve", posts_path, class: "btn btn-storitve" %>
+            <%= link_to "Orders", orders_path, class: "btn btn-success" %>
 
-        <% else %>
-          <!-- If the user is not logged in -->
-          <%= link_to t('home.login'), new_user_session_path, class: 'btn btn-primary' %>
-          <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
-        <% end %>
-      </div>
-    </nav>
-    
-    <!-- Main Content -->
-    <%= yield %>
+            <% if current_user.seller_profile.present? %>
+              <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
+              <%= link_to "Requests", requests_path, class: "btn btn-warning" %>
+            <% else %>
+              <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
+            <% end %>
+          <% end %>
+        </div>
+      </nav>
+    <% end %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
