@@ -1,100 +1,80 @@
-<style>
-  /* Navbar styles */
-  .navbar {
-    background-color: #004d4d;
-    color: white;
-    padding: 0.75em 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || t('home.title', default: "Fiver Clone") %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  .navbar-title {
-    flex-grow: 1;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1em;
-    margin: 0;
-  }
+    <%= yield :head %>
 
-  .menu-toggle {
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    z-index: 1001;
-  }
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
 
-  /* Sidebar styles */
-  .sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    background-color: #003333;
-    color: white;
-    padding: 2em 1em;
-    transition: 0.3s;
-    z-index: 1000;
-  }
+    <!-- Stylesheets -->
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
 
-  .sidebar.show {
-    left: 0;
-  }
+    <!-- Include application.js as a module -->
+    <script type="module" src="<%= asset_path('application.js') %>"></script>
 
-  .sidebar a, .sidebar form {
-    display: block;
-    margin-bottom: 1.2em;
-    color: white;
-    text-decoration: none;
-  }
+    <%= javascript_importmap_tags %> <!-- Ensure this is after the script inclusion -->
+  </head>
 
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: none;
-    z-index: 999;
-  }
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-  .overlay.show {
-    display: block;
-  }
-</style>
+    <!-- Navigation Bar -->
+    <nav>
+      <!-- Fiverb button on the top left -->
+      <%= link_to t('home.fiverb'), posts_path, class: "btn btn-primary" %>
 
-<nav class="navbar">
-  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-  <h1 class="navbar-title">Ponujene storitve</h1>
-  <div style="width: 24px;"></div> <!-- Filler for right side -->
-</nav>
+      <!-- Right side of the nav bar -->
+      <div class="nav-right">
+        <% if user_signed_in? %>
+          <!-- If the user is logged in -->
+          
+          <!-- Show "Orders" button for all logged-in users -->
+          <%= link_to "Orders", orders_path, class: "btn btn-success ml-2" %> <!-- Orders Button -->
+          
+          <% if current_user.seller_profile.present? %>
+            <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
+            <%= link_to "Requests", requests_path, class: "btn btn-warning ml-2" %> <!-- Requests Button -->
+          <% else %>
+            <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
+          <% end %>
 
-<div id="sidebar" class="sidebar">
-  <%= link_to "Orders", orders_path %>
-  <% if current_user&.seller_profile.present? %>
-    <%= link_to "Account", account_seller_path(current_user.seller_profile) %>
-    <%= link_to "Requests", requests_path %>
-  <% else %>
-    <%= link_to "Create Seller Profile", new_seller_profile_path %>
-  <% end %>
+          <!-- Sign out form -->
+          <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do |form| %>
+            <%= form.submit "Logout", class: "btn btn-danger" %>
+          <% end %>
 
-  <%= form_with url: destroy_user_session_path, method: :delete do |form| %>
-    <%= form.submit "Logout", style: "background:none;border:none;color:white;cursor:pointer;text-align:left;" %>
-  <% end %>
-</div>
+        <% else %>
+          <!-- If the user is not logged in -->
+          <%= link_to t('home.login'), new_user_session_path, class: 'btn btn-primary' %>
+          <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
+        <% end %>
 
-<div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-<script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    sidebar.classList.toggle('show');
-    overlay.classList.toggle('show');
-  }
-</script>
+        <!-- Language Selector -->
+        <form action="<%= set_language_path %>" method="get">
+          <select name="locale" onchange="this.form.submit();">
+            <% { 'English' => 'en', 'French' => 'fr', 'Spanish' => 'es', 'German' => 'de' }.each do |name, code| %>
+              <option value="<%= code %>" <%= 'selected' if I18n.locale.to_s == code %> >
+                <%= name %>
+              </option>
+            <% end %>
+          </select>
+        </form>
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <%= yield %>
+  </body>
+</html>
