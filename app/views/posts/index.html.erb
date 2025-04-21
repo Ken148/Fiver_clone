@@ -1,69 +1,33 @@
-<h1><%= t('posts.index.title') %></h1>
+<h1>Ponujene storitve</h1>
 
-<!-- Search and Filter Section -->
+<!-- Search Section -->
 <div class="filter-container">
   <input type="text" id="search-input" placeholder="Search..." onkeyup="filterPosts()">
-
-  <div class="filter-options">
-    <label><input type="checkbox" id="filter-name" checked> Name</label>
-    <label><input type="checkbox" id="filter-description" checked> Description</label>
-  </div>
-
-  <div class="rating-filter">
-    <label>Rating: <span id="rating-range">1 - 5</span> ⭐</label>
-    <input type="range" id="rating-slider" min="1" max="5" step="1" value="1" oninput="updateRating()">
-    <input type="range" id="rating-slider-max" min="1" max="5" step="1" value="5" oninput="updateRating()">
-  </div>
 </div>
 
 <!-- Display Posts -->
 <div class="post-container" id="post-container">
   <% if @posts.any? %>
-    <% @posts.each_with_index do |post, post_index| %>
+    <% @posts.each do |post| %>
       <% average_rating = post.reviews.any? ? (post.reviews.average(:rating).to_f.round(1)) : 0 %>
 
       <div class="post" 
            data-title="<%= post.title.downcase %>" 
            data-description="<%= post.content.downcase %>"
            data-rating="<%= average_rating %>">
+        
+        <!-- Title -->
         <h2><%= link_to post.title, post_path(post) %></h2>
+        
+        <!-- Description (Content) -->
         <p><%= post.content.truncate(100) %></p>
 
-        <% if post.reviews.any? %>
-          <p><strong>Rating:</strong> <%= average_rating %> ⭐ (<%= post.reviews.count %> reviews)</p>
-        <% else %>
-          <p><strong>No reviews yet.</strong></p>
+        <!-- Display single attached image -->
+        <% if post.image.attached? %>
+          <div class="post-image">
+            <%= image_tag post.image, alt: "#{post.title} image", class: "slide-image" %>
+          </div>
         <% end %>
-
-        <!-- Image Gallery -->
-        <div class="container">
-          <% plan_images = [
-            { image: post.gig.basic_image, name: "Basic Plan", price: post.gig.basic_price, description: post.gig.basic_description },
-            { image: post.gig.standard_image, name: "Standard Plan", price: post.gig.standard_price, description: post.gig.standard_description },
-            { image: post.gig.premium_image, name: "Premium Plan", price: post.gig.premium_price, description: post.gig.premium_description }
-          ] %>
-
-          <% plan_images.each_with_index do |plan, index| %>
-            <% if plan[:image].present? %>
-              <div class="mySlides" data-post-index="<%= post_index %>" data-index="<%= index %>">
-                <div class="numbertext"><%= index + 1 %> / 3</div>
-                <%= image_tag(plan[:image], alt: "#{plan[:name]} Image", class: "slide-image") %>
-                <div class="caption-container">
-                  <h3><%= plan[:name] %></h3>
-                  <p><%= plan[:description] %></p>
-                  <p><strong>Price:</strong> $<%= plan[:price] %></p>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-
-          <a class="prev" onclick="plusSlides(<%= post_index %>, -1)">&#10094;</a>
-          <a class="next" onclick="plusSlides(<%= post_index %>, 1)">&#10095;</a>
-        </div>
-
-        <div class="order-now-container">
-          <%= link_to "Check it out", post_path(post), class: "btn btn-primary" %>
-        </div>
       </div>
     <% end %>
   <% else %>
@@ -74,78 +38,23 @@
 <script>
   function filterPosts() {
     let input = document.getElementById('search-input').value.toLowerCase();
-    let filterName = document.getElementById('filter-name').checked;
-    let filterDescription = document.getElementById('filter-description').checked;
-    let minRating = parseFloat(document.getElementById('rating-slider').value);
-    let maxRating = parseFloat(document.getElementById('rating-slider-max').value);
     let posts = document.querySelectorAll('.post');
 
     posts.forEach(post => {
       let title = post.getAttribute('data-title');
       let description = post.getAttribute('data-description');
-      let rating = parseFloat(post.getAttribute('data-rating'));
+      let matchesText = (!input || title.includes(input) || description.includes(input));
 
-      let matchesText = (!input || (filterName && title.includes(input)) || (filterDescription && description.includes(input)));
-      let matchesRating = (rating >= minRating && rating <= maxRating);
-
-      if (matchesText && matchesRating) {
-        post.style.display = "block";
-      } else {
-        post.style.display = "none";
-      }
+      post.style.display = matchesText ? "block" : "none";
     });
   }
-
-  function updateRating() {
-    let min = document.getElementById('rating-slider').value;
-    let max = document.getElementById('rating-slider-max').value;
-    if (parseInt(min) > parseInt(max)) {
-      [min, max] = [max, min]; // Swap values if min > max
-      document.getElementById('rating-slider').value = min;
-      document.getElementById('rating-slider-max').value = max;
-    }
-    document.getElementById('rating-range').innerText = min + " - " + max;
-    filterPosts();
-  }
-
-  // Initialize slideIndex for each post
-  let slideIndices = [];
-
-  function showSlides(postIndex) {
-    let slides = document.querySelectorAll(`[data-post-index="${postIndex}"]`);
-    let totalSlides = slides.length;
-
-    slides.forEach(slide => slide.style.display = "none");
-
-    if (slideIndices[postIndex] > totalSlides) slideIndices[postIndex] = 1;
-    if (slideIndices[postIndex] < 1) slideIndices[postIndex] = totalSlides;
-
-    slides[slideIndices[postIndex] - 1].style.display = "block";
-  }
-
-  function plusSlides(postIndex, n) {
-    if (typeof slideIndices[postIndex] === 'undefined') {
-      slideIndices[postIndex] = 1;
-    }
-
-    slideIndices[postIndex] += n;
-    showSlides(postIndex);
-  }
-
-  window.onload = function() {
-    let posts = document.querySelectorAll('.container');
-    posts.forEach((post, index) => {
-      slideIndices[index] = 1;
-      showSlides(index);
-    });
-  };
 </script>
 
 <style>
 h1 {
   text-align: center;
   margin-top: 2rem;
-  color: #fff; // Assuming dark background
+  color: #fff;
 }
 
 .filter-container {
@@ -168,14 +77,6 @@ h1 {
   border: 1px solid #ccc;
 }
 
-.filter-options,
-.rating-filter {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .post-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -192,65 +93,21 @@ h1 {
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 1rem;
 }
 
-.container {
-  position: relative;
-  max-width: 100%;
+.post p {
+  color: #000000;
+}
+
+.post-image {
+  margin-top: 1rem;
 }
 
 .slide-image {
   width: 100%;
   height: auto;
   border-radius: 10px;
-}
-
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 0.5rem;
-  color: white;
-  font-weight: bold;
-  font-size: 1.5rem;
-  transition: 0.3s ease;
-  border-radius: 3px;
-  user-select: none;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.prev {
-  left: 0;
-}
-
-.next {
-  right: 0;
-}
-
-.caption-container {
-  padding: 0.5rem;
-  background-color: #f9f9f9;
-  border-top: 1px solid #ccc;
-  border-radius: 0 0 10px 10px;
-}
-
-.order-now-container {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 
 @media (max-width: 768px) {

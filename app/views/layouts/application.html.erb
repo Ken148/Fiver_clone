@@ -130,11 +130,10 @@
         <div class="nav-right">
           <% if user_signed_in? %>
             <%= link_to "Storitve", posts_path, class: "btn btn-storitve" %>
-            <%= link_to "Orders", orders_path, class: "btn btn-success" %>
+            <%= link_to "Naročila", orders_path, class: "btn btn-success" %>
 
             <% if current_user.seller_profile.present? %>
-              <%= link_to "Account", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
-              <%= link_to "Requests", requests_path, class: "btn btn-warning" %>
+              <%= link_to "Uporabniški račun", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
             <% else %>
               <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
             <% end %>
