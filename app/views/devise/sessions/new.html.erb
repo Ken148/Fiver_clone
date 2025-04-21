@@ -21,8 +21,83 @@
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
+
+  <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
 <% end %>
 
+
 <%= render "devise/shared/links" %>
-<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-<%= yield :stylesheets %>  <!-- This allows specific pages to insert styles -->
+
+<style>
+body {
+  background-color: #121212; /* Dark mode background */
+  color: #fff;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 1.5em;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1em;
+  color: #ffffff;
+}
+
+.field {
+  margin-bottom: 1.5em;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #ddd;
+}
+
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 0.75em;
+  border-radius: 8px;
+  border: none;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1em;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+.actions input[type="submit"] {
+  background-color: #007c91; /* Matching the blue in nav and button */
+  color: white;
+  padding: 0.8em 1em;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.actions input[type="submit"]:hover {
+  background-color: #009bb3;
+}
+
+.btn-link {
+  color: #66ccff;
+  text-decoration: underline;
+  display: block;
+  text-align: center;
+  margin-top: 1em;
+}
+
+@media (min-width: 600px) {
+  body {
+    max-width: 400px;
+    margin: 2em auto;
+  }
+}
+</style>

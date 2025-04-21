@@ -32,9 +32,6 @@
 
     <!-- Navigation Bar -->
     <nav>
-      <!-- Fiverb button on the top left -->
-      <%= link_to t('home.fiverb'), posts_path, class: "btn btn-primary" %>
-
       <!-- Right side of the nav bar -->
       <div class="nav-right">
         <% if user_signed_in? %>
@@ -60,17 +57,6 @@
           <%= link_to t('home.login'), new_user_session_path, class: 'btn btn-primary' %>
           <%= link_to t('home.sign_up'), new_user_registration_path, class: 'btn btn-success' %>
         <% end %>
-
-        <!-- Language Selector -->
-        <form action="<%= set_language_path %>" method="get">
-          <select name="locale" onchange="this.form.submit();">
-            <% { 'English' => 'en', 'French' => 'fr', 'Spanish' => 'es', 'German' => 'de' }.each do |name, code| %>
-              <option value="<%= code %>" <%= 'selected' if I18n.locale.to_s == code %> >
-                <%= name %>
-              </option>
-            <% end %>
-          </select>
-        </form>
       </div>
     </nav>
     
