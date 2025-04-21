@@ -50,8 +50,9 @@ Rails.application.routes.draw do
   # Language selector route
   get 'set_language', to: 'application#set_language', as: :set_language
 
-  # Root route for the site
-  root 'posts#index'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
 
   # Add route for manifest.json
   get '/manifest.json', to: 'home#manifest', defaults: { format: :json }
