@@ -1,27 +1,22 @@
-<h1><%= t('account.title') %></h1>
-
-<!-- Sign out form -->
-<%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do |form| %>
-  <%= form.submit "Logout", class: "btn btn-danger" %>
-<% end %>
+<h1><%= 'Uporabniški račun' %></h1>
 
 <%= form_with model: @seller_profile, url: update_account_seller_path(@seller_profile), method: :patch, html: { multipart: true } do |f| %>
 
-  <!-- Full Name -->
+  <!-- Full Name (Ime podjetja) -->
   <div>
-    <strong><%= t('complete_seller_profile.full_name') %>:</strong>
-    <%= f.text_field :full_name %>
+    <%= f.label :full_name, "Ime podjetja" %>
+    <%= f.text_field :full_name, required: true, placeholder: "Kronoterm" %>
   </div>
 
-  <!-- Display Name -->
+  <!-- Display Name (Kontaktna oseba) -->
   <div>
-    <strong><%= t('complete_seller_profile.display_name') %>:</strong>
-    <%= f.text_field :display_name %>
+    <%= f.label :display_name, "Ime kontaktna oseba" %>
+    <%= f.text_field :display_name, required: true, placeholder: "Janez Novak" %>
   </div>
 
-  <!-- Profile Picture -->
+  <!-- Profile Picture (Logotip podjetja) -->
   <div>
-    <strong><%= t('complete_seller_profile.profile_picture') %>:</strong><br>
+    <%= f.label :profile_picture, "Logotip podjetja" %>
     <% if @seller_profile.profile_picture.attached? %>
       <%= image_tag url_for(@seller_profile.profile_picture), alt: "Profile Picture", width: 150 %>
     <% else %>
@@ -30,78 +25,16 @@
     <%= f.file_field :profile_picture %>
   </div>
 
-  <!-- Profile Description -->
+  <!-- Profile Description (Opis dejavnosti podjetja) -->
   <div>
-    <strong><%= t('complete_seller_profile.description') %>:</strong>
-    <%= f.text_area :description %>
+    <%= f.label :description, "Opis dejavnosti podjetja" %>
+    <%= f.text_area :description, required: true, placeholder: "Inštalacije, ogrevalni sistemi, ..." %>
   </div>
 
-  <!-- Preferred Language -->
+  <!-- Email Address -->
   <div>
-    <strong><%= t('complete_seller_profile.language') %>:</strong>
-    <%= f.select :language, options_for_select(["English", "Spanish", "French", "German", "Chinese", "Japanese", "Other"], @seller_profile.language), {}, { id: 'language-dropdown' } %>
-  </div>
-
-  <!-- Contact Information -->
-  <div>
-    <strong>Email:</strong>
-    <%= @seller_profile.email %>
-  </div>
-  <div>
-    <strong>Phone Number:</strong>
-    <%= f.telephone_field :phone_number, value: @seller_profile.phone_number, maxlength: 9, minlength: 9, pattern: '\d{9}' %> 
-    <!-- Ensuring the phone number is exactly 9 digits -->
-  </div>
-
-  <!-- Work Information -->
-  <h2><%= t('work_info.title') %></h2>
-
-  <!-- Occupation -->
-  <div class="field">
-    <%= f.label :occupation, t('work_info.occupation') %><br />
-    <%= f.select :occupation, ["Music and Audio", "Software Development", "Marketing", "Design", "Writing", "Healthcare", "Other"], {}, { id: 'occupation-dropdown', required: true } %>
-  </div>
-
-  <!-- Skills -->
-  <div class="field">
-    <%= f.label :skills, t('work_info.skills') %><br />
-    <%= f.select :skills, options_for_select(["Audio Editing", "Web Development", "SEO Optimization", "Graphic Design", "Content Writing", "Copywriting", "Front-end Development", "Back-end Development", "Social Media Marketing", "Data Science", "Mobile App Development"]), {}, { id: 'skill-dropdown' } %>
-    <%= f.select :skill_level, options_for_select(["Beginner", "Intermediate", "Expert"]), {}, { id: 'skill-level' } %>
-    <button type="button" id="add-skill-button">Add Skill</button>
-  </div>
-
-  <!-- Added Skills List -->
-  <div id="skills-list"></div>
-
-  <!-- Education -->
-  <h2><%= t('complete_seller_profile.education') %></h2>
-  <div>
-    <strong>Start Year:</strong>
-    <%= f.number_field :start_year, maxlength: 4, min: 1000, max: 9999, oninput: "validateYears()" %>
-    <!-- Ensure 4 digits only for the start year -->
-  </div>
-  <div>
-    <strong>End Year:</strong>
-    <%= f.number_field :end_year, maxlength: 4, min: 1000, max: 9999, oninput: "validateYears()" %>
-    <!-- Ensure 4 digits only for the end year -->
-  </div>
-
-  <!-- Website Link -->
-  <div class="field">
-    <%= f.label :website, "Your Website Link:" %><br />
-    <%= f.text_field :website, placeholder: "Put your website link here", id: 'website-textbox' %><br />
-
-    <% if @seller_profile.website.present? %>
-      <% url = @seller_profile.website.strip %>
-      <% if url =~ /\A(http:\/\/|https:\/\/)/ %> <!-- Check if the URL starts with http:// or https:// -->
-        <strong>Website: </strong>
-        <%= link_to url, url, target: "_blank" %>
-      <% else %>
-        <p>The website link is not valid.</p> <!-- Optional: show a message if the link is invalid -->
-      <% end %>
-    <% else %>
-      <p>No website added yet.</p>
-    <% end %>
+    <%= f.label :email, "Email naslov" %>
+    <%= f.email_field :email, required: true, placeholder: "ime@podjetje.si" %>
   </div>
 
   <!-- Save Profile Button -->
@@ -112,54 +45,9 @@
   <!-- Add Create Gig Button -->
   <%= link_to 'Create New Gig', new_post_path, class: 'btn-create-gig' %>
 
-  <% if @gigs.any? %>
-    <% @gigs.each do |gig| %>
-      <h3><%= link_to gig.title, gig_path(gig) %></h3>
-      <% if gig.posts.any? %>
-        <ul>
-          <% gig.posts.each do |post| %>
-            <li><%= link_to post.title, post_path(post) %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>No posts for this gig.</p>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>No gigs (posts) created yet.</p>
-  <% end %>
-
 <% end %>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const startYearField = document.querySelector('input[name="seller_profile[start_year]"]');
-  const endYearField = document.querySelector('input[name="seller_profile[end_year]"]');
-  
-  function validateYears() {
-    const startYear = parseInt(startYearField.value);
-    const endYear = parseInt(endYearField.value);
-    
-    if (startYear && endYear && startYear > endYear) {
-      endYearField.value = startYear;  // Set end year to start year if start year is greater
-    }
-  }
-
-  startYearField.addEventListener("input", validateYears);
-  endYearField.addEventListener("input", validateYears);
-
-  // For phone validation
-  const phoneField = document.querySelector('input[name="seller_profile[phone_number]"]');
-  phoneField.addEventListener('input', function(event) {
-    const value = phoneField.value.replace(/\D/g, ''); // Remove non-digit characters
-    if (value.length > 9) {
-      phoneField.value = value.slice(0, 9);  // Limit to 9 digits
-    }
-    if (value.length < 9) {
-      phoneField.setCustomValidity('Phone number must be exactly 9 digits.');
-    } else {
-      phoneField.setCustomValidity('');
-    }
-  });
-});
-</script>
+<!-- Sign out form -->
+<%= form_with url: destroy_user_session_path, method: :delete, class: "inline-form" do |form| %>
+  <%= form.submit "Logout", class: "btn btn-danger" %>
+<% end %>
