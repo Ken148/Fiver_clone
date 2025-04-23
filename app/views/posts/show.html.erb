@@ -1,9 +1,35 @@
+<%# Display Post Image %>
 <%= image_tag @post.image, class: "your-custom-class", alt: "Post Image" if @post.image.attached? %>
 
+<%# Display Post Title %>
 <h1><%= @post.title %></h1>
+
+<%# Display Post Description/Content %>
 <p><%= @post.content %></p>
 
+<%# Display Services Related to This Post (Category) %>
+<h2>Services Offered</h2>
+<% if @post.services.any? %>
+  <div class="services-list">
+    <% @post.services.each do |service| %>
+      <div class="service-item">
+        <h3><%= service.name %></h3>
+        <p><%= service.description %></p>
+        <p><strong>Price:</strong> <%= number_to_currency(service.price, unit: "€") %></p>
+        <%# Display Post Image %>
+        <%= image_tag @post.image, class: "post-image", alt: "Post Image" if @post.image.attached? %>
+        
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No services available for this post yet.</p>
+<% end %>
 
-<!-- Back Button to All Posts (Positioned at the Bottom Right Corner) -->
-<%= link_to 'Back', posts_path, class: "btn btn-secondary back-btn" %>
+<%# Button to Create a New Service (Only Visible to Post Creator) %>
+<% if current_user == @post.user %>
+  <%= link_to 'Add a New Service', new_post_service_path(@post), class: 'btn btn-success' %>
+<% end %>
 
+<%# Back Button to All Posts (Positioned at the Bottom Right Corner) %>
+<%= link_to 'Back to All Posts', posts_path, class: "btn btn-secondary back-btn" %>

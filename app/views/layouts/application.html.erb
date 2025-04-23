@@ -105,7 +105,7 @@
       .inline-form {
         display: inline;
       }
-      
+
       .btn-storitve {
         background-color: #6f42c1; /* Bootstrap-ish purple */
         color: white;
@@ -121,27 +121,22 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-<% if (controller_name == 'posts' && action_name == 'index') || 
-      (controller_name == 'orders' && action_name == 'index') ||
-      (controller_name == 'requests' && action_name == 'index') ||
-      (controller_name == 'sellers' && action_name == 'account') %>
-
-      <nav>
-        <div class="nav-right">
-          <% if user_signed_in? %>
-            <%= link_to "Storitve", posts_path, class: "btn btn-storitve" %>
-            <%= link_to "Naročila", orders_path, class: "btn btn-success" %>
-
-            <% if current_user.seller_profile.present? %>
-              <%= link_to "Uporabniški račun", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
-            <% else %>
-              <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
-            <% end %>
+    <!-- Navigation Bar for All Pages -->
+    <nav>
+      <div class="nav-right">
+        <% if user_signed_in? %>
+          <%= link_to "Storitve", posts_path, class: "btn btn-storitve" %>
+          <%= link_to "Naročila", orders_path, class: "btn btn-success" %>
+          <% if current_user.seller_profile.present? %>
+            <%= link_to "Uporabniški račun", account_seller_path(current_user.seller_profile), class: "btn btn-info" %>
+          <% else %>
+            <%= link_to "Create Seller Profile", new_seller_profile_path, class: "btn btn-warning" %>
           <% end %>
-        </div>
-      </nav>
-    <% end %>
+        <% end %>
+      </div>
+    </nav>
 
+    <!-- Main Content -->
     <div class="container">
       <%= yield %>
     </div>

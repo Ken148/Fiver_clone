@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  # — Devise routes first —
+  # — Devise routes first — 
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # — Root routing, inside a Devise scope so mapping[:user] is always available —
+  # — Root routing, inside a Devise scope so mapping[:user] is always available — 
   devise_scope :user do
     authenticated :user do
       root to: 'posts#index', as: :authenticated_root
@@ -15,10 +15,10 @@ Rails.application.routes.draw do
     end
   end
 
-  # — Seller profile related routes —
-  get  'become_a_seller',         to: 'sellers#info',   as: :become_a_seller
-  get  'new_seller_profile',      to: 'sellers#new',    as: :new_seller_profile
-  post 'create_seller_profile',   to: 'sellers#create', as: :create_seller_profile
+  # — Seller profile related routes — 
+  get 'become_a_seller', to: 'sellers#info', as: :become_a_seller
+  get 'new_seller_profile', to: 'sellers#new', as: :new_seller_profile
+  post 'create_seller_profile', to: 'sellers#create', as: :create_seller_profile
 
   resources :sellers, only: [:show, :edit, :update] do
     member do
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # — Posts (with member routes) —
+  # — Posts (with member routes) — 
   resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     member do
       get  :buy,              to: 'posts#buy'
@@ -39,27 +39,30 @@ Rails.application.routes.draw do
       post :send_message,     to: 'posts#send_message'
       post :submit_review,    to: 'posts#submit_review'
     end
+
+    # Nested services under posts
+    resources :services, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+      # Nested orders under services
+      resources :orders, only: [:new, :create]
+    end
   end
 
-  # — Gigs and nested posts —
+  # — Gigs and nested posts — 
   resources :gigs, only: [:new, :create, :index, :show] do
     resources :posts, only: [:index, :new, :create]
   end
 
-  # — Creator profile —
+  # — Creator profile — 
   get 'creator/:id', to: 'creators#show', as: :creator
 
-  # — Orders —
+  # — Orders — 
   get 'orders', to: 'orders#index', as: :orders
 
-  # — Requests and nested messages —
+  # — Requests and nested messages — 
   resources :requests, only: [:index, :create] do
     resources :messages, only: [:create]
   end
 
-  # — Language selector —
-  get 'set_language', to: 'application#set_language', as: :set_language
-
-  # — PWA manifest —
+  # — PWA manifest — 
   get '/manifest.json', to: 'home#manifest', defaults: { format: :json }
 end

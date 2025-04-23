@@ -12,7 +12,9 @@ class PostsController < ApplicationController
   end
 
   def show
-    @reviews = @post.reviews  # Load all reviews associated with the post
+    @post = Post.find(params[:id])
+    # Make sure you're eager loading the services if needed:
+    @services = @post.services
   end
 
   def new

@@ -1,6 +1,5 @@
-# app/models/post.rb
 class Post < ApplicationRecord
-  # A Post belongs to a user (creator of the category)
+  # A Post belongs to a user (the creator of the category)
   belongs_to :user
 
   # A Post has many services (the services offered under this category)
@@ -17,4 +16,10 @@ class Post < ApplicationRecord
 
   # Validations to ensure title and content are present when creating a Post
   validates :title, :content, presence: true
+
+  # Optional: If you want to validate the length of the title or description, you can add:
+  validates :title, length: { maximum: 100 }
+  validates :content, length: { minimum: 50 }
+
+  # Optionally, you could add scopes or custom methods if needed in the future
 end
