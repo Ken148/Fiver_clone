@@ -4,13 +4,11 @@
   <div>
     <%= f.label :full_name, "Ime podjetja" %>
     <%= f.text_field :full_name, required: true, placeholder: "Kronoterm" %>
-    <%= f.error_message_for :full_name %>
   </div>
 
   <div>
     <%= f.label :display_name, "Kontaktna oseba" %>
     <%= f.text_field :display_name, required: true, placeholder: "Janez Novak" %>
-    <%= f.error_message_for :display_name %>
   </div>
 
   <div>
@@ -19,26 +17,22 @@
       <%= select_tag 'seller_profile[country_code]', options_for_select([['+386 (SI)', '+386'], ['+385 (HR)', '+385'], ['+44 (UK)', '+44']]), class: "form-select", required: true %>
       <%= f.text_field :phone_number, maxlength: 9, pattern: '\d{9}', placeholder: '40123456', class: "form-control", required: true %>
     </div>
-    <%= f.error_message_for :phone_number %>
   </div>
 
   <!-- Email Field -->
   <div>
     <%= f.label :email, "Email naslov" %>
     <%= f.email_field :email, required: true, placeholder: "ime@podjetje.si" %>
-    <%= f.error_message_for :email %>
   </div>
 
   <div>
     <%= f.label :profile_picture, "Logotip podjetja" %>
     <%= f.file_field :profile_picture %>
-    <%= f.error_message_for :profile_picture %>
   </div>
 
   <div>
     <%= f.label :description, "Opis dejavnosti podjetja" %>
     <%= f.text_area :description, required: true, placeholder: "Inštalacije, ogrevalni sistemi, ..." %>
-    <%= f.error_message_for :description %>
   </div>
 
   <!-- CONTINUE button -->
