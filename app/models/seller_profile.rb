@@ -9,7 +9,7 @@ class SellerProfile < ApplicationRecord
 
   # Validations for required fields
   validates :user, presence: true
-  validates :full_name, :display_name, :description, :language, presence: true
+  validates :full_name, :display_name, :description, presence: true  # Removed `:language` validation
 
   # Profile picture validation - only required on create
   validates :profile_picture, presence: true, on: :create 

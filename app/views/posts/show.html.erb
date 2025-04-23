@@ -1,9 +1,7 @@
+<%= image_tag @post.image, class: "your-custom-class", alt: "Post Image" if @post.image.attached? %>
+
 <h1><%= @post.title %></h1>
 <p><%= @post.content %></p>
-
-<!-- Display user's profile information -->
-<p><strong>Created by:</strong> <%= @post.user.seller_profile.full_name %></p>
-
 
 
 <!-- Back Button to All Posts (Positioned at the Bottom Right Corner) -->

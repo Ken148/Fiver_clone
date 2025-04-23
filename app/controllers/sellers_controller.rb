@@ -23,8 +23,7 @@ class SellersController < ApplicationController
     end
   end
 
-  def occupation_step
-  end
+  def occupation_step; end
 
   def update_occupation_step
     if @seller_profile.update(occupation_step_params)
@@ -35,8 +34,7 @@ class SellersController < ApplicationController
     end
   end
 
-  def security_step
-  end
+  def security_step; end
 
   def update_security_step
     if @seller_profile.update(security_step_params)
@@ -48,7 +46,7 @@ class SellersController < ApplicationController
   end
 
   def account
-    @gigs = @seller_profile.gigs.includes(:posts) # Preload posts for efficiency
+    @gigs = @seller_profile.gigs.includes(:posts)
   end
 
   def update_account
@@ -70,15 +68,14 @@ class SellersController < ApplicationController
     end
   end
 
-  # Profile validation for phone number and start/end years
   def validate_profile
     errors = []
 
     # Phone Number Validation (must be exactly 9 digits)
     if params[:seller_profile][:phone_number].present?
-      phone_number = params[:seller_profile][:phone_number].gsub(/\D/, '') # Remove non-digit characters
+      phone_number = params[:seller_profile][:phone_number].gsub(/\D/, '')
       unless phone_number.length == 9
-        errors << "Phone number must be exactly 9 digits."
+        errors << "Telefonska številka mora imeti točno 9 številk."
       end
     end
 
@@ -87,11 +84,10 @@ class SellersController < ApplicationController
       start_year = params[:seller_profile][:start_year].to_i
       end_year = params[:seller_profile][:end_year].to_i
       if start_year > end_year
-        params[:seller_profile][:end_year] = start_year # Auto-adjust end year
+        params[:seller_profile][:end_year] = start_year
       end
     end
 
-    # Check if there are any errors
     if errors.any?
       flash[:alert] = errors.join(" ")
       return false
@@ -102,7 +98,7 @@ class SellersController < ApplicationController
 
   def seller_profile_params
     params.require(:seller_profile).permit(
-      :full_name, :display_name, :profile_picture, :description, :language, 
+      :full_name, :display_name, :profile_picture, :description, 
       :phone_number, :website, :start_year, :end_year, :occupation, :country_code,
       skill_ids: [], education_ids: []
     )
@@ -120,7 +116,7 @@ class SellersController < ApplicationController
 
   def account_params
     params.require(:seller_profile).permit(
-      :full_name, :display_name, :profile_picture, :description, :language, 
+      :full_name, :display_name, :profile_picture, :description, 
       :phone_number, :website, :start_year, :end_year, :occupation, :country_code,
       skill_ids: [], education_ids: []
     )
